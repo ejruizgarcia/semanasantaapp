@@ -6,6 +6,7 @@
     <title>Semana Santa San Fernando</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        /* Animaciones y utilidades de scroll */
         .fade-in {
             animation: fadeIn 0.3s ease-in-out;
         }
@@ -36,6 +37,7 @@
             100% { transform: scale(1) translateY(0); opacity: 1; }
         }
         
+        /* Animación de destello único para Carrera Oficial */
         .shimmer-flash {
             animation: ringFlash 3s ease-out forwards;
         }
@@ -63,33 +65,48 @@
         }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans fixed inset-0 w-full h-full flex flex-col overflow-hidden">
+<body class="bg-gray-50 text-gray-800 font-sans h-screen flex flex-col overflow-hidden relative">
 
+    <!-- Pantalla de inicio (Splash Screen) -->
     <div id="splashScreen" class="fixed inset-0 z-[100] flex flex-col bg-black transition-opacity duration-500 ease-in-out">
         <img src="https://raw.githubusercontent.com/ejruizgarcia/images/main/cartel.jpg" alt="Cartel Semana Santa" class="w-full h-full object-cover">
     </div>
 
+    <!-- Marca de agua general -->
     <div class="fixed inset-0 z-0 pointer-events-none opacity-15 bg-[url('https://raw.githubusercontent.com/ejruizgarcia/images/main/cartel.jpg')] bg-cover bg-center"></div>
 
+    <!-- Contenedor de notificaciones flotantes -->
     <div id="toastContainer" class="fixed top-1/3 inset-x-0 z-[60] flex flex-col items-center gap-3 pointer-events-none px-4"></div>
 
-    <header class="bg-rose-900 text-white shadow-md z-20 flex-none w-full">
-        <div class="flex justify-between items-center px-4 pt-4 pb-3">
-            <h1 class="text-xl font-bold truncate">Semana Santa San Fernando</h1>
-            <div class="flex items-center gap-2 shrink-0 ml-2">
-                <button onclick="abrirYt()" class="p-2 bg-rose-800 rounded-full hover:bg-rose-700 transition active:scale-95" aria-label="Directos en YouTube">
+    <!-- Cabecera fija -->
+    <header class="bg-rose-900 text-white pt-4 pb-2 shadow-md z-10 shrink-0 relative">
+        <div class="flex justify-between items-center mb-3 px-4">
+            <h1 class="text-xl font-bold">Semana Santa San Fernando</h1>
+            <div class="flex items-center gap-2">
+                <a href="https://drive.google.com/drive/folders/1zAUDooxu2WBppOisKBpK2Ca2z9zWM_9f?usp=drive_link" target="_blank" class="p-2 bg-rose-800 rounded-full hover:bg-rose-700 transition active:scale-95" aria-label="Carpeta de recursos">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path>
+                    </svg>
+                </a>
+                <a href="https://www.youtube.com/@islapasion/streams" target="_blank" class="p-2 bg-rose-800 rounded-full hover:bg-rose-700 transition active:scale-95" aria-label="Directos en YouTube">
                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.5 12 3.5 12 3.5s-7.505 0-9.377.55a3.016 3.016 0 0 0-2.122 2.136C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.55 9.376.55 9.376.55s7.505 0 9.377-.55a3.016 3.016 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
                     </svg>
-                </button>
+                </a>
                 <button onclick="abrirFb()" class="p-2 bg-rose-800 rounded-full hover:bg-rose-700 transition active:scale-95" aria-label="Perfiles de Facebook">
                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/>
                     </svg>
                 </button>
+                <a href="https://drive.google.com/file/d/1oasIWiFgNSAMiBG5iteE20PoE83LCGfw/view?usp=drive_link" target="_blank" class="p-2 bg-rose-800 rounded-full hover:bg-rose-700 transition active:scale-95" aria-label="Tickets del palco">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"></path>
+                    </svg>
+                </a>
             </div>
         </div>
 
+        <!-- Selector Deslizable de Días -->
         <div class="relative w-full">
             <div id="diaSlider" class="flex gap-2 overflow-x-auto whitespace-nowrap px-4 py-2 hide-scrollbar scroll-smooth snap-x">
                 <button class="dia-btn snap-center shrink-0 px-5 py-2.5 rounded-full font-bold text-sm transition-all" data-dia="domingo" onclick="seleccionarDia('domingo')">Domingo de Ramos</button>
@@ -105,75 +122,143 @@
         </div>
     </header>
 
+    <!-- Contenedor principal desplazable -->
     <main class="flex-1 overflow-y-auto p-4 pb-24 relative z-10" id="mainContainer">
-        <div id="listaCofradias" class="flex flex-col gap-4 max-w-lg mx-auto pb-6"></div>
-        <div class="text-center pt-2 pb-8 text-[10px] text-gray-500 font-medium">
-            App creada por @ejruizgarcia con la IA de Gemini.<br>Licencia Creative Commons CC BY-NC-SA 4.0
+        <div id="listaCofradias" class="flex flex-col gap-4 max-w-lg mx-auto pb-6">
+            <!-- Los botones se inyectan aquí con JS -->
+        </div>
+        
+        <div class="max-w-lg mx-auto text-center text-gray-400 text-xs mt-2 pb-8">
+            <p>App creada por @ejruizgarcia con la IA de Gemini.</p>
+            <p>Licencia Creative Commons CC BY-NC-SA 4.0</p>
         </div>
     </main>
 
-    <div class="fixed bottom-6 inset-x-6 flex justify-between items-center pointer-events-none z-40">
-        <button onclick="abrirJuegos()" class="pointer-events-auto p-4 bg-rose-950 text-white rounded-full shadow-lg hover:bg-rose-900 transition active:scale-95 border-2 border-white" aria-label="Juegos Cofrades">
-            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 1.5L5.5 14.5C3.57 14.5 2 16.07 2 18v3h20v-3c0-1.93-1.57-3.5-3.5-3.5L12 1.5z M9.5 10.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm5 0a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/>
-            </svg>
-        </button>
+    <!-- Botón Flotante Menú Juegos -->
+    <button onclick="abrirJuegos()" class="fixed bottom-6 left-6 p-4 bg-rose-900 text-white rounded-full shadow-lg hover:bg-rose-800 transition active:scale-95 z-40 border-2 border-white" aria-label="Juegos Cofrades">
+        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 1.5L5.5 14.5C3.57 14.5 2 16.07 2 18v3h20v-3c0-1.93-1.57-3.5-3.5-3.5L12 1.5z M9.5 10.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm5 0a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/>
+        </svg>
+    </button>
+
+    <!-- Modal de Detalle -->
+    <div id="detalleModal" class="fixed inset-0 z-50 hidden flex-col h-full w-full">
+        <div class="bg-rose-900 text-white p-4 flex justify-between items-center shadow-md shrink-0">
+            <div class="flex items-center min-w-0">
+                <button onclick="cerrarDetalle()" class="mr-4 p-2 bg-rose-800 rounded-full hover:bg-rose-700 transition active:scale-95 shrink-0" aria-label="Volver">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                </button>
+                <h2 id="modalTitulo" class="text-xl font-bold truncate">Detalle</h2>
+            </div>
+        </div>
         
-        <button onclick="abrirConfiguracion()" class="pointer-events-auto p-2.5 bg-rose-900 text-white rounded-full shadow-lg hover:bg-rose-800 transition active:scale-95 border-2 border-white" aria-label="Configuración">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-            </svg>
-        </button>
-    </div>
+        <div class="flex-1 overflow-y-auto p-5">
+            <div class="max-w-lg mx-auto bg-white rounded-xl shadow-sm border border-gray-100 p-6 space-y-6 slide-up relative z-10">
+                <button onclick="cerrarDetalle()" class="absolute top-4 right-4 text-rose-900 hover:text-rose-700 bg-rose-50 hover:bg-rose-100 p-1.5 rounded-full transition active:scale-95" aria-label="Cerrar Ficha">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
 
-    <div id="configuracionModal" class="fixed inset-0 z-[70] hidden flex-col h-full w-full bg-white/95 backdrop-blur-sm">
-        <div class="bg-rose-950 text-white p-4 flex justify-between items-center shadow-md shrink-0">
-            <h2 class="text-xl font-bold">Configuración</h2>
-            <button onclick="cerrarConfiguracion()" class="p-2 bg-rose-800 rounded-full hover:bg-rose-700 transition active:scale-95">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-            </button>
-        </div>
-        <div class="flex-1 p-6 flex flex-col gap-6 max-w-lg mx-auto w-full">
-            <div>
-                <p class="text-rose-900 font-bold uppercase tracking-wider text-sm mb-4">Criterio de ordenación</p>
-                <div class="flex flex-col gap-3">
-                    <button onclick="cambiarOrden('carrera')" id="btnOrdenCarrera" class="flex items-center justify-between p-4 rounded-xl border-2 transition-all text-left group">
-                        <div>
-                            <p class="font-bold text-lg">Carrera Oficial</p>
-                            <p class="text-xs text-gray-500">Orden por hora de entrada en C.O.</p>
+                <div class="border-b border-gray-100 pb-4">
+                    <div class="pr-8">
+                        <!-- Título Interior y Nombre Oficial -->
+                        <div class="flex items-center gap-2 mb-2">
+                            <h3 id="modalTituloInterior" class="text-2xl font-bold text-rose-900"></h3>
+                            <button onclick="toggleNombreOficial()" class="text-rose-600 bg-rose-100 hover:bg-rose-200 rounded-full p-1.5 transition active:scale-95" aria-label="Ver nombre oficial">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            </button>
                         </div>
-                        <div class="radio-indicator w-6 h-6 rounded-full border-2 border-rose-900 flex items-center justify-center">
-                            <div class="inner-dot w-3 h-3 bg-rose-900 rounded-full hidden"></div>
+                        <div id="modalNombreOficialContainer" class="hidden mb-4 p-3 bg-rose-50 rounded-lg border border-rose-100">
+                            <p id="modalNombreOficial" class="text-sm text-rose-800 font-medium italic leading-relaxed"></p>
                         </div>
-                    </button>
-                    <button onclick="cambiarOrden('salida')" id="btnOrdenSalida" class="flex items-center justify-between p-4 rounded-xl border-2 transition-all text-left group">
-                        <div>
-                            <p class="font-bold text-lg">Hora de Salida</p>
-                            <p class="text-xs text-gray-500">Orden por salida de Cruz de Guía</p>
+                    </div>
+
+                    <p class="text-sm text-gray-500 uppercase font-semibold tracking-wider mb-1 mt-2">Sede Canónica</p>
+                    <p id="modalSede" class="text-lg text-gray-800 font-medium mb-4"></p>
+                    
+                    <div class="w-full">
+                        <div class="flex justify-between text-xs text-rose-800 font-bold mb-1">
+                            <span>Progreso en la calle</span>
+                            <span id="modalProgresoTexto">0%</span>
                         </div>
-                        <div class="radio-indicator w-6 h-6 rounded-full border-2 border-rose-900 flex items-center justify-center">
-                            <div class="inner-dot w-3 h-3 bg-rose-900 rounded-full hidden"></div>
+                        <div class="w-full bg-rose-100 rounded-full h-2.5 overflow-hidden shadow-inner">
+                            <div id="modalProgressBar" class="bg-rose-600 h-2.5 rounded-full transition-all duration-1000 ease-linear" style="width: 0%"></div>
                         </div>
-                    </button>
-                    <button onclick="cambiarOrden('recogida')" id="btnOrdenRecogida" class="flex items-center justify-between p-4 rounded-xl border-2 transition-all text-left group">
-                        <div>
-                            <p class="font-bold text-lg">Hora de Recogida</p>
-                            <p class="text-xs text-gray-500">Orden por llegada de Cruz de Guía</p>
-                        </div>
-                        <div class="radio-indicator w-6 h-6 rounded-full border-2 border-rose-900 flex items-center justify-center">
-                            <div class="inner-dot w-3 h-3 bg-rose-900 rounded-full hidden"></div>
-                        </div>
-                    </button>
+                    </div>
                 </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
+                        <p class="text-xs text-gray-500 uppercase font-bold mb-2">Salida</p>
+                        <div class="flex justify-between text-sm mb-1">
+                            <span class="text-gray-600 font-medium">Cruz de Guía:</span>
+                            <span id="modalSalidaCruz" class="font-bold text-gray-800"></span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-600 font-medium">Último Paso:</span>
+                            <span id="modalSalidaPaso" class="font-bold text-gray-800"></span>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
+                        <p class="text-xs text-gray-500 uppercase font-bold mb-2">Recogida</p>
+                        <div class="flex justify-between text-sm mb-1">
+                            <span class="text-gray-600 font-medium">Cruz de Guía:</span>
+                            <span id="modalRecogidaCruz" class="font-bold text-gray-800"></span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-600 font-medium">Último Paso:</span>
+                            <span id="modalRecogidaPaso" class="font-bold text-gray-800"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-lg shadow-sm my-2">
+                    <p class="text-sm text-amber-800 uppercase font-bold tracking-wider mb-3">Carrera Oficial</p>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <p class="text-xs text-amber-700 uppercase font-bold mb-1 border-b border-amber-200 pb-1">Entrada</p>
+                            <div class="flex justify-between text-sm mb-1 mt-2">
+                                <span class="text-amber-900">Cruz:</span>
+                                <span id="modalEntradaCOCruz" class="font-bold text-amber-800"></span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-amber-900">Paso:</span>
+                                <span id="modalEntradaCOPaso" class="font-bold text-amber-800"></span>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-xs text-amber-700 uppercase font-bold mb-1 border-b border-amber-200 pb-1">Salida</p>
+                            <div class="flex justify-between text-sm mb-1 mt-2">
+                                <span class="text-amber-900">Cruz:</span>
+                                <span id="modalSalidaCOCruz" class="font-bold text-amber-800"></span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-amber-900">Paso:</span>
+                                <span id="modalSalidaCOPaso" class="font-bold text-amber-800"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-2">
+                    <p class="text-sm text-gray-500 uppercase font-semibold tracking-wider mb-2">Itinerario</p>
+                    <p id="modalItinerario" class="text-gray-700 leading-relaxed"></p>
+                </div>
+
+                <button onclick="cerrarDetalle()" class="w-full bg-rose-900 text-white font-bold py-4 rounded-xl shadow-md hover:bg-rose-800 transition active:scale-95 mt-4">
+                    Cerrar Ficha
+                </button>
             </div>
-            <div class="mt-auto text-center pt-8 text-[10px] text-gray-400 font-medium">
-                App creada por @ejruizgarcia con la IA de Gemini.<br>Licencia Creative Commons CC BY-NC-SA 4.0
+            
+            <div class="max-w-lg mx-auto text-center text-gray-400 text-xs mt-6 pb-4">
+                <p>App creada por @ejruizgarcia con la IA de Gemini.</p>
+                <p>Licencia Creative Commons CC BY-NC-SA 4.0</p>
             </div>
         </div>
     </div>
 
-    <div id="fbModal" class="fixed inset-0 z-[70] bg-white hidden flex-col h-full w-full">
+    <!-- Modal de Facebook -->
+    <div id="fbModal" class="fixed inset-0 bg-white z-50 hidden flex-col h-full w-full">
         <div class="bg-blue-800 text-white p-4 flex items-center shadow-md shrink-0">
             <button onclick="cerrarFb()" class="mr-4 p-2 bg-blue-700 rounded-full hover:bg-blue-600 transition active:scale-95">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
@@ -182,207 +267,53 @@
         </div>
         <div class="flex-1 overflow-y-auto p-5 bg-gray-50 flex flex-col gap-4">
             <div class="max-w-lg mx-auto w-full space-y-4 slide-up">
-                <p class="text-gray-600 mb-6 font-medium">Accede a las páginas oficiales para más información.</p>
+                <p class="text-gray-600 mb-6 font-medium">Accede a las páginas oficiales para más información y novedades.</p>
                 <a href="https://www.facebook.com/islapasion?locale=es_ES" target="_blank" class="block w-full bg-white border border-blue-200 p-4 rounded-xl shadow-sm hover:shadow-md transition flex items-center gap-4 group">
-                    <svg class="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/></svg>
+                    <svg class="w-8 h-8 text-blue-600 group-hover:scale-110 transition" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/></svg>
                     <span class="font-bold text-gray-800 text-lg">IslaPasión</span>
                 </a>
                 <a href="https://www.facebook.com/share/1D2s6nfzTH/" target="_blank" class="block w-full bg-white border border-blue-200 p-4 rounded-xl shadow-sm hover:shadow-md transition flex items-center gap-4 group">
-                    <svg class="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/></svg>
+                    <svg class="w-8 h-8 text-blue-600 group-hover:scale-110 transition" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/></svg>
                     <span class="font-bold text-gray-800 text-lg">San Fernando Cofrade</span>
                 </a>
                 <a href="https://www.facebook.com/AytoSanFdo?locale=es_ES" target="_blank" class="block w-full bg-white border border-blue-200 p-4 rounded-xl shadow-sm hover:shadow-md transition flex items-center gap-4 group">
-                    <svg class="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/></svg>
+                    <svg class="w-8 h-8 text-blue-600 group-hover:scale-110 transition" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/></svg>
                     <span class="font-bold text-gray-800 text-lg">Ayuntamiento de San Fernando</span>
                 </a>
                 <a href="https://www.facebook.com/profile.php?id=100080499935607&locale=es_ES" target="_blank" class="block w-full bg-white border border-blue-200 p-4 rounded-xl shadow-sm hover:shadow-md transition flex items-center gap-4 group">
-                    <svg class="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/></svg>
+                    <svg class="w-8 h-8 text-blue-600 group-hover:scale-110 transition" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/></svg>
                     <span class="font-bold text-gray-800 text-lg">La Venera</span>
                 </a>
             </div>
-            <div class="mt-auto text-center pt-8 text-[10px] text-gray-400 font-medium">
-                App creada por @ejruizgarcia con la IA de Gemini.<br>Licencia Creative Commons CC BY-NC-SA 4.0
+            
+            <div class="max-w-lg mx-auto text-center text-gray-400 text-xs mt-auto pt-6 pb-4">
+                <p>App creada por @ejruizgarcia con la IA de Gemini.</p>
+                <p>Licencia Creative Commons CC BY-NC-SA 4.0</p>
             </div>
         </div>
     </div>
 
-    <div id="ytModal" class="fixed inset-0 z-[70] bg-white hidden flex-col h-full w-full">
-        <div class="bg-red-600 text-white p-4 flex items-center shadow-md shrink-0">
-            <button onclick="cerrarYt()" class="mr-4 p-2 bg-red-700 rounded-full hover:bg-red-800 transition active:scale-95">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-            </button>
-            <h2 class="text-xl font-bold truncate">Directos de YouTube</h2>
-        </div>
-        <div class="flex-1 overflow-y-auto p-5 bg-gray-50 flex flex-col gap-4">
-            <div class="max-w-lg mx-auto w-full space-y-4 slide-up">
-                <p class="text-gray-600 mb-6 font-medium">Accede a las retransmisiones en directo de nuestra Semana Santa.</p>
-                <a href="https://www.youtube.com/@islapasion/streams" target="_blank" class="block w-full bg-white border border-red-200 p-4 rounded-xl shadow-sm hover:shadow-md transition flex items-center gap-4 group">
-                    <svg class="w-8 h-8 text-red-600 group-hover:scale-110 transition" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.5 12 3.5 12 3.5s-7.505 0-9.377.55a3.016 3.016 0 0 0-2.122 2.136C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.55 9.376.55 9.376.55s7.505 0 9.377-.55a3.016 3.016 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-                    <span class="font-bold text-gray-800 text-lg">IslaPasión</span>
-                </a>
-                <a href="https://www.youtube.com/@SFERNANDOCOFRADE/streams" target="_blank" class="block w-full bg-white border border-red-200 p-4 rounded-xl shadow-sm hover:shadow-md transition flex items-center gap-4 group">
-                    <svg class="w-8 h-8 text-red-600 group-hover:scale-110 transition" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.5 12 3.5 12 3.5s-7.505 0-9.377.55a3.016 3.016 0 0 0-2.122 2.136C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.55 9.376.55 9.376.55s7.505 0 9.377-.55a3.016 3.016 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-                    <span class="font-bold text-gray-800 text-lg">San Fernando Cofrade</span>
-                </a>
-            </div>
-            <div class="mt-auto text-center pt-8 text-[10px] text-gray-400 font-medium">
-                App creada por @ejruizgarcia con la IA de Gemini.<br>Licencia Creative Commons CC BY-NC-SA 4.0
-            </div>
-        </div>
-    </div>
-
-    <div id="detalleModal" class="fixed inset-0 z-[70] hidden flex-col h-full w-full">
-        <div class="bg-rose-950 text-white p-4 flex justify-between items-center shadow-md shrink-0">
-            <div class="flex items-center min-w-0">
-                <button onclick="cerrarDetalle()" class="mr-4 p-2 bg-rose-800 rounded-full hover:bg-rose-700 transition active:scale-95 shrink-0">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                </button>
-                <h2 id="modalTitulo" class="text-xl font-bold truncate">Detalle</h2>
-            </div>
-        </div>
-        <div class="flex-1 overflow-y-auto p-5">
-            <div class="max-w-lg mx-auto bg-white rounded-xl shadow-sm border border-gray-100 p-6 space-y-6 slide-up relative z-10">
-                <button onclick="cerrarDetalle()" class="absolute top-4 right-4 text-rose-900 hover:text-rose-700 bg-rose-50 hover:bg-rose-100 p-1.5 rounded-full transition">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
-                </button>
-                <div class="border-b border-gray-100 pb-4">
-                    <div class="pr-8">
-                        <div class="flex items-center gap-2 mb-2">
-                            <h3 id="modalTituloInterior" class="text-2xl font-bold text-rose-900"></h3>
-                            <button onclick="toggleNombreOficial()" class="text-rose-600 bg-rose-100 hover:bg-rose-200 rounded-full p-1.5 transition">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            </button>
-                        </div>
-                        <div id="modalNombreOficialContainer" class="hidden mb-4 p-3 bg-rose-50 rounded-lg border border-rose-100">
-                            <p id="modalNombreOficial" class="text-sm text-rose-800 font-medium italic leading-relaxed"></p>
-                        </div>
-                    </div>
-                    <p class="text-sm text-gray-500 uppercase font-semibold tracking-wider mb-1 mt-2">Sede Canónica</p>
-                    <p id="modalSede" class="text-lg text-gray-800 font-medium mb-4"></p>
-                    <div class="w-full">
-                        <div class="flex justify-between text-xs text-rose-800 font-bold mb-1">
-                            <span>Progreso en la calle</span>
-                            <span id="modalProgresoTexto">0%</span>
-                        </div>
-                        <div class="w-full bg-rose-100 rounded-full h-2.5 overflow-hidden shadow-inner">
-                            <div id="modalProgressBar" class="bg-rose-600 h-2.5 rounded-full transition-all duration-1000 ease-linear"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
-                        <p class="text-xs text-gray-500 uppercase font-bold mb-2">Salida</p>
-                        <div class="flex justify-between text-sm mb-1"><span class="text-gray-600 font-medium">Cruz de Guía:</span><span id="modalSalidaCruz" class="font-bold text-gray-800"></span></div>
-                        <div class="flex justify-between text-sm"><span class="text-gray-600 font-medium">Último Paso:</span><span id="modalSalidaPaso" class="font-bold text-gray-800"></span></div>
-                    </div>
-                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
-                        <p class="text-xs text-gray-500 uppercase font-bold mb-2">Recogida</p>
-                        <div class="flex justify-between text-sm mb-1"><span class="text-gray-600 font-medium">Cruz de Guía:</span><span id="modalRecogidaCruz" class="font-bold text-gray-800"></span></div>
-                        <div class="flex justify-between text-sm"><span class="text-gray-600 font-medium">Último Paso:</span><span id="modalRecogidaPaso" class="font-bold text-gray-800"></span></div>
-                    </div>
-                </div>
-                <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-lg shadow-sm my-2">
-                    <p class="text-sm text-amber-800 uppercase font-bold tracking-wider mb-3">Carrera Oficial</p>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <p class="text-xs text-amber-700 uppercase font-bold mb-1 border-b border-amber-200 pb-1">Entrada</p>
-                            <div class="flex justify-between text-sm mb-1 mt-2"><span class="text-amber-900">Cruz de Guía:</span><span id="modalEntradaCOCruz" class="font-bold text-amber-800"></span></div>
-                            <div class="flex justify-between text-sm"><span class="text-amber-900">Último Paso:</span><span id="modalEntradaCOPaso" class="font-bold text-amber-800"></span></div>
-                        </div>
-                        <div>
-                            <p class="text-xs text-amber-700 uppercase font-bold mb-1 border-b border-amber-200 pb-1">Salida</p>
-                            <div class="flex justify-between text-sm mb-1 mt-2"><span class="text-amber-900">Cruz de Guía:</span><span id="modalSalidaCOCruz" class="font-bold text-amber-800"></span></div>
-                            <div class="flex justify-between text-sm"><span class="text-amber-900">Último Paso:</span><span id="modalSalidaCOPaso" class="font-bold text-amber-800"></span></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="pt-2">
-                    <p class="text-sm text-gray-500 uppercase font-semibold tracking-wider mb-2">Itinerario</p>
-                    <p id="modalItinerario" class="text-gray-700 leading-relaxed text-sm"></p>
-                </div>
-                <button onclick="cerrarDetalle()" class="w-full bg-rose-950 text-white font-bold py-4 rounded-xl shadow-md hover:bg-rose-900 transition mt-4">Cerrar Ficha</button>
-            </div>
-            <div class="text-center pt-8 text-[10px] text-gray-400 font-medium">
-                App creada por @ejruizgarcia con la IA de Gemini.<br>Licencia Creative Commons CC BY-NC-SA 4.0
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal de Juegos -->
-    <div id="juegosModal" class="fixed inset-0 z-[70] bg-gray-900 hidden flex-col h-full w-full text-white">
+    <!-- Modal de Juegos (Impostor y Trivial) -->
+    <div id="juegosModal" class="fixed inset-0 bg-gray-900 z-50 hidden flex-col h-full w-full text-white">
         <div class="p-4 flex items-center shadow-md shrink-0 bg-gray-800">
-            <button onclick="cerrarJuegos()" class="mr-4 p-2 bg-gray-700 rounded-full hover:bg-gray-600 transition">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+            <button onclick="cerrarJuegos()" class="mr-4 p-2 bg-gray-700 rounded-full hover:bg-gray-600 transition active:scale-95">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
             </button>
             <h2 id="juegosTitulo" class="text-xl font-bold truncate">Juegos Cofrades</h2>
         </div>
-        <div class="flex-1 overflow-y-auto p-5 flex flex-col items-center justify-center relative">
-            <div id="juegosContenido" class="w-full max-w-sm flex flex-col items-center justify-center gap-6 z-10"></div>
-            <div class="absolute bottom-4 left-0 right-0 text-center text-[10px] text-gray-500 font-medium">
-                App creada por @ejruizgarcia con la IA de Gemini.<br>Licencia Creative Commons CC BY-NC-SA 4.0
-            </div>
+        
+        <div id="juegosContenido" class="flex-1 overflow-y-auto p-5 flex flex-col items-center justify-center gap-6">
+            <!-- Contenido dinámico -->
+        </div>
+        
+        <div class="shrink-0 text-center text-gray-500 text-xs p-4 bg-gray-900">
+            <p>App creada por @ejruizgarcia con la IA de Gemini.</p>
+            <p>Licencia Creative Commons CC BY-NC-SA 4.0</p>
         </div>
     </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        let auth, db, appId, userId = null;
-
-        try {
-            const firebaseConfig = JSON.parse(__firebase_config);
-            const app = initializeApp(firebaseConfig);
-            auth = getAuth(app);
-            db = getFirestore(app);
-            appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-
-            const initAuth = async () => {
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
-            };
-
-            onAuthStateChanged(auth, async (user) => {
-                if (user) {
-                    window.userId = user.uid;
-                    await loadSettings(user.uid);
-                }
-            });
-
-            initAuth();
-        } catch (e) { console.warn("Firebase no disponible."); }
-
-        async function loadSettings(uid) {
-            if (!db) return;
-            try {
-                const settingsRef = doc(db, 'artifacts', appId, 'users', uid, 'preferences', 'settings');
-                const docSnap = await getDoc(settingsRef);
-                if (docSnap.exists()) {
-                    const data = docSnap.data();
-                    if (data.sortingCriteria) {
-                        window.criterioOrdenActual = data.sortingCriteria;
-                        if (typeof window.actualizarUIOrdenacion === 'function') window.actualizarUIOrdenacion();
-                        if (typeof window.cargarDia === 'function') window.cargarDia(window.diaSeleccionadoActual);
-                    }
-                }
-            } catch (error) { console.error("Error al cargar configuración:", error); }
-        }
-
-        window.saveSortingPreference = async (criteria) => {
-            if (!window.userId || !db) return;
-            try {
-                const settingsRef = doc(db, 'artifacts', appId, 'users', window.userId, 'preferences', 'settings');
-                await setDoc(settingsRef, { sortingCriteria: criteria }, { merge: true });
-            } catch (error) { console.error("Error al guardar preferencia:", error); }
-        };
-    </script>
-
     <script>
-        window.datosSemanaSanta = {
+        const datosSemanaSanta = {
             domingo: [
                 { nombre: 'La Borriquita', nombreOficial: 'Hermandad Sacramental y Cofradía Lasaliana de Cristo Rey en su Triunfal Entrada en Jerusalén, María Santísima de la Estrella y San Juan Bautista de La Salle', sede: 'Capilla de Nuestra Señora de la Estrella', salidaCruz: '15:50', salidaPaso: '16:15', entradaCOCruz: '17:50', entradaCOPaso: '18:20', salidaCOCruz: '18:20', salidaCOPaso: '19:00', recogidaCruz: '21:40', recogidaPaso: '23:00', itinerario: 'Real, Sánchez Cerquero, Calderón de la Barca, Cayetano del Toro, General García de la Herrán, Rosario, Plaza de la Iglesia, Real, Carrera Oficial, General Valdés, Sánchez Cerquero, Tomás del Valle, Pece Casas, Bravo, Lanuza, Héroes del Baleares, Real y a su templo.' },
                 { nombre: 'Columna', nombreOficial: 'Real, Venerable y Antigua Hermandad de Penitencia de Nuestro Padre Jesús Atado y Flagelado en la Columna y Nuestra Señora María Santísima de las Lágrimas', sede: 'Iglesia Mayor Parroquial de San Pedro y San Pablo y los Desagravios', salidaCruz: '18:30', salidaPaso: '19:15', entradaCOCruz: '18:40', entradaCOPaso: '19:35', salidaCOCruz: '19:20', salidaCOPaso: '20:20', recogidaCruz: '23:45', recogidaPaso: '00:45', itinerario: 'Real, Carrera Oficial, General Valdés, Losada, Real, San José, Plaza de San José, Virgen de los Desamparados, Dolores, Pérez Galdós, San Cristóbal, San Francisco de Asís, San Nicolás, San Servando, Almirante Cervera, Jorge Juan, San Vicente, Pérez Galdós, Capataz Nicolás Carrillo, Real y a su templo.' },
@@ -423,8 +354,544 @@
             ]
         };
 
-        window.diccionarioCofrade = ["Carrera Oficial", "Capirote", "Incienso", "Cargador", "Capataz", "Trabajadera", "Marcha procesional", "Iglesia Mayor", "La Isla", "Torrija", "Mantilla", "Nazareno", "Cruz de Guía", "Paso de palio", "Paso de misterio", "Saeta", "Candelabro", "Llamador", "Banda de música", "Penitente", "IslaPasión", "La Venera", "Calle Real", "Carga isleña", "Almohada", "Aguaor", "Cirial", "Respiradero", "Faldón", "Varal", "Manto", "Corona", "Potencias", "Túnica", "Cíngulo", "Cirio", "Hermano Mayor", "Pregón", "Plaza de la Pastora", "Rosario", "Campana", "Recogida", "Antifaz", "Corneta", "Tambor", "Sacerdote", "Acólito"];
-        window.bancoPreguntasTrivial = [
+        let progresoInterval;
+        let modalProgresoInterval;
+        const notificados = new Set(); 
+
+        const ordenDiasGestos = ['domingo', 'lunes', 'martes', 'miercoles', 'jueves', 'madrugada', 'viernes', 'resurreccion'];
+        let diaActualGestos = 'domingo';
+        let touchstartX = 0;
+        let touchstartY = 0;
+        let touchendX = 0;
+        let touchendY = 0;
+
+        const diasOffset = {
+            domingo: 0,
+            lunes: 1,
+            martes: 2,
+            miercoles: 3,
+            jueves: 4,
+            madrugada: 5,
+            viernes: 5,
+            resurreccion: 7
+        };
+
+        function obtenerTimestampAbsoluto(dia, horaString) {
+            let offset = diasOffset[dia];
+            let partes = horaString.split(':');
+            let horas = parseInt(partes[0], 10);
+            let minutos = parseInt(partes[1], 10);
+
+            if (dia !== 'madrugada' && horas < 7) {
+                offset += 1;
+            }
+
+            const fecha = new Date(2026, 2, 29 + offset, horas, minutos, 0);
+            return fecha.getTime();
+        }
+
+        function mostrarNotificacion(mensaje, icono) {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = 'bg-rose-900 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4 pop-in border border-rose-700 max-w-sm w-full';
+            toast.innerHTML = `<span class="text-3xl">${icono}</span><span class="font-bold text-lg leading-tight">${mensaje}</span>`;
+            
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'transition-opacity', 'duration-500');
+                setTimeout(() => toast.remove(), 500);
+            }, 6000);
+        }
+
+        function actualizarProgresoLive(barras) {
+            const ahora = Date.now();
+
+            barras.forEach(barra => {
+                const inicio = barra.inicioTs;
+                const fin = barra.finTs;
+
+                let porcentaje = 0;
+                
+                if (ahora >= fin) {
+                    porcentaje = 100;
+                } else if (ahora > inicio) {
+                    porcentaje = ((ahora - inicio) / (fin - inicio)) * 100;
+                }
+
+                barra.elemento.style.width = porcentaje + '%';
+
+                const enCalle = ahora >= barra.salidaTs && ahora < barra.recogidaPasoTs;
+                const estaRecogida = ahora >= barra.recogidaPasoTs;
+
+                barra.boton.classList.remove('ring-2', 'ring-rose-500', 'border-transparent', 'border-gray-200', 'border-dashed', 'border-gray-400', 'opacity-40', 'opacity-50', 'grayscale');
+
+                if (estaRecogida) {
+                    barra.boton.classList.add('border-dashed', 'border-gray-400', 'opacity-50', 'grayscale');
+                } else if (enCalle) {
+                    barra.boton.classList.add('ring-2', 'ring-rose-500', 'border-transparent');
+                } else {
+                    barra.boton.classList.add('border-gray-200');
+                }
+
+                const windowMs = 120000; 
+
+                if (!notificados.has(barra.nombre + 'salida') && ahora >= barra.salidaTs && ahora <= barra.salidaTs + windowMs) {
+                    notificados.add(barra.nombre + 'salida');
+                    mostrarNotificacion(`¡La Cruz de Guía de ${barra.nombre} ya está en la calle!`, '🚪');
+                }
+                
+                if (!notificados.has(barra.nombre + 'co') && ahora >= barra.inicioTs && ahora <= barra.inicioTs + windowMs) {
+                    notificados.add(barra.nombre + 'co');
+                    mostrarNotificacion(`¡La Cruz de Guía de ${barra.nombre} entra en Carrera Oficial!`, '✨');
+                    barra.boton.classList.add('shimmer-flash');
+                    setTimeout(() => barra.boton.classList.remove('shimmer-flash'), 3500);
+                }
+                
+                if (!notificados.has(barra.nombre + 'salidaCO') && ahora >= barra.finTs && ahora <= barra.finTs + windowMs) {
+                    notificados.add(barra.nombre + 'salidaCO');
+                    mostrarNotificacion(`¡El último paso de ${barra.nombre} sale de Carrera Oficial!`, '👋');
+                }
+
+                if (!notificados.has(barra.nombre + 'recogida') && ahora >= barra.recogidaCruzTs && ahora <= barra.recogidaCruzTs + windowMs) {
+                    notificados.add(barra.nombre + 'recogida');
+                    mostrarNotificacion(`¡La Cruz de Guía de ${barra.nombre} ha llegado a su templo!`, '⛪');
+                }
+
+                if (!notificados.has(barra.nombre + 'recogidaPaso') && ahora >= barra.recogidaPasoTs && ahora <= barra.recogidaPasoTs + windowMs) {
+                    notificados.add(barra.nombre + 'recogidaPaso');
+                    mostrarNotificacion(`¡El último paso de ${barra.nombre} ha entrado en su templo!`, '⛪');
+                }
+            });
+        }
+
+        function seleccionarDia(dia) {
+            diaActualGestos = dia;
+            document.querySelectorAll('.dia-btn').forEach(btn => {
+                if (btn.dataset.dia === dia) {
+                    btn.classList.remove('bg-rose-800', 'text-rose-100', 'hover:bg-rose-700');
+                    btn.classList.add('bg-white', 'text-rose-900', 'shadow-sm');
+                    btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+                } else {
+                    btn.classList.add('bg-rose-800', 'text-rose-100', 'hover:bg-rose-700');
+                    btn.classList.remove('bg-white', 'text-rose-900', 'shadow-sm');
+                }
+            });
+            cargarDia(dia);
+        }
+
+        function cargarDia(diaActual) {
+            const contenedor = document.getElementById('listaCofradias');
+            contenedor.innerHTML = '';
+
+            if (progresoInterval) {
+                clearInterval(progresoInterval);
+            }
+
+            const cofradiasDia = datosSemanaSanta[diaActual] || [];
+
+            if (cofradiasDia.length === 0) {
+                contenedor.innerHTML = '<p class="text-center text-gray-800 py-8 bg-white/80 rounded-xl backdrop-blur-sm shadow-sm font-medium">No hay información para este día.</p>';
+                return;
+            }
+
+            const cofradiasOrdenadas = cofradiasDia
+                .map((cofradia, index) => ({ cofradia, index }))
+                .sort((a, b) => {
+                    const getMinutosSort = (horaStr) => {
+                        let partes = horaStr.split(':');
+                        let horas = parseInt(partes[0], 10);
+                        let mins = parseInt(partes[1], 10);
+                        if (horas < 7) horas += 24;
+                        return horas * 60 + mins;
+                    };
+                    return getMinutosSort(a.cofradia.entradaCOCruz) - getMinutosSort(b.cofradia.entradaCOCruz);
+                });
+
+            const barrasParaActualizar = [];
+
+            cofradiasOrdenadas.forEach((item) => {
+                const cofradia = item.cofradia;
+                const originalIndex = item.index;
+
+                const btn = document.createElement('button');
+                btn.className = 'relative overflow-hidden fade-in w-full bg-white text-left rounded-2xl shadow-sm border border-gray-200 hover:shadow-md hover:border-rose-300 transition-all duration-200 active:scale-95 group';
+                btn.onclick = () => mostrarDetalle(diaActual, originalIndex);
+                
+                const barraFondo = document.createElement('div');
+                barraFondo.className = 'absolute top-0 left-0 h-full bg-rose-100 transition-all duration-1000 ease-linear z-0';
+                barraFondo.style.width = '0%';
+                
+                const contenidoDiv = document.createElement('div');
+                contenidoDiv.className = 'relative z-10 flex justify-between items-center p-5 w-full';
+
+                const textoDiv = document.createElement('div');
+                textoDiv.className = 'flex flex-col';
+                
+                const nombreEl = document.createElement('span');
+                nombreEl.className = 'text-xl font-bold text-rose-900 mb-1';
+                nombreEl.innerText = cofradia.nombre;
+                
+                const horarioEl = document.createElement('span');
+                horarioEl.className = 'text-sm text-gray-500 font-medium';
+                horarioEl.innerText = `Carrera Oficial: ${cofradia.entradaCOCruz}`;
+                
+                textoDiv.appendChild(nombreEl);
+                textoDiv.appendChild(horarioEl);
+                
+                const iconoFlecha = document.createElement('div');
+                iconoFlecha.className = 'text-rose-400 group-hover:text-rose-600 transition-colors';
+                iconoFlecha.innerHTML = '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>';
+
+                contenidoDiv.appendChild(textoDiv);
+                contenidoDiv.appendChild(iconoFlecha);
+                
+                btn.appendChild(barraFondo);
+                btn.appendChild(contenidoDiv);
+                contenedor.appendChild(btn);
+                
+                barrasParaActualizar.push({
+                    nombre: cofradia.nombre,
+                    boton: btn,
+                    elemento: barraFondo,
+                    inicioTs: obtenerTimestampAbsoluto(diaActual, cofradia.entradaCOCruz),
+                    finTs: obtenerTimestampAbsoluto(diaActual, cofradia.salidaCOPaso),
+                    salidaTs: obtenerTimestampAbsoluto(diaActual, cofradia.salidaCruz),
+                    recogidaCruzTs: obtenerTimestampAbsoluto(diaActual, cofradia.recogidaCruz),
+                    recogidaPasoTs: obtenerTimestampAbsoluto(diaActual, cofradia.recogidaPaso)
+                });
+            });
+            
+            document.getElementById('mainContainer').scrollTop = 0;
+            
+            actualizarProgresoLive(barrasParaActualizar);
+            progresoInterval = setInterval(() => actualizarProgresoLive(barrasParaActualizar), 10000);
+        }
+
+        function actualizarModalProgreso(inicio, fin) {
+            const ahora = Date.now();
+            let porcentaje = 0;
+            const bar = document.getElementById('modalProgressBar');
+            const txt = document.getElementById('modalProgresoTexto');
+
+            if (ahora >= fin) {
+                porcentaje = 100;
+                txt.innerText = "Recogida";
+            } else if (ahora <= inicio) {
+                porcentaje = 0;
+                txt.innerText = "En el templo";
+            } else {
+                porcentaje = ((ahora - inicio) / (fin - inicio)) * 100;
+                txt.innerText = Math.round(porcentaje) + "%";
+            }
+            bar.style.width = porcentaje + '%';
+        }
+
+        function mostrarDetalle(dia, index) {
+            const cofradia = datosSemanaSanta[dia][index];
+            
+            document.getElementById('modalTitulo').innerText = "Detalle de la Cofradía";
+            document.getElementById('modalTituloInterior').innerText = cofradia.nombre;
+            
+            document.getElementById('modalNombreOficial').innerText = cofradia.nombreOficial;
+            document.getElementById('modalNombreOficialContainer').classList.add('hidden');
+            
+            document.getElementById('modalSede').innerText = cofradia.sede;
+            document.getElementById('modalItinerario').innerText = cofradia.itinerario;
+            
+            document.getElementById('modalSalidaCruz').innerText = cofradia.salidaCruz;
+            document.getElementById('modalSalidaPaso').innerText = cofradia.salidaPaso;
+            document.getElementById('modalRecogidaCruz').innerText = cofradia.recogidaCruz;
+            document.getElementById('modalRecogidaPaso').innerText = cofradia.recogidaPaso;
+            
+            document.getElementById('modalEntradaCOCruz').innerText = cofradia.entradaCOCruz;
+            document.getElementById('modalEntradaCOPaso').innerText = cofradia.entradaCOPaso;
+            document.getElementById('modalSalidaCOCruz').innerText = cofradia.salidaCOCruz;
+            document.getElementById('modalSalidaCOPaso').innerText = cofradia.salidaCOPaso;
+            
+            const inicioTs = obtenerTimestampAbsoluto(dia, cofradia.salidaCruz);
+            const finTs = obtenerTimestampAbsoluto(dia, cofradia.recogidaPaso);
+            
+            actualizarModalProgreso(inicioTs, finTs);
+            if (modalProgresoInterval) clearInterval(modalProgresoInterval);
+            modalProgresoInterval = setInterval(() => actualizarModalProgreso(inicioTs, finTs), 10000);
+
+            const modal = document.getElementById('detalleModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex', 'fade-in');
+        }
+
+        function cerrarDetalle() {
+            const modal = document.getElementById('detalleModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex', 'fade-in');
+            if (modalProgresoInterval) clearInterval(modalProgresoInterval);
+        }
+
+        function toggleNombreOficial() {
+            const container = document.getElementById('modalNombreOficialContainer');
+            container.classList.toggle('hidden');
+            container.classList.toggle('fade-in');
+        }
+
+        function abrirFb() {
+            const modal = document.getElementById('fbModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex', 'fade-in');
+        }
+
+        function cerrarFb() {
+            const modal = document.getElementById('fbModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex', 'fade-in');
+        }
+
+        /* --- LOGICA GENERAL DE JUEGOS --- */
+        let juegoSeleccionado = ''; 
+
+        function abrirJuegos() {
+            const modal = document.getElementById('juegosModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex', 'fade-in');
+            document.getElementById('juegosTitulo').innerText = 'Juegos Cofrades';
+            renderJuegosMenu();
+        }
+
+        function cerrarJuegos() {
+            const modal = document.getElementById('juegosModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex', 'fade-in');
+            setTimeout(renderJuegosMenu, 300);
+        }
+
+        function renderJuegosMenu() {
+            const contenedor = document.getElementById('juegosContenido');
+            contenedor.innerHTML = `
+                <div class="w-full max-w-sm flex flex-col gap-4 fade-in text-center">
+                    <p class="text-gray-300 mb-4">Selecciona un juego para pasar el rato.</p>
+                    
+                    <button onclick="seleccionarJuego('impostor')" class="w-full bg-rose-700 text-white font-bold py-6 px-4 rounded-2xl shadow-lg hover:bg-rose-600 transition active:scale-95 text-xl border border-rose-500">
+                        🕵️ El Impostor Cofrade
+                    </button>
+                    
+                    <button onclick="seleccionarJuego('trivial')" class="w-full bg-blue-700 text-white font-bold py-6 px-4 rounded-2xl shadow-lg hover:bg-blue-600 transition active:scale-95 text-xl border border-blue-500">
+                        🧠 Trivial Cofrade
+                    </button>
+                </div>
+            `;
+        }
+
+        function seleccionarJuego(juego) {
+            juegoSeleccionado = juego;
+            document.getElementById('juegosTitulo').innerText = juego === 'impostor' ? 'El Impostor Cofrade' : 'Trivial Cofrade';
+            renderJuegosSetup();
+        }
+
+        function generarInputsNombresJuegos() {
+            const num = parseInt(document.getElementById('numJugadoresJuegos').value);
+            const contenedorNombres = document.getElementById('contenedorNombresJuegos');
+            contenedorNombres.innerHTML = '';
+            
+            for (let i = 1; i <= num; i++) {
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.className = 'w-full bg-gray-700 text-white border border-gray-600 rounded-lg p-3 focus:outline-none focus:border-rose-500';
+                input.placeholder = num === 1 ? 'Tu nombre' : `Nombre del jugador ${i}`;
+                input.id = `nombreJugadorJuegos${i}`;
+                contenedorNombres.appendChild(input);
+            }
+        }
+
+        function renderJuegosSetup() {
+            const contenedor = document.getElementById('juegosContenido');
+            
+            let opcionesSelect = '';
+            if (juegoSeleccionado === 'trivial') {
+                opcionesSelect += '<option value="1">Modo Solitario</option>';
+                opcionesSelect += '<option value="2">2 Jugadores</option>';
+                opcionesSelect += '<option value="3">3 Jugadores</option>';
+                opcionesSelect += '<option value="4" selected>4 Jugadores</option>';
+                opcionesSelect += '<option value="5">5 Jugadores</option>';
+                opcionesSelect += '<option value="6">6 Jugadores</option>';
+                opcionesSelect += '<option value="7">7 Jugadores</option>';
+                opcionesSelect += '<option value="8">8 Jugadores</option>';
+            } else {
+                opcionesSelect += '<option value="3">3 Jugadores</option>';
+                opcionesSelect += '<option value="4" selected>4 Jugadores</option>';
+                opcionesSelect += '<option value="5">5 Jugadores</option>';
+                opcionesSelect += '<option value="6">6 Jugadores</option>';
+                opcionesSelect += '<option value="7">7 Jugadores</option>';
+                opcionesSelect += '<option value="8">8 Jugadores</option>';
+            }
+
+            contenedor.innerHTML = `
+                <div class="w-full max-w-sm flex flex-col gap-6 fade-in text-center">
+                    <p class="text-gray-300">Introduce los participantes para comenzar.</p>
+                    
+                    <div class="flex flex-col gap-2 text-left">
+                        <label class="text-sm font-bold text-gray-400 uppercase tracking-wider">Número de jugadores</label>
+                        <select id="numJugadoresJuegos" onchange="generarInputsNombresJuegos()" class="w-full bg-gray-700 text-white border border-gray-600 rounded-lg p-3 focus:outline-none">
+                            ${opcionesSelect}
+                        </select>
+                    </div>
+
+                    <div id="contenedorNombresJuegos" class="flex flex-col gap-3">
+                        <!-- Inputs generados aquí -->
+                    </div>
+
+                    <button onclick="iniciarJuegoGeneral()" class="w-full ${juegoSeleccionado === 'impostor' ? 'bg-rose-600 hover:bg-rose-500' : 'bg-blue-600 hover:bg-blue-500'} text-white font-bold py-4 rounded-xl shadow-lg transition active:scale-95 text-lg mt-2">
+                        Comenzar Partida
+                    </button>
+                    
+                    <button onclick="renderJuegosMenu()" class="text-gray-400 hover:text-white transition text-sm">
+                        Volver al menú de juegos
+                    </button>
+                </div>
+            `;
+            generarInputsNombresJuegos();
+        }
+
+        function iniciarJuegoGeneral() {
+            const num = parseInt(document.getElementById('numJugadoresJuegos').value);
+            let nombres = [];
+            for (let i = 1; i <= num; i++) {
+                const nombre = document.getElementById(`nombreJugadorJuegos${i}`).value.trim() || `Jugador ${i}`;
+                nombres.push(nombre);
+            }
+
+            if (juegoSeleccionado === 'impostor') {
+                impJugadoresOriginal = nombres;
+                iniciarSiguienteRondaImpostor();
+            } else {
+                iniciarTrivial(nombres);
+            }
+        }
+
+        /* --- LOGICA DEL IMPOSTOR COFRADE --- */
+        const diccionarioCofrade = [
+            "Carrera Oficial", "Capirote", "Incienso", "Cargador", "Capataz", 
+            "Trabajadera", "Marcha procesional", "Iglesia Mayor", "La Isla", 
+            "Torrija", "Mantilla", "Nazareno", "Cruz de Guía", "Paso de palio", 
+            "Paso de misterio", "Saeta", "Candelabro", "Faja", "Costal", 
+            "Llamador", "Banda de música", "Penitente", "Bambalina", "Tortillita de camarones",
+            "IslaPasión", "La Venera", "Calle Real", "Carga isleña", "Almohada", 
+            "Palo", "Aguaor", "Cirial", "Pértiga", "Inciensario", "Naveta", 
+            "Bocina", "Estandarte", "Senatus", "Libro de Reglas", "Simpecado", 
+            "Canastilla", "Respiradero", "Faldón", "Varal", "Manto", "Corona", 
+            "Potencias", "Túnica", "Cíngulo", "Cirio", "Hachón", "Hermano Mayor", 
+            "Pregón", "Vía Crucis", "Diputado de tramo", "Calle Ancha", 
+            "Plaza de la Pastora", "Siete Revueltas", "Callejón de Ánimas", 
+            "Iglesia del Carmen", "Virgen del Carmen", "Rosario", "Campana",
+            "Rosco", "Papeleta de sitio", "Recogida", "Antifaz", "Guantes", 
+            "Trepá", "Monaguillo", "Dalmática", "Fiscal", "Mayordomo", 
+            "Tesorero", "Trompeta", "Corneta", "Tambor", "Farol", 
+            "Sacerdote", "Palco", "Palquillo", "Acólito", "Cerero"
+        ];
+
+        let impJugadoresOriginal = [];
+        let impJugadores = [];
+        let impImpostorIndex = -1;
+        let impPalabraSecreta = '';
+        let impTurnoActual = 0;
+        let impJugadorInicia = '';
+
+        function iniciarSiguienteRondaImpostor() {
+            impJugadores = [...impJugadoresOriginal].sort(() => Math.random() - 0.5);
+            impImpostorIndex = Math.floor(Math.random() * impJugadores.length);
+            impPalabraSecreta = diccionarioCofrade[Math.floor(Math.random() * diccionarioCofrade.length)];
+            impTurnoActual = 0;
+            impJugadorInicia = impJugadores[Math.floor(Math.random() * impJugadores.length)];
+            mostrarTurnoPassImpostor();
+        }
+
+        function mostrarTurnoPassImpostor() {
+            const contenedor = document.getElementById('juegosContenido');
+            const nombreActual = impJugadores[impTurnoActual];
+
+            contenedor.innerHTML = `
+                <div class="w-full max-w-sm flex flex-col items-center gap-8 fade-in text-center">
+                    <svg class="w-20 h-20 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                    <div>
+                        <p class="text-xl text-gray-400 mb-2">Pasa el dispositivo a</p>
+                        <h3 class="text-4xl font-bold text-white text-rose-500">${nombreActual}</h3>
+                    </div>
+                    <button onclick="revelarRolImpostor()" class="w-full bg-gray-700 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-gray-600 transition active:scale-95 text-lg">
+                        Soy ${nombreActual}, ver mi rol
+                    </button>
+                </div>
+            `;
+        }
+
+        function revelarRolImpostor() {
+            const contenedor = document.getElementById('juegosContenido');
+            const esImpostor = (impTurnoActual === impImpostorIndex);
+            let contenidoRol = esImpostor 
+                ? `<p class="text-2xl font-bold text-red-500 mb-2">¡ERES EL IMPOSTOR!</p><p class="text-gray-300">Intenta disimular y adivinar la palabra por el contexto de los demás.</p>`
+                : `<p class="text-gray-400 uppercase tracking-widest text-sm mb-1">Palabra Secreta</p><p class="text-4xl font-bold text-white mb-2">${impPalabraSecreta}</p><p class="text-gray-400">Mantén la palabra en secreto.</p>`;
+
+            contenedor.innerHTML = `
+                <div class="w-full max-w-sm flex flex-col items-center gap-8 fade-in text-center">
+                    <div class="bg-gray-800 p-8 rounded-2xl border border-gray-700 w-full shadow-inner">
+                        ${contenidoRol}
+                    </div>
+                    <button onclick="siguienteTurnoImpostor()" class="w-full bg-rose-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-rose-500 transition active:scale-95 text-lg">
+                        Ocultar y continuar
+                    </button>
+                </div>
+            `;
+        }
+
+        function siguienteTurnoImpostor() {
+            impTurnoActual++;
+            if (impTurnoActual < impJugadores.length) {
+                mostrarTurnoPassImpostor();
+            } else {
+                mostrarFinPreparacionImpostor();
+            }
+        }
+
+        function mostrarFinPreparacionImpostor() {
+            const contenedor = document.getElementById('juegosContenido');
+            contenedor.innerHTML = `
+                <div class="w-full max-w-sm flex flex-col items-center gap-6 fade-in text-center">
+                    <svg class="w-24 h-24 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"></path></svg>
+                    <div>
+                        <h3 class="text-3xl font-bold text-white mb-3">Todos listos</h3>
+                        <p class="text-gray-300">Que empiece el debate para encontrar al impostor de la cofradía.</p>
+                        <p class="text-xl font-bold text-amber-400 mt-4 border border-amber-500/30 bg-amber-500/10 py-3 rounded-lg">
+                            Empieza a hablar: <span class="text-white">${impJugadorInicia}</span>
+                        </p>
+                    </div>
+                    <button onclick="revelarImpostorFinal()" class="w-full bg-amber-500 text-gray-900 font-bold py-4 rounded-xl shadow-lg hover:bg-amber-400 transition active:scale-95 text-lg mt-2">
+                        Revelar Impostor
+                    </button>
+                </div>
+            `;
+        }
+
+        function revelarImpostorFinal() {
+            const contenedor = document.getElementById('juegosContenido');
+            const nombreImpostor = impJugadores[impImpostorIndex];
+            contenedor.innerHTML = `
+                <div class="w-full max-w-sm flex flex-col items-center gap-8 fade-in text-center">
+                    <div class="bg-gray-800 p-8 rounded-2xl border border-rose-700 w-full shadow-inner">
+                        <p class="text-gray-400 uppercase tracking-widest text-sm mb-1">El impostor era...</p>
+                        <p class="text-4xl font-bold text-rose-500 mb-6">${nombreImpostor}</p>
+                        <p class="text-gray-400 uppercase tracking-widest text-sm mb-1 border-t border-gray-700 pt-6">La palabra secreta era</p>
+                        <p class="text-2xl font-bold text-white mb-2">${impPalabraSecreta}</p>
+                    </div>
+                    <button onclick="iniciarSiguienteRondaImpostor()" class="w-full bg-rose-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-rose-500 transition active:scale-95 text-lg">
+                        Siguiente Ronda
+                    </button>
+                    <button onclick="cerrarJuegos()" class="w-full text-gray-400 hover:text-white font-bold py-2 transition mt-2">
+                        Terminar Juego
+                    </button>
+                </div>
+            `;
+        }
+
+        /* --- LOGICA DEL TRIVIAL COFRADE --- */
+        const bancoPreguntasTrivial = [
             { q: "¿Cuál es la cofradía de penitencia más antigua de San Fernando?", a: "La Hermandad de la Soledad.", e: ["La Hermandad del Nazareno.", "La Hermandad de la Vera Cruz.", "La Hermandad del Carmen."] },
             { q: "¿En qué año fue fundada la Hermandad de Nuestra Madre y Señora María Santísima de la Soledad?", a: "En 1747.", e: ["En 1768.", "En 1759.", "En 1795."] },
             { q: "¿Qué gremio monopolizó la fundación y primeros años de la Hermandad del Nazareno?", a: "El gremio de los montañeses (ultramarinos).", e: ["El gremio de los mareantes.", "El gremio de los obreros de la maestranza.", "El gremio de los estudiantes."] },
@@ -527,429 +994,89 @@
             { q: "Históricamente, en la época de esplendor de la Carrera Oficial de la Calle Rosario (1968), ¿quién organizaba y cobraba las sillas para sentarse a ver los pasos?", a: "La Sociedad de Fomento.", e: ["El Consejo de Hermandades y Cofradías.", "El Ayuntamiento de la ciudad.", "La Iglesia Mayor Parroquial."] }
         ];
 
-        let progresoInterval;
-        let modalProgresoInterval;
-        window.diaSeleccionadoActual = 'domingo';
-        window.criterioOrdenActual = 'carrera';
-        const notificados = new Set();
-        const diasOffset = { domingo: 0, lunes: 1, martes: 2, miercoles: 3, jueves: 4, madrugada: 5, viernes: 5, resurreccion: 7 };
+        let trivialJugadores = [];
+        let trivialRondaActual = 1;
+        let totalRondasTrivial = 5;
+        let trivialTurnoActual = 0;
+        let trivialOrdenDeJuego = [];
+        let preguntasDisponibles = [];
+        let preguntaSeleccionada = null;
+        let opcionesActuales = [];
 
-        // UI Functions
-        window.abrirFb = function() {
-            document.getElementById('fbModal').classList.remove('hidden');
-            document.getElementById('fbModal').classList.add('flex', 'fade-in');
-        };
-        window.cerrarFb = function() {
-            document.getElementById('fbModal').classList.add('hidden');
-            document.getElementById('fbModal').classList.remove('flex', 'fade-in');
-        };
-        window.abrirYt = function() {
-            document.getElementById('ytModal').classList.remove('hidden');
-            document.getElementById('ytModal').classList.add('flex', 'fade-in');
-        };
-        window.cerrarYt = function() {
-            document.getElementById('ytModal').classList.add('hidden');
-            document.getElementById('ytModal').classList.remove('flex', 'fade-in');
-        };
-        window.abrirConfiguracion = function() {
-            window.actualizarUIOrdenacion();
-            document.getElementById('configuracionModal').classList.remove('hidden');
-            document.getElementById('configuracionModal').classList.add('flex', 'fade-in');
-        };
-        window.cerrarConfiguracion = function() {
-            document.getElementById('configuracionModal').classList.add('hidden');
-            document.getElementById('configuracionModal').classList.remove('flex', 'fade-in');
-        };
-        window.abrirJuegos = function() {
-            document.getElementById('juegosModal').classList.remove('hidden');
-            document.getElementById('juegosModal').classList.add('flex', 'fade-in');
-            window.renderJuegosMenu();
-        };
-        window.cerrarJuegos = function() {
-            document.getElementById('juegosModal').classList.add('hidden');
-            document.getElementById('juegosModal').classList.remove('flex', 'fade-in');
-        };
-        window.toggleNombreOficial = function() {
-            const container = document.getElementById('modalNombreOficialContainer');
-            container.classList.toggle('hidden');
-            container.classList.toggle('fade-in');
-        };
-        window.cerrarDetalle = function() {
-            document.getElementById('detalleModal').classList.add('hidden');
-            document.getElementById('detalleModal').classList.remove('flex', 'fade-in');
-            if (modalProgresoInterval) clearInterval(modalProgresoInterval);
-        };
-        
-        window.mostrarNotificacion = function(mensaje, icono) {
-            const container = document.getElementById('toastContainer');
-            if (!container) return;
-            const toast = document.createElement('div');
-            toast.className = 'bg-rose-900 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4 pop-in border border-rose-700 max-w-sm w-full z-50';
-            toast.innerHTML = `<span class="text-3xl">${icono}</span><span class="font-bold text-lg leading-tight">${mensaje}</span>`;
-            container.appendChild(toast);
-            setTimeout(() => {
-                toast.classList.add('opacity-0', 'transition-opacity', 'duration-500');
-                setTimeout(() => toast.remove(), 500);
-            }, 6000);
-        };
+        function iniciarTrivial(nombres) {
+            trivialJugadores = nombres.map(n => ({ nombre: n, puntos: 0 }));
+            trivialRondaActual = 1;
+            totalRondasTrivial = (trivialJugadores.length === 1) ? 10 : 5;
+            
+            preguntasDisponibles = [...bancoPreguntasTrivial].sort(() => Math.random() - 0.5);
 
-        function obtenerTimestampAbsoluto(dia, horaString) {
-            let offset = diasOffset[dia];
-            let partes = horaString.split(':');
-            let h = parseInt(partes[0]);
-            let m = parseInt(partes[1]);
-            if (dia !== 'madrugada' && h < 7) offset += 1;
-            return new Date(2026, 2, 29 + offset, h, m, 0).getTime();
+            const numJugadores = trivialJugadores.length;
+            const inicioAzar = Math.floor(Math.random() * numJugadores);
+            
+            trivialOrdenDeJuego = [];
+            for(let i = 0; i < numJugadores; i++) {
+                trivialOrdenDeJuego.push((inicioAzar + i) % numJugadores);
+            }
+            
+            trivialTurnoActual = 0;
+            flujoTrivialTurno();
         }
 
-        window.seleccionarDia = function(dia) {
-            window.diaSeleccionadoActual = dia;
-            document.querySelectorAll('.dia-btn').forEach(btn => {
-                if (btn.dataset.dia === dia) {
-                    btn.classList.remove('bg-rose-800', 'text-rose-100');
-                    btn.classList.add('bg-white', 'text-rose-900', 'shadow-sm');
-                    btn.scrollIntoView({ behavior: 'smooth', inline: 'center' });
-                } else {
-                    btn.classList.add('bg-rose-800', 'text-rose-100');
-                    btn.classList.remove('bg-white', 'text-rose-900', 'shadow-sm');
-                }
-            });
-            window.cargarDia(dia);
-        };
-
-        window.cargarDia = function(diaActual) {
-            const contenedor = document.getElementById('listaCofradias');
-            if(!contenedor) return;
-            contenedor.innerHTML = '';
-            if (progresoInterval) clearInterval(progresoInterval);
-
-            const cofradiasDia = window.datosSemanaSanta[diaActual] || [];
-            if (cofradiasDia.length === 0) {
-                contenedor.innerHTML = '<p class="text-center text-gray-800 py-8 bg-white/80 rounded-xl backdrop-blur-sm shadow-sm font-medium">No hay información para este día.</p>';
-                return;
-            }
-
-            const cofradiasOrdenadas = [...cofradiasDia].sort((a, b) => {
-                const getMins = h => { let p = h.split(':'); let r = parseInt(p[0])*60 + parseInt(p[1]); return parseInt(p[0]) < 7 ? r + 1440 : r; };
-                let hA = window.criterioOrdenActual === 'salida' ? a.salidaCruz : (window.criterioOrdenActual === 'recogida' ? a.recogidaCruz : a.entradaCOCruz);
-                let hB = window.criterioOrdenActual === 'salida' ? b.salidaCruz : (window.criterioOrdenActual === 'recogida' ? b.recogidaCruz : b.entradaCOCruz);
-                return getMins(hA) - getMins(hB);
-            });
-
-            const barrasParaActualizar = [];
-            cofradiasOrdenadas.forEach((cof) => {
-                const btn = document.createElement('button');
-                btn.className = 'relative overflow-hidden fade-in w-full bg-white text-left rounded-2xl shadow-sm border border-gray-200 p-5 active:scale-95 group';
-                btn.onclick = () => window.mostrarDetalle(diaActual, cof.nombre);
-                
-                const barraFondo = document.createElement('div');
-                barraFondo.className = 'absolute top-0 left-0 h-full bg-rose-100 transition-all duration-1000 ease-linear z-0';
-                barraFondo.style.width = '0%';
-                
-                let label = window.criterioOrdenActual === 'salida' ? 'Salida' : (window.criterioOrdenActual === 'recogida' ? 'Recogida' : 'Carrera Oficial');
-                let hora = window.criterioOrdenActual === 'salida' ? cof.salidaCruz : (window.criterioOrdenActual === 'recogida' ? cof.recogidaCruz : cof.entradaCOCruz);
-
-                btn.innerHTML = `
-                    <div class="relative z-10 flex justify-between items-center">
-                        <div class="flex flex-col">
-                            <span class="text-xl font-bold text-rose-900">${cof.nombre}</span>
-                            <span class="text-sm text-gray-500 font-medium">${label}: ${hora}</span>
-                        </div>
-                        <div class="text-rose-400 group-hover:text-rose-600"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></div>
-                    </div>`;
-                btn.prepend(barraFondo);
-                contenedor.appendChild(btn);
-
-                barrasParaActualizar.push({
-                    nombre: cof.nombre, boton: btn, elemento: barraFondo,
-                    inicioTs: obtenerTimestampAbsoluto(diaActual, cof.entradaCOCruz),
-                    finTs: obtenerTimestampAbsoluto(diaActual, cof.salidaCOPaso),
-                    salidaCruzTs: obtenerTimestampAbsoluto(diaActual, cof.salidaCruz),
-                    entradaCOTs: obtenerTimestampAbsoluto(diaActual, cof.entradaCOCruz),
-                    salidaCOTs: obtenerTimestampAbsoluto(diaActual, cof.salidaCOPaso),
-                    recogidaCruzTs: obtenerTimestampAbsoluto(diaActual, cof.recogidaCruz),
-                    recogidaPasoTs: obtenerTimestampAbsoluto(diaActual, cof.recogidaPaso)
-                });
-            });
-            window.actualizarProgresoLive(barrasParaActualizar);
-            progresoInterval = setInterval(() => window.actualizarProgresoLive(barrasParaActualizar), 10000);
-        };
-
-        window.actualizarProgresoLive = function(barras) {
-            const ahora = Date.now();
-            barras.forEach(barra => {
-                const inicio = barra.inicioTs;
-                const fin = barra.finTs;
-                let porcentaje = 0;
-                
-                if (ahora >= fin) {
-                    porcentaje = 100;
-                } else if (ahora > inicio) {
-                    porcentaje = ((ahora - inicio) / (fin - inicio)) * 100;
-                }
-                
-                barra.elemento.style.width = porcentaje + '%';
-                
-                const enCalle = ahora >= barra.salidaCruzTs && ahora < barra.recogidaPasoTs;
-                const yaRecogida = ahora >= barra.recogidaPasoTs;
-                
-                barra.boton.classList.remove('ring-2', 'ring-rose-500', 'border-transparent', 'border-gray-200', 'opacity-40', 'grayscale', 'border-dashed', 'border-gray-400');
-                
-                if (yaRecogida) {
-                    barra.boton.classList.add('opacity-40', 'grayscale', 'border-dashed', 'border-gray-400');
-                } else if (enCalle) {
-                    barra.boton.classList.add('ring-2', 'ring-rose-500', 'border-transparent');
-                } else {
-                    barra.boton.classList.add('border-gray-200');
-                }
-                
-                const windowMs = 120000; 
-                if (!notificados.has(barra.nombre + 'salida') && ahora >= barra.salidaCruzTs && ahora <= barra.salidaCruzTs + windowMs) {
-                    notificados.add(barra.nombre + 'salida');
-                    window.mostrarNotificacion(`¡La Cruz de Guía de ${barra.nombre} ya está en la calle!`, '🚪');
-                }
-                if (!notificados.has(barra.nombre + 'co') && ahora >= barra.entradaCOTs && ahora <= barra.entradaCOTs + windowMs) {
-                    notificados.add(barra.nombre + 'co');
-                    window.mostrarNotificacion(`¡La Cruz de Guía de ${barra.nombre} entra en Carrera Oficial!`, '✨');
-                    barra.boton.classList.add('shimmer-flash');
-                    setTimeout(() => barra.boton.classList.remove('shimmer-flash'), 3500);
-                }
-                if (!notificados.has(barra.nombre + 'salidaCO') && ahora >= barra.salidaCOTs && ahora <= barra.salidaCOTs + windowMs) {
-                    notificados.add(barra.nombre + 'salidaCO');
-                    window.mostrarNotificacion(`¡El último paso de ${barra.nombre} sale de Carrera Oficial!`, '👋');
-                }
-                if (!notificados.has(barra.nombre + 'recogida') && ahora >= barra.recogidaCruzTs && ahora <= barra.recogidaCruzTs + windowMs) {
-                    notificados.add(barra.nombre + 'recogida');
-                    window.mostrarNotificacion(`¡La Cruz de Guía de ${barra.nombre} ha llegado a su templo!`, '⛪');
-                }
-                if (!notificados.has(barra.nombre + 'recogidaPaso') && ahora >= barra.recogidaPasoTs && ahora <= barra.recogidaPasoTs + windowMs) {
-                    notificados.add(barra.nombre + 'recogidaPaso');
-                    window.mostrarNotificacion(`¡El último paso de ${barra.nombre} ha entrado en su templo!`, '⛪');
-                }
-            });
-        };
-
-        window.mostrarDetalle = function(dia, nombre) {
-            const cof = window.datosSemanaSanta[dia].find(c => c.nombre === nombre);
-            document.getElementById('modalTituloInterior').innerText = cof.nombre;
-            document.getElementById('modalNombreOficial').innerText = cof.nombreOficial;
-            document.getElementById('modalNombreOficialContainer').classList.add('hidden');
-            document.getElementById('modalSede').innerText = cof.sede;
-            document.getElementById('modalItinerario').innerText = cof.itinerario;
-            document.getElementById('modalSalidaCruz').innerText = cof.salidaCruz;
-            document.getElementById('modalSalidaPaso').innerText = cof.salidaPaso;
-            document.getElementById('modalRecogidaCruz').innerText = cof.recogidaCruz;
-            document.getElementById('modalRecogidaPaso').innerText = cof.recogidaPaso;
-            document.getElementById('modalEntradaCOCruz').innerText = cof.entradaCOCruz;
-            document.getElementById('modalEntradaCOPaso').innerText = cof.entradaCOPaso;
-            document.getElementById('modalSalidaCOCruz').innerText = cof.salidaCOCruz;
-            document.getElementById('modalSalidaCOPaso').innerText = cof.salidaCOPaso;
-            
-            const start = obtenerTimestampAbsoluto(dia, cof.salidaCruz);
-            const end = obtenerTimestampAbsoluto(dia, cof.recogidaPaso);
-            
-            const updateModalBar = () => {
-                const ahora = Date.now();
-                let p = 0;
-                if (ahora >= end) { p = 100; document.getElementById('modalProgresoTexto').innerText = "Recogida"; }
-                else if (ahora <= start) { p = 0; document.getElementById('modalProgresoTexto').innerText = "En el templo"; }
-                else { p = ((ahora - start) / (end - start)) * 100; document.getElementById('modalProgresoTexto').innerText = Math.round(p) + "%"; }
-                document.getElementById('modalProgressBar').style.width = p + '%';
-            };
-            updateModalBar();
-            if (modalProgresoInterval) clearInterval(modalProgresoInterval);
-            modalProgresoInterval = setInterval(updateModalBar, 10000);
-
-            document.getElementById('detalleModal').classList.remove('hidden');
-            document.getElementById('detalleModal').classList.add('flex', 'fade-in');
-        };
-
-        window.cambiarOrden = function(c) {
-            window.criterioOrdenActual = c;
-            if(window.saveSortingPreference) window.saveSortingPreference(c);
-            window.actualizarUIOrdenacion();
-            window.cargarDia(window.diaSeleccionadoActual);
-            window.cerrarConfiguracion();
-        };
-
-        window.actualizarUIOrdenacion = function() {
-            const ids = { carrera: 'btnOrdenCarrera', salida: 'btnOrdenSalida', recogida: 'btnOrdenRecogida' };
-            Object.keys(ids).forEach(k => {
-                const btn = document.getElementById(ids[k]);
-                if(!btn) return;
-                const dot = btn.querySelector('.inner-dot');
-                if(k === window.criterioOrdenActual) {
-                    btn.classList.add('border-rose-900', 'bg-rose-50');
-                    dot.classList.remove('hidden');
-                } else {
-                    btn.classList.remove('border-rose-900', 'bg-rose-50');
-                    dot.classList.add('hidden');
-                }
-            });
-        };
-
-        // Games Logic
-        window.renderJuegosMenu = function() {
-            document.getElementById('juegosContenido').innerHTML = `
-                <div class="w-full max-w-sm flex flex-col gap-4 fade-in text-center">
-                    <p class="text-gray-300 mb-4">Selecciona un juego para pasar el rato.</p>
-                    <button onclick="window.seleccionarJuego('impostor')" class="w-full bg-rose-700 text-white font-bold py-6 px-4 rounded-2xl shadow-lg hover:bg-rose-600 transition active:scale-95 text-xl border border-rose-500">🕵️ El Impostor Cofrade</button>
-                    <button onclick="window.seleccionarJuego('trivial')" class="w-full bg-blue-700 text-white font-bold py-6 px-4 rounded-2xl shadow-lg hover:bg-blue-600 transition active:scale-95 text-xl border border-blue-500">🧠 Trivial Cofrade</button>
-                </div>`;
-        };
-
-        window.seleccionarJuego = function(j) {
-            window.selectedGame = j;
-            window.renderJuegosSetup();
-        };
-
-        window.renderJuegosSetup = function() {
-            const contenedor = document.getElementById('juegosContenido');
-            let opciones = '';
-            const min = window.selectedGame === 'trivial' ? 1 : 3;
-            for(let i=min; i<=8; i++) {
-                opciones += `<option value="${i}" ${i===4?'selected':''}>${i===1?'Modo Solitario':i+' Jugadores'}</option>`;
-            }
-            contenedor.innerHTML = `
-                <div class="w-full max-w-sm flex flex-col gap-6 fade-in text-center">
-                    <p class="text-gray-300">Introduce los participantes para comenzar.</p>
-                    <div class="flex flex-col gap-2 text-left">
-                        <label class="text-sm font-bold text-gray-400 uppercase tracking-wider">Número de jugadores</label>
-                        <select id="numJugadoresJuegos" onchange="window.generarInputsNombresJuegos()" class="w-full bg-gray-700 text-white border border-gray-600 rounded-lg p-3">
-                            ${opciones}
-                        </select>
-                    </div>
-                    <div id="contenedorNombresJuegos" class="flex flex-col gap-3"></div>
-                    <button onclick="window.iniciarJuegoGeneral()" class="w-full bg-rose-600 text-white font-bold py-4 rounded-xl shadow-lg transition active:scale-95 text-lg mt-2">Comenzar Partida</button>
-                    <button onclick="window.renderJuegosMenu()" class="text-gray-400 text-sm">Volver</button>
-                </div>`;
-            window.generarInputsNombresJuegos();
-        };
-
-        window.generarInputsNombresJuegos = function() {
-            const n = parseInt(document.getElementById('numJugadoresJuegos').value);
-            const cont = document.getElementById('contenedorNombresJuegos');
-            cont.innerHTML = '';
-            for(let i=1; i<=n; i++) {
-                cont.innerHTML += `<input type="text" id="nombreJugadorJuegos${i}" placeholder="Nombre del jugador ${i}" class="w-full bg-gray-700 text-white border border-gray-600 rounded-lg p-3">`;
-            }
-        };
-
-        window.iniciarJuegoGeneral = function() {
-            const n = parseInt(document.getElementById('numJugadoresJuegos').value);
-            window.players = [];
-            for(let i=1; i<=n; i++) window.players.push(document.getElementById(`nombreJugadorJuegos${i}`).value.trim() || `Jugador ${i}`);
-            
-            if(window.selectedGame === 'impostor') {
-                window.impPlayersOriginal = [...window.players];
-                window.iniciarSiguienteRondaImpostor();
+        function flujoTrivialTurno() {
+            if (trivialJugadores.length === 1) {
+                mostrarPantallaTrivial();
             } else {
-                window.iniciarTrivial(window.players);
+                mostrarTurnoPasoTrivial();
             }
-        };
+        }
 
-        window.iniciarSiguienteRondaImpostor = function() {
-            window.impPlayers = [...window.impPlayersOriginal].sort(() => Math.random() - 0.5);
-            window.impIdx = Math.floor(Math.random() * window.impPlayers.length);
-            window.impSecret = window.diccionarioCofrade[Math.floor(Math.random() * window.diccionarioCofrade.length)];
-            window.impTurn = 0;
-            window.mostrarTurnoPassImpostor();
-        };
+        function mostrarTurnoPasoTrivial() {
+            const contenedor = document.getElementById('juegosContenido');
+            const indexJugador = trivialOrdenDeJuego[trivialTurnoActual];
+            const nombreActual = trivialJugadores[indexJugador].nombre;
 
-        window.mostrarTurnoPassImpostor = function() {
-            document.getElementById('juegosContenido').innerHTML = `
+            contenedor.innerHTML = `
                 <div class="w-full max-w-sm flex flex-col items-center gap-8 fade-in text-center">
-                    <p class="text-xl text-gray-400 mb-2">Pasa el dispositivo a</p>
-                    <h3 class="text-4xl font-bold text-rose-500">${window.impPlayers[window.impTurn]}</h3>
-                    <button onclick="window.revelarRolImpostor()" class="w-full bg-gray-700 font-bold py-4 rounded-xl shadow-lg">Soy ${window.impPlayers[window.impTurn]}, ver mi rol</button>
-                </div>`;
-        };
+                    <svg class="w-20 h-20 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                    <div>
+                        <p class="text-xl text-gray-400 mb-2">Pasa el dispositivo a</p>
+                        <h3 class="text-4xl font-bold text-white text-blue-400">${nombreActual}</h3>
+                    </div>
+                    <button onclick="mostrarPantallaTrivial()" class="w-full bg-gray-700 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-gray-600 transition active:scale-95 text-lg">
+                        Soy ${nombreActual}, jugar
+                    </button>
+                </div>
+            `;
+        }
 
-        window.revelarRolImpostor = function() {
-            const isImp = (window.impTurn === window.impIdx);
-            const msg = isImp ? `<p class="text-2xl font-bold text-red-500">¡ERES EL IMPOSTOR!</p><p class="text-gray-300">Disimula y adivina la palabra por el contexto de los demás.</p>` : `<p class="text-gray-400 text-sm">Palabra Secreta</p><p class="text-4xl font-bold">${window.impSecret}</p>`;
-            document.getElementById('juegosContenido').innerHTML = `
-                <div class="w-full max-w-sm flex flex-col items-center gap-8 fade-in text-center">
-                    <div class="bg-gray-800 p-8 rounded-2xl w-full border border-gray-700">${msg}</div>
-                    <button onclick="window.siguienteTurnoImpostor()" class="w-full bg-rose-600 font-bold py-4 rounded-xl">Ocultar y continuar</button>
-                </div>`;
-        };
+        function mostrarPantallaTrivial() {
+            const contenedor = document.getElementById('juegosContenido');
+            const indexJugador = trivialOrdenDeJuego[trivialTurnoActual];
+            const jugadorActual = trivialJugadores[indexJugador];
 
-        window.siguienteTurnoImpostor = function() {
-            window.impTurn++;
-            if(window.impTurn < window.impPlayers.length) window.mostrarTurnoPassImpostor();
-            else {
-                document.getElementById('juegosContenido').innerHTML = `
-                    <div class="text-center fade-in">
-                        <h3 class="text-3xl font-bold mb-4">Todos listos</h3>
-                        <p class="text-gray-400 mb-6 italic">Empezad el debate para encontrar al impostor.</p>
-                        <button onclick="window.revelarImpostorFinal()" class="bg-amber-500 text-gray-900 p-4 rounded-xl font-bold w-full">Revelar Impostor</button>
-                    </div>`;
-            }
-        };
-
-        window.revelarImpostorFinal = function() {
-            document.getElementById('juegosContenido').innerHTML = `
-                <div class="text-center fade-in">
-                    <p class="text-gray-400 mb-2">El impostor era...</p>
-                    <p class="text-4xl font-bold text-rose-500 mb-8">${window.impPlayers[window.impIdx]}</p>
-                    <button onclick="window.iniciarSiguienteRondaImpostor()" class="bg-rose-600 p-4 rounded-xl w-full font-bold mb-4">Siguiente Ronda</button>
-                    <button onclick="window.renderJuegosMenu()" class="text-gray-400">Terminar Juego</button>
-                </div>`;
-        };
-
-        window.iniciarTrivial = function(n) {
-            window.trivialPlayers = n.map(p => ({ nombre: p, puntos: 0 }));
-            window.trivialRound = 1;
-            window.totalRondasTrivial = n.length === 1 ? 10 : 5;
+            preguntaSeleccionada = preguntasDisponibles.pop();
             
-            let shuffled = [...window.bancoPreguntasTrivial];
-            for (let i = shuffled.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-            }
-            window.qBank = shuffled;
-            
-            window.trivialTurn = 0;
-            window.flujoTurnoTrivial();
-        };
+            opcionesActuales = [preguntaSeleccionada.a, ...preguntaSeleccionada.e];
+            opcionesActuales.sort(() => Math.random() - 0.5);
 
-        window.flujoTurnoTrivial = function() {
-            if (window.trivialPlayers.length === 1) {
-                window.mostrarPreguntaTrivial();
-                return;
-            }
-            const p = window.trivialPlayers[window.trivialTurn];
-            document.getElementById('juegosContenido').innerHTML = `
-                <div class="w-full max-w-sm flex flex-col items-center gap-8 fade-in text-center">
-                    <p class="text-xl text-gray-400 mb-2">Turno de</p>
-                    <h3 class="text-4xl font-bold text-blue-400">${p.nombre}</h3>
-                    <button onclick="window.mostrarPreguntaTrivial()" class="w-full bg-gray-700 font-bold py-4 rounded-xl shadow-lg">Responder</button>
-                </div>`;
-        };
-
-        window.mostrarPreguntaTrivial = function() {
-            const q = window.qBank.pop();
-            if(!q) { window.mostrarPantallaVictoria(); return; }
-            window.currentQ = q;
-            window.opcionesActuales = [q.a, ...q.e].sort(() => Math.random() - 0.5);
-            
             let opcionesHTML = '';
-            window.opcionesActuales.forEach((opcion, i) => {
-                opcionesHTML += `<button id="btnOpcion${i}" onclick="window.checkTrivial(${i})" class="w-full bg-gray-700 text-white text-left p-4 rounded-xl shadow border border-gray-600 hover:bg-blue-600 transition text-sm md:text-base">${opcion}</button>`;
+            opcionesActuales.forEach((opcion, i) => {
+                opcionesHTML += `
+                    <button id="btnOpcion${i}" onclick="seleccionarRespuesta(${i})" class="w-full bg-gray-700 text-white text-left p-4 rounded-xl shadow border border-gray-600 hover:bg-blue-600 transition text-sm md:text-base">
+                        ${opcion}
+                    </button>
+                `;
             });
 
-            const jugadorActual = window.trivialPlayers[window.trivialTurn];
-
-            document.getElementById('juegosContenido').innerHTML = `
+            contenedor.innerHTML = `
                 <div class="w-full max-w-lg flex flex-col gap-4 fade-in">
                     <div class="flex justify-between items-center bg-gray-800 p-3 rounded-xl border border-gray-700">
-                        <span class="text-blue-400 font-bold uppercase text-sm tracking-widest">Ronda ${window.trivialRound} de ${window.totalRondasTrivial}</span>
+                        <span class="text-blue-400 font-bold uppercase text-sm tracking-widest">Ronda ${trivialRondaActual} de ${totalRondasTrivial}</span>
                         <span class="text-white font-bold">${jugadorActual.nombre}</span>
                     </div>
                     
                     <div class="bg-blue-900 text-white p-6 rounded-2xl shadow-inner border border-blue-700 mb-2">
-                        <p class="text-lg md:text-xl font-bold leading-snug">${q.q}</p>
+                        <p class="text-lg md:text-xl font-bold leading-snug">${preguntaSeleccionada.q}</p>
                     </div>
 
                     <div class="flex flex-col gap-3" id="contenedorOpciones">
@@ -957,23 +1084,25 @@
                     </div>
 
                     <div id="contenedorContinuar" class="hidden mt-4">
-                        <button onclick="window.siguienteTurnoTrivial()" class="w-full bg-amber-500 text-gray-900 font-bold py-4 rounded-xl shadow-lg hover:bg-amber-400 transition active:scale-95 text-lg">
+                        <button onclick="siguienteTurnoTrivial()" class="w-full bg-amber-500 text-gray-900 font-bold py-4 rounded-xl shadow-lg hover:bg-amber-400 transition active:scale-95 text-lg">
                             Siguiente
                         </button>
                     </div>
-                </div>`;
-        };
+                </div>
+            `;
+        }
 
-        window.checkTrivial = function(indexSeleccionado) {
-            const textoSeleccionado = window.opcionesActuales[indexSeleccionado];
-            const esCorrecta = (textoSeleccionado === window.currentQ.a);
+        function seleccionarRespuesta(indexSeleccionado) {
+            const indexJugador = trivialOrdenDeJuego[trivialTurnoActual];
+            const textoSeleccionado = opcionesActuales[indexSeleccionado];
+            const esCorrecta = (textoSeleccionado === preguntaSeleccionada.a);
 
             for(let i = 0; i < 4; i++) {
                 const btn = document.getElementById(`btnOpcion${i}`);
                 btn.onclick = null;
                 btn.classList.remove('hover:bg-blue-600', 'bg-gray-700');
                 
-                if (window.opcionesActuales[i] === window.currentQ.a) {
+                if (opcionesActuales[i] === preguntaSeleccionada.a) {
                     btn.classList.add('bg-green-600', 'border-green-400');
                 } else if (i === indexSeleccionado && !esCorrecta) {
                     btn.classList.add('bg-red-600', 'border-red-400');
@@ -983,150 +1112,175 @@
             }
 
             if (esCorrecta) {
-                window.trivialPlayers[window.trivialTurn].puntos += 100;
+                trivialJugadores[indexJugador].puntos += 100;
             }
 
             document.getElementById('contenedorContinuar').classList.remove('hidden');
             document.getElementById('contenedorContinuar').classList.add('fade-in');
-        };
+        }
 
-        window.siguienteTurnoTrivial = function() {
-            window.trivialTurn++;
-            if(window.trivialTurn < window.trivialPlayers.length) {
-                window.flujoTurnoTrivial();
-            } else {
-                if (window.trivialPlayers.length === 1) {
-                    window.trivialRound++;
-                    if(window.trivialRound > window.totalRondasTrivial) window.mostrarPantallaVictoria();
-                    else { window.trivialTurn = 0; window.flujoTurnoTrivial(); }
-                } else {
-                    const esFinal = window.trivialRound >= window.totalRondasTrivial;
-                    if (esFinal) {
-                        window.mostrarPantallaVictoria();
-                    } else {
-                        window.mostrarClasificacionTrivial(false);
-                    }
-                }
-            }
-        };
-
-        window.mostrarPantallaVictoria = function() {
-            const ranking = [...window.trivialPlayers].sort((a,b) => b.puntos - a.puntos);
-            const ganador = ranking[0];
+        function siguienteTurnoTrivial() {
+            trivialTurnoActual++;
             
-            let empates = ranking.filter(p => p.puntos === ganador.puntos);
-            let textoGanador = `¡Enhorabuena ${ganador.nombre}, has ganado!`;
-            
-            if (empates.length > 1) {
-                const nombresEmpate = empates.map(e => e.nombre).join(' y ');
-                textoGanador = `¡Enhorabuena ${nombresEmpate}, habéis empatado!`;
-            }
-            if (window.trivialPlayers.length === 1) {
-                textoGanador = `¡Buen trabajo, ${ganador.nombre}!`;
-            }
-
-            document.getElementById('juegosContenido').innerHTML = `
-                <div class="w-full max-w-sm flex flex-col items-center justify-center fade-in text-center py-4">
-                    <div class="text-7xl mb-4 pop-in">🏆</div>
-                    <h2 class="text-3xl md:text-4xl font-black text-amber-400 mb-4 leading-tight pop-in">${textoGanador}</h2>
-                    <p class="text-gray-300 mb-8 text-lg">Has completado todas las rondas del Trivial Cofrade.</p>
-                    
-                    <div class="flex flex-col gap-4 w-full">
-                        <button onclick="window.mostrarClasificacionTrivial(true)" class="w-full bg-amber-500 text-gray-900 font-bold py-4 rounded-xl shadow-lg hover:bg-amber-400 transition active:scale-95 text-lg">
-                            Ver clasificación final
-                        </button>
-                        <button onclick="window.renderJuegosMenu()" class="w-full bg-gray-700 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-gray-600 transition active:scale-95 text-lg">
-                            Terminar juego
-                        </button>
-                    </div>
-                </div>`;
-        };
-
-        window.mostrarClasificacionTrivial = function(esFinal) {
-            const ranking = [...window.trivialPlayers].sort((a,b) => b.puntos - a.puntos);
-            let html = ranking.map((p, i) => {
-                let medalla = '';
-                if (esFinal && i === 0) medalla = '🏆 ';
-                else if (esFinal && i === 1) medalla = '🥈 ';
-                else if (esFinal && i === 2) medalla = '🥉 ';
-                else medalla = `<span class="text-gray-500 w-6 inline-block text-center">${i+1}</span>`;
-                return `<div class="flex justify-between items-center p-4 bg-gray-800 rounded-xl border border-gray-700 mb-2"><div><span class="text-xl">${medalla}</span><span class="font-bold text-white ml-2">${p.nombre}</span></div><span class="font-black text-amber-400">${p.puntos} pts</span></div>`;
-            }).join('');
-            
-            let tituloHTML = esFinal 
-                ? `<h2 class="text-3xl font-black text-amber-400 mb-2 text-center">¡Juego Terminado!</h2><p class="text-gray-300 text-center mb-6">Clasificación Final</p>`
-                : `<h3 class="text-2xl font-bold text-white mb-2 text-center">Clasificación Parcial</h3><p class="text-gray-400 text-center mb-6">Fin de la Ronda ${window.trivialRound}</p>`;
+            if (trivialTurnoActual >= trivialJugadores.length) {
+                const esSolitario = trivialJugadores.length === 1;
                 
-            let botonHTML = esFinal
-                ? `<button onclick="window.renderJuegosMenu()" class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-blue-500 transition active:scale-95 mt-4">Terminar Juego</button>`
-                : `<button onclick="window.avanzarRondaTrivial()" class="w-full bg-rose-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-rose-500 transition active:scale-95 mt-4">Comenzar Ronda ${window.trivialRound + 1}</button>`;
+                if (esSolitario) {
+                    if (trivialRondaActual === 5 || trivialRondaActual === 10) {
+                        mostrarClasificacionTrivial();
+                    } else {
+                        avanzarRondaTrivial();
+                    }
+                } else {
+                    mostrarClasificacionTrivial();
+                }
+            } else {
+                flujoTrivialTurno();
+            }
+        }
 
-            document.getElementById('juegosContenido').innerHTML = `
+        function mostrarClasificacionTrivial() {
+            const contenedor = document.getElementById('juegosContenido');
+            const esFinal = (trivialRondaActual === totalRondasTrivial);
+            
+            const ranking = [...trivialJugadores].sort((a, b) => b.puntos - a.puntos);
+            
+            let rankingHTML = '';
+            ranking.forEach((jugador, i) => {
+                let medalla = '';
+                if (esFinal && i === 0) medalla = '🏆';
+                else if (esFinal && i === 1) medalla = '🥈';
+                else if (esFinal && i === 2) medalla = '🥉';
+                else medalla = `<span class="text-gray-500 w-6 text-center inline-block">${i+1}</span>`;
+
+                rankingHTML += `
+                    <div class="flex justify-between items-center bg-gray-800 p-4 rounded-xl border ${esFinal && i === 0 ? 'border-amber-400 bg-amber-900/30' : 'border-gray-700'} mb-2">
+                        <div class="flex items-center gap-3">
+                            <span class="text-xl">${medalla}</span>
+                            <span class="font-bold text-lg text-white">${jugador.nombre}</span>
+                        </div>
+                        <span class="font-black text-amber-400 text-xl">${jugador.puntos} <span class="text-sm text-gray-400">pts</span></span>
+                    </div>
+                `;
+            });
+
+            let tituloHTML = '';
+            if (esFinal) {
+                if (trivialJugadores.length === 1) {
+                    tituloHTML = `<h2 class="text-4xl md:text-5xl font-black text-amber-400 mb-2 leading-tight pop-in text-center">¡Buen trabajo, ${ranking[0].nombre}!</h2>
+                       <p class="text-gray-300 text-center mb-6">Resultado Final del Trivial Cofrade</p>`;
+                } else {
+                    tituloHTML = `<h2 class="text-4xl md:text-5xl font-black text-amber-400 mb-2 leading-tight pop-in text-center">¡${ranking[0].nombre} ha ganado!</h2>
+                       <p class="text-gray-300 text-center mb-6">Resultado Final del Trivial Cofrade</p>`;
+                }
+            } else {
+                tituloHTML = `<h3 class="text-2xl font-bold text-white mb-2 text-center">Clasificación Parcial</h3>
+                   <p class="text-gray-400 text-center mb-6">Fin de la Ronda ${trivialRondaActual}</p>`;
+            }
+
+            let botonHTML = esFinal
+                ? `<button onclick="renderJuegosMenu()" class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-blue-500 transition active:scale-95 text-lg mt-4">Volver al Menú</button>`
+                : `<button onclick="avanzarRondaTrivial()" class="w-full bg-rose-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-rose-500 transition active:scale-95 text-lg mt-4">Comenzar Ronda ${trivialRondaActual + 1}</button>`;
+
+            contenedor.innerHTML = `
                 <div class="w-full max-w-sm flex flex-col fade-in">
                     ${tituloHTML}
                     <div class="flex flex-col">
-                        ${html}
+                        ${rankingHTML}
                     </div>
                     ${botonHTML}
-                </div>`;
-        };
+                </div>
+            `;
+        }
 
-        window.avanzarRondaTrivial = function() {
-            window.trivialRound++;
-            window.trivialTurn = 0;
-            window.flujoTurnoTrivial();
-        };
+        function avanzarRondaTrivial() {
+            trivialRondaActual++;
+            trivialTurnoActual = 0;
+            flujoTrivialTurno();
+        }
 
-        const ordenDiasSwipe = ['domingo', 'lunes', 'martes', 'miercoles', 'jueves', 'madrugada', 'viernes', 'resurreccion'];
-        let touchstartX = 0;
-        let touchendX = 0;
+        function manejarGestoDeslizamiento() {
+            const deltaX = touchendX - touchstartX;
+            const deltaY = touchendY - touchstartY;
 
-        function manejarSwipe() {
-            const umbral = 60; 
-            const indexActual = ordenDiasSwipe.indexOf(window.diaSeleccionadoActual);
-            
-            if (touchstartX - touchendX > umbral) {
-                if (indexActual < ordenDiasSwipe.length - 1) {
-                    window.seleccionarDia(ordenDiasSwipe[indexActual + 1]);
-                }
-            }
-            
-            if (touchendX - touchstartX > umbral) {
-                if (indexActual > 0) {
-                    window.seleccionarDia(ordenDiasSwipe[indexActual - 1]);
+            // Nos aseguramos de que el movimiento es mayormente horizontal y supera un mínimo
+            if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 45) {
+                const currentIndex = ordenDiasGestos.indexOf(diaActualGestos);
+                
+                if (deltaX < 0 && currentIndex < ordenDiasGestos.length - 1) {
+                    seleccionarDia(ordenDiasGestos[currentIndex + 1]);
+                } else if (deltaX > 0 && currentIndex > 0) {
+                    seleccionarDia(ordenDiasGestos[currentIndex - 1]);
                 }
             }
         }
 
-        const mainContenedorSwipe = document.getElementById('mainContainer');
-        mainContenedorSwipe.addEventListener('touchstart', e => {
-            touchstartX = e.changedTouches[0].screenX;
-        }, { passive: true });
+        function inicializarGestos() {
+            const contenedor = document.getElementById('mainContainer');
+            
+            contenedor.addEventListener('touchstart', e => {
+                touchstartX = e.changedTouches[0].screenX;
+                touchstartY = e.changedTouches[0].screenY;
+            }, { passive: true });
 
-        mainContenedorSwipe.addEventListener('touchend', e => {
-            touchendX = e.changedTouches[0].screenX;
-            manejarSwipe();
-        }, { passive: true });
+            contenedor.addEventListener('touchend', e => {
+                touchendX = e.changedTouches[0].screenX;
+                touchendY = e.changedTouches[0].screenY;
+                manejarGestoDeslizamiento();
+            }, { passive: true });
+            
+            let arrastrando = false;
+            contenedor.addEventListener('mousedown', e => {
+                arrastrando = true;
+                touchstartX = e.clientX;
+                touchstartY = e.clientY;
+            });
+            
+            contenedor.addEventListener('mouseup', e => {
+                if (!arrastrando) return;
+                arrastrando = false;
+                touchendX = e.clientX;
+                touchendY = e.clientY;
+                manejarGestoDeslizamiento();
+            });
+            
+            contenedor.addEventListener('mouseleave', () => {
+                arrastrando = false;
+            });
+        }
 
-        // App Init
-        window.addEventListener('load', () => {
+        window.onload = function() {
+            inicializarGestos();
+            
             setTimeout(() => {
                 const splash = document.getElementById('splashScreen');
-                if (splash) { splash.classList.add('opacity-0'); setTimeout(() => splash.classList.add('hidden'), 500); }
+                if (splash) {
+                    splash.classList.add('opacity-0');
+                    setTimeout(() => splash.classList.add('hidden'), 500);
+                }
             }, 1000);
+
+            const hoy = new Date();
+            const mes = hoy.getMonth(); 
+            const fecha = hoy.getDate();
+            const hora = hoy.getHours();
             
-            const hoy = new Date(), mes = hoy.getMonth(), fecha = hoy.getDate(), hora = hoy.getHours();
-            let dia = 'domingo';
-            if (mes === 2 && fecha === 30) dia = 'lunes';
-            else if (mes === 2 && fecha === 31) dia = 'martes';
-            else if (mes === 3 && fecha === 1) dia = 'miercoles';
-            else if (mes === 3 && fecha === 2) dia = 'jueves';
-            else if (mes === 3 && fecha === 3) dia = (hora < 7) ? 'madrugada' : 'viernes';
-            else if (mes === 3 && fecha === 5) dia = 'resurreccion';
+            let diaInicial = 'domingo';
             
-            // Timeout to allow Firebase settings to load if quick enough
-            setTimeout(() => { window.seleccionarDia(dia); }, 50);
-        });
+            if (mes === 2 && fecha === 30) diaInicial = 'lunes';
+            else if (mes === 2 && fecha === 31) diaInicial = 'martes';
+            else if (mes === 3 && fecha === 1) diaInicial = 'miercoles';
+            else if (mes === 3 && fecha === 2) diaInicial = 'jueves';
+            else if (mes === 3 && fecha === 3) {
+                if (hora < 7) diaInicial = 'madrugada';
+                else diaInicial = 'viernes';
+            }
+            else if (mes === 3 && fecha === 5) diaInicial = 'resurreccion';
+            
+            setTimeout(() => {
+                seleccionarDia(diaInicial);
+            }, 100);
+        };
     </script>
 </body>
 </html>
