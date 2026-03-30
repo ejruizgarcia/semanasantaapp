@@ -110,7 +110,6 @@
         <div id="listaCofradias" class="flex flex-col gap-4 max-w-lg mx-auto pb-6"></div>
     </main>
 
-    <!-- Botones Flotantes Inferiores -->
     <div class="fixed bottom-6 inset-x-6 flex justify-between items-center pointer-events-none z-40">
         <button onclick="abrirJuegos()" class="pointer-events-auto p-4 bg-rose-950 text-white rounded-full shadow-lg hover:bg-rose-900 transition active:scale-95 border-2 border-white" aria-label="Juegos Cofrades">
             <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -126,7 +125,6 @@
         </button>
     </div>
 
-    <!-- Modal de Configuración -->
     <div id="configuracionModal" class="fixed inset-0 z-50 hidden flex-col h-full w-full bg-white/95 backdrop-blur-sm">
         <div class="bg-rose-950 text-white p-4 flex justify-between items-center shadow-md shrink-0">
             <h2 class="text-xl font-bold">Configuración</h2>
@@ -170,7 +168,6 @@
         </div>
     </div>
 
-    <!-- Modal de Detalle -->
     <div id="detalleModal" class="fixed inset-0 z-50 hidden flex-col h-full w-full">
         <div class="bg-rose-950 text-white p-4 flex justify-between items-center shadow-md shrink-0">
             <div class="flex items-center min-w-0">
@@ -293,7 +290,6 @@
 
         let userId = null;
 
-        // Guardar preferencia de forma remota vinculada al navegador
         window.saveSortingPreference = async (criteria) => {
             if (!userId) return;
             try {
@@ -304,7 +300,6 @@
             }
         };
 
-        // Cargar preferencia al iniciar
         async function loadSettings(uid) {
             try {
                 const settingsRef = doc(db, 'artifacts', appId, 'users', uid, 'preferences', 'settings');
@@ -313,7 +308,6 @@
                     const data = docSnap.data();
                     if (data.sortingCriteria) {
                         window.criterioOrdenActual = data.sortingCriteria;
-                        // Actualizar UI si la app ya cargó el día
                         if (typeof window.actualizarUIOrdenacion === 'function') window.actualizarUIOrdenacion();
                         if (typeof window.cargarDia === 'function') window.cargarDia(window.diaSeleccionadoActual);
                     }
@@ -526,8 +520,8 @@
                 nombreEl.innerText = cofradia.nombre;
                 const horarioEl = document.createElement('span');
                 horarioEl.className = 'text-sm text-gray-500 font-medium';
-                if (window.criterioOrdenActual === 'salida') horarioEl.innerText = `Salida Cruz: ${cofradia.salidaCruz}`;
-                else if (window.criterioOrdenActual === 'recogida') horarioEl.innerText = `Recogida Cruz: ${cofradia.recogidaCruz}`;
+                if (window.criterioOrdenActual === 'salida') horarioEl.innerText = `Salida: ${cofradia.salidaCruz}`;
+                else if (window.criterioOrdenActual === 'recogida') horarioEl.innerText = `Recogida: ${cofradia.recogidaCruz}`;
                 else horarioEl.innerText = `Carrera Oficial: ${cofradia.entradaCOCruz}`;
                 textoDiv.appendChild(nombreEl);
                 textoDiv.appendChild(horarioEl);
@@ -841,7 +835,6 @@
             seleccionarDia(diaInicial);
         };
 
-        // Lógica de Splash Screen (Cartel) desacoplada de la base de datos
         window.addEventListener('load', () => {
             setTimeout(() => {
                 const splash = document.getElementById('splashScreen');
@@ -851,7 +844,6 @@
                 }
             }, 1000);
             
-            // Iniciar flujo de carga de datos básica por si la base de datos tarda
             window.startAppFlow();
         });
     </script>
