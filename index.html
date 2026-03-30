@@ -1150,17 +1150,31 @@
                 if (splash) { splash.classList.add('opacity-0'); setTimeout(() => splash.classList.add('hidden'), 500); }
             }, 1000);
             
-            const hoy = new Date(), mes = hoy.getMonth(), fecha = hoy.getDate(), hora = hoy.getHours();
-            let dia = 'domingo';
-            if (mes === 2 && fecha === 30) dia = 'lunes';
-            else if (mes === 2 && fecha === 31) dia = 'martes';
-            else if (mes === 3 && fecha === 1) dia = 'miercoles';
-            else if (mes === 3 && fecha === 2) dia = 'jueves';
-            else if (mes === 3 && fecha === 3) dia = (hora < 7) ? 'madrugada' : 'viernes';
-            else if (mes === 3 && fecha === 5) dia = 'resurreccion';
+            let diaInicial = 'domingo';
+            const ahora = Date.now();
+            const diasProcesionales = ['domingo', 'lunes', 'martes', 'miercoles', 'jueves', 'madrugada', 'viernes', 'resurreccion'];
+            
+            let diaEncontrado = false;
+            for (const d of diasProcesionales) {
+                const cofradiasDia = window.datosSemanaSanta[d];
+                if (!cofradiasDia || cofradiasDia.length === 0) continue;
+                
+                let maxRecogida = 0;
+                cofradiasDia.forEach(cof => {
+                    const ts = obtenerTimestampAbsoluto(d, cof.recogidaPaso);
+                    if (ts > maxRecogida) maxRecogida = ts;
+                });
+                
+                if (ahora <= maxRecogida) {
+                    diaInicial = d;
+                    diaEncontrado = true;
+                    break;
+                }
+            }
+            if (!diaEncontrado) diaInicial = 'resurreccion';
             
             // Timeout to allow Firebase settings to load if quick enough
-            setTimeout(() => { window.seleccionarDia(dia); }, 50);
+            setTimeout(() => { window.seleccionarDia(diaInicial); }, 50);
         });
     </script>
 </body>
