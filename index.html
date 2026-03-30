@@ -404,7 +404,108 @@
         };
 
         window.diccionarioCofrade = ["Carrera Oficial", "Capirote", "Incienso", "Cargador", "Capataz", "Trabajadera", "Marcha procesional", "Iglesia Mayor", "La Isla", "Torrija", "Mantilla", "Nazareno", "Cruz de Guía", "Paso de palio", "Paso de misterio", "Saeta", "Candelabro", "Llamador", "Banda de música", "Penitente", "IslaPasión", "La Venera", "Calle Real", "Carga isleña", "Almohada", "Aguaor", "Cirial", "Respiradero", "Faldón", "Varal", "Manto", "Corona", "Potencias", "Túnica", "Cíngulo", "Cirio", "Hermano Mayor", "Pregón", "Plaza de la Pastora", "Rosario", "Campana", "Recogida", "Antifaz", "Corneta", "Tambor", "Sacerdote", "Acólito"];
-        window.bancoPreguntasTrivial = [{ q: "¿Cuál es la cofradía de penitencia más antigua de San Fernando?", a: "La Hermandad de la Soledad.", e: ["La Hermandad del Nazareno.", "La Vera Cruz.", "El Carmen."] }, { q: "¿En qué barrio procesiona el Gran Poder?", a: "La Bazán.", e: ["La Ardila.", "La Casería.", "La Pastora."] }, { q: "¿Qué escultor talló al Cristo de la Expiración?", a: "José Tomás de Cirartegui.", e: ["Alfonso Berraquero.", "Castillo Lastrucci.", "Bey Olvera."] }, { q: "¿Qué calle fue la carrera oficial tradicional durante décadas?", a: "La calle Rosario.", e: ["Calle Real.", "Calle Colón.", "Calle San Rafael."] }, { q: "¿Cómo se conoce popularmente a la hermandad de la Expiración?", a: "El Silencio.", e: ["Los Estudiantes.", "El Gremio.", "La Sanidad."] }];
+        window.bancoPreguntasTrivial = [
+            { q: "¿Cuál es la cofradía de penitencia más antigua de San Fernando?", a: "La Hermandad de la Soledad.", e: ["La Hermandad del Nazareno.", "La Hermandad de la Vera Cruz.", "La Hermandad del Carmen."] },
+            { q: "¿En qué año fue fundada la Hermandad de Nuestra Madre y Señora María Santísima de la Soledad?", a: "En 1747.", e: ["En 1768.", "En 1759.", "En 1795."] },
+            { q: "¿Qué gremio monopolizó la fundación y primeros años de la Hermandad del Nazareno?", a: "El gremio de los montañeses (ultramarinos).", e: ["El gremio de los mareantes.", "El gremio de los obreros de la maestranza.", "El gremio de los estudiantes."] },
+            { q: "¿De dónde procedía la imagen del Cristo Yacente del Santo Entierro traída a la Isla en 1790?", a: "De Génova.", e: ["De Nápoles.", "De Sevilla.", "De Roma."] },
+            { q: "¿Qué hermandad isleña surgió de la fusión en 1977 de una Orden Tercera y la Hermandad de Mater Amabilis?", a: "La Orden Seglar de los Siervos de María (Servitas).", e: ["La Hermandad del Rosario Doloroso.", "La Hermandad de los Desamparados.", "La Hermandad del Gran Poder."] },
+            { q: "¿Qué imaginero local talló las imágenes titulares de la cofradía del Prendimiento?", a: "Alfonso Berraquero García.", e: ["Antonio Castillo Lastrucci.", "Antonio Bey Olvera.", "Luis Álvarez Duarte."] },
+            { q: "¿En qué lugar, según la leyenda, se encontró la imagen del Nazareno dejada por unos viajeros italianos?", a: "En el antiguo Mesón del Duque.", e: ["En la playa de la Casería.", "En el Castillo de San Romualdo.", "En el Arsenal de La Carraca."] },
+            { q: "¿Qué calle fue por excelencia la carrera oficial de la Semana Santa isleña durante bastantes décadas?", a: "La calle Rosario.", e: ["La calle Constructora Naval.", "La calle Real.", "La calle de Las Siete Revueltas."] },
+            { q: "¿Qué cofradía procesionó por primera vez en la madrugada del Viernes Santo de 1987 desde el antiguo Hospital de San José?", a: "Los Desamparados.", e: ["El Perdón.", "La Expiración.", "El Rosario Doloroso."] },
+            { q: "¿Cuál fue la primera cofradía de penitencia establecida en la iglesia de la Divina Pastora?", a: "La Oración en el Huerto.", e: ["El Ecce Homo.", "La Misericordia.", "La Sagrada Resurrección."] },
+            { q: "¿Qué imagen titular fue tallada por el escultor guipuzcoano del Arsenal de la Carraca, José Tomás de Cirartegui Saralegui (1788)?", a: "El Cristo de la Expiración.", e: ["El Cristo de la Redención.", "Jesús del Gran Poder.", "El Cristo de la Sangre."] },
+            { q: "¿Qué hermandad recuperó en 1997 el título de Gremial de Sanidad?", a: "Los Desamparados.", e: ["La Sanidad (Misericordia).", "El Ecce Homo.", "Los Afligidos (Estudiantes)."] },
+            { q: "Junto con la del Nazareno, ¿cuál fue la única cofradía de penitencia que procesionó durante la Segunda República en 1935?", a: "La Vera Cruz.", e: ["El Santo Entierro.", "La Expiración.", "La Soledad."] },
+            { q: "¿Qué corporación es conocida desde la posguerra con el sobrenombre del «Silencio»?", a: "La Expiración.", e: ["El Rosario Doloroso.", "El Santo Entierro.", "Servitas."] },
+            { q: "¿En qué devoción se inspiró la fundación de la hermandad de la Caridad en 1942?", a: "En la Patrona de la ciudad de Cartagena.", e: ["En la hermandad de los Panaderos de Sevilla.", "En el Gran Poder de Sevilla.", "En el Cristo de Medinaceli de Madrid."] },
+            { q: "¿Qué escultor talló el actual Cristo de la Redención de la Hermandad de la Soledad en 1964?", a: "Antonio Castillo Lastrucci.", e: ["Alfonso Berraquero García.", "Antonio Bey Olvera.", "Luis Álvarez Duarte."] },
+            { q: "¿Qué cofradía fue la pionera en estrenar un paso dorado neobarroco en San Fernando en 1960?", a: "Los Estudiantes (Afligidos).", e: ["La Misericordia.", "La Expiración.", "La Columna."] },
+            { q: "¿A qué hermandad concedió el rey Alfonso XIII el título de Real en 1923?", a: "A la Divina Pastora.", e: ["Al Nazareno.", "A la Vera Cruz.", "Al Carmen."] },
+            { q: "¿Cuál es la hermandad más antigua de la ciudad entre las subsistentes (fundada en 1698)?", a: "La Virgen del Carmen.", e: ["La Soledad.", "El Nazareno.", "La Vera Cruz."] },
+            { q: "¿Qué imagen de la Semana Santa isleña es atribuida tradicionalmente por expertos a la escultora Luisa Roldán «La Roldana»?", a: "La Virgen de Gracia y Esperanza (Oración en el Huerto).", e: ["Nuestra Señora de la Soledad.", "La Virgen del Mayor Dolor.", "La Virgen de las Lágrimas."] },
+            { q: "¿Cómo se llamaba el presbítero genovés que importó a San Fernando la imagen original del Cristo Yacente en 1790?", a: "Jácome Parodi Macaggi.", e: ["Ramón Olivera.", "Camilo García Valenzuela.", "Felipe Carrasco."] },
+            { q: "¿En qué parroquia se fundó la Hermandad de la Humildad y Paciencia en 1986?", a: "En la Parroquia de San Servando y San Germán (La Ardila).", e: ["En la Parroquia de la Sagrada Familia (Bazán).", "En la Parroquia de San José Artesano (El Parque).", "En la Iglesia Mayor Parroquial."] },
+            { q: "¿Qué cofradía procesiona con una austeridad extrema, llevando sus penitentes una soga atada a la cintura y sin acompañamiento musical?", a: "El Rosario Doloroso.", e: ["El Perdón.", "La Expiración.", "Los Desamparados."] },
+            { q: "¿En qué año fue coronada canónicamente la imagen neoclásica de la Divina Pastora?", a: "En 2004.", e: ["En 1951.", "En 2006.", "En 1996."] },
+            { q: "¿Qué hermandad sacó en 1985 a su titular en un antiguo paso perteneciente a la Hermandad de Jesús Nazareno?", a: "El Prendimiento.", e: ["La Misericordia.", "El Gran Poder.", "Cristo Rey."] },
+            { q: "¿A qué instituto o congregación religiosa estuvo vinculada desde sus orígenes la cofradía de Cristo Rey (La Borriquita)?", a: "Al Instituto Lasaliano (Hermanos de La Salle).", e: ["A la Orden Franciscana.", "A la Orden Tercera de Servitas.", "A los Carmelitas Descalzos."] },
+            { q: "¿Qué hermandad es conocida vulgarmente como «la del comercio» debido a la profesión de sus fundadores (1954)?", a: "El Ecce Homo.", e: ["La Columna.", "Los Estudiantes.", "La Oración en el Huerto."] },
+            { q: "¿Qué cofradía montaba hasta hace poco a su crucificado fuera de su templo debido a las dimensiones de su puerta principal?", a: "El Perdón.", e: ["El Rosario Doloroso.", "La Humildad y Paciencia.", "El Gran Poder."] },
+            { q: "¿Cuál fue la primera cofradía de penitencia isleña presidida por una mujer?", a: "La Expiración.", e: ["La Soledad.", "La Pastora.", "El Carmen."] },
+            { q: "¿Qué cofradía de la barriada Bazán cruza un puente que actualmente recibe el título oficial de su sagrado titular?", a: "El Gran Poder.", e: ["La Humildad y Paciencia.", "El Prendimiento.", "La Sagrada Resurrección."] },
+            { q: "¿Cuál fue la primera hermandad en abandonar el templete clásico y sacar a su Virgen en un paso de palio estilo sevillano (1939)?", a: "La Columna (Virgen de las Lágrimas).", e: ["La Soledad.", "Los Estudiantes.", "La Expiración."] },
+            { q: "¿Qué cofradía de gloria fue fundada a finales de los 90 y fue amadrinada por Puerto Real para ser filial en 2006?", a: "La Hermandad del Rocío.", e: ["La Hermandad del Carmen.", "La Asociación Josefina.", "La Hermandad de la Divina Pastora."] },
+            { q: "¿En qué siglo comenzó a tener estrechos y documentados vínculos la Hermandad del Nazareno con el poder municipal?", a: "Siglo XVIII.", e: ["Siglo XIX.", "Siglo XVII.", "Siglo XX."] },
+            { q: "¿Qué corporación basó sus primitivos estatutos (1789) en los de una entidad homónima establecida en la parroquia del Rosario de Cádiz?", a: "La Congregación de Esclavos de San José.", e: ["La Hermandad del Ecce Homo.", "La Hermandad de la Misericordia.", "La Orden Tercera de Servitas."] },
+            { q: "¿Quién fue el escultor isleño del grupo escultórico inicial de la Virgen de la Caridad en 1943?", a: "Antonio Bey Olvera.", e: ["Alfonso Berraquero García.", "Antonio Castillo Lastrucci.", "Luis Álvarez Duarte."] },
+            { q: "¿Qué miembro de la realeza fue nombrado Prioste de Honor de la Hermandad de la Soledad en 1975?", a: "S.M. el Rey Juan Carlos I.", e: ["S.M. el Rey Alfonso XII.", "S.M. el Rey Alfonso XIII.", "S.M. el Rey Fernando VII."] },
+            { q: "¿Qué hermandad isleña organiza desde 1976 una devota procesión conocida como el 'Corpus chiquito' por su barrio?", a: "La Misericordia.", e: ["El Gran Poder.", "La Caridad.", "La Expiración."] },
+            { q: "¿Qué hermandad sacaba tras el paso del Señor una centuria de soldados romanos durante varias décadas a partir de 1916?", a: "La Columna.", e: ["El Ecce Homo.", "El Prendimiento.", "El Santo Entierro."] },
+            { q: "¿Qué cofradía organizaba un prestigioso certamen literario para jóvenes a nivel nacional llamado premio «Padre José María Franco»?", a: "Los Estudiantes (Afligidos).", e: ["Cristo Rey.", "La Oración en el Huerto.", "El Gran Poder."] },
+            { q: "¿Qué cofradía rindió culto y procesionó a una antigua Virgen de las Mercedes reformada como dolorosa entre 1985 y 1997?", a: "Los Desamparados.", e: ["La Caridad.", "La Columna.", "El Rosario Doloroso."] },
+            { q: "¿Cuál es el lema latino que figura en el sudario del escudo de la Hermandad de la Soledad?", a: "Stabat Mater.", e: ["Sin cruz no hay gloria ninguna.", "Rezad el rosario.", "Iuxta Crucem."] },
+            { q: "¿Qué título cristífero adoptó oficialmente la Hermandad de la Soledad al renovar sus reglas en 1909?", a: "Descendimiento de Nuestro Señor Jesucristo.", e: ["Santo Entierro de Nuestro Señor Jesucristo.", "Traslado al Sepulcro de Cristo.", "Divina Misericordia del Señor."] },
+            { q: "¿Qué escultor restauró profundamente la imagen del Cristo de la Redención (Soledad) en el año 1999?", a: "Juan Manuel Miñarro López.", e: ["Alfonso Berraquero García.", "Luis Álvarez Duarte.", "Antonio Castillo Lastrucci."] },
+            { q: "¿Desde qué año el municipio de San Fernando rinde la función del Voto a San José como patrón debido a una epidemia de fiebre amarilla?", a: "1800.", e: ["1766.", "1802.", "1789."] },
+            { q: "¿Cuál fue la primera cofradía isleña fundada inmediatamente tras la Guerra Civil en 1939?", a: "Los Estudiantes (Afligidos).", e: ["La Caridad.", "Medinaceli.", "La Oración en el Huerto."] },
+            { q: "¿A qué afamada devoción intentaba imitar el origen de la hermandad de Medinaceli de San Fernando?", a: "A la imagen del convento de capuchinos de Madrid.", e: ["A Jesús del Gran Poder de Sevilla.", "Al Cristo de los Alabarderos.", "A Nuestro Padre Jesús Nazareno."] },
+            { q: "¿Qué hermandad sacó por primera vez en San Fernando un sobrio paso de palio de estilo «cajón» con malla dorada?", a: "El Gran Poder (Virgen del Amor).", e: ["La Soledad.", "Los Desamparados.", "El Prendimiento."] },
+            { q: "¿En qué hermandad procesiona el pasaje evangélico de la Presentación al Pueblo de Pilato?", a: "El Ecce Homo.", e: ["La Columna.", "La Misericordia.", "El Prendimiento."] },
+            { q: "¿Quiénes integraban y gobernaban la peculiar Hermandad del Resucitado surgida en la posguerra (1947-1952)?", a: "Los obreros cargadores de los pasos.", e: ["Los estudiantes lasalianos.", "Los comerciantes y mercaderes.", "Los militares de Infantería de Marina."] },
+            { q: "¿A qué hermandad pertenece históricamente la antigua imagen de Jesús de las Lágrimas, actualmente en la Divina Pastora?", a: "A la Misericordia.", e: ["Al Nazareno.", "A los Estudiantes.", "A la Oración en el Huerto."] },
+            { q: "¿En qué año fue aprobada la Hermandad del Santísimo Cristo de la Vera Cruz?", a: "1784.", e: ["1810.", "1891.", "1759."] },
+            { q: "¿Quién fue el primer hermano mayor del Nazareno, montañés natural del valle de Ibio-Mazcuerras?", a: "Pedro Guerra Calderón.", e: ["Diego Lopez Tagle.", "Román Terán.", "Domingo de los Hoyos."] },
+            { q: "¿Qué cofradía contó con miembros ilustres de la Real Armada en su fundación, siendo su primer prioste el jefe de escuadra Pedro de Cárdenas?", a: "La Expiración.", e: ["El Carmen.", "El Santo Entierro.", "La Vera Cruz."] },
+            { q: "Además de su misterio doloroso, ¿qué antigua imagen letífica del hospicio venera la cofradía de la Caridad?", a: "La Virgen de los Remedios.", e: ["La Virgen de las Mercedes.", "La Virgen del Carmen.", "La Virgen de los Ángeles."] },
+            { q: "¿En la sede canónica de qué hermandad sucedieron los juramentos inmortalizados por Casado del Alisal en las Cortes de 1810?", a: "En la de la Soledad (Iglesia Mayor San Pedro y San Pablo).", e: ["En la de la Pastora.", "En la de Vera Cruz.", "En la del Carmen."] },
+            { q: "¿Qué hermandad tuvo como primer titular en 1939 a un 'Jesús de los Afligidos' procedente de la extinta capilla del Zaporito?", a: "Los Estudiantes.", e: ["Cristo Rey.", "El Gran Poder.", "La Misericordia."] },
+            { q: "¿Qué misterio isleño fue completado paulatinamente y hoy incluye a San Pedro, Santiago y a un soldado del Sanedrín?", a: "El Prendimiento.", e: ["La Columna.", "La Expiración.", "La Oración en el Huerto."] },
+            { q: "¿En qué zona o barrio periférico se erigió la moderna parroquia de San Servando y San Germán?", a: "La Ardila o Blas Infante.", e: ["La Casería de Ossio.", "La Bazán.", "El Parque Almirante Laulhé."] },
+            { q: "¿Quién talló de manera magistral entre 1994 y 1996 el actual grupo escultórico de Cristo Rey en su Entrada en Jerusalén (La Borriquita)?", a: "Juan Manuel Miñarro López.", e: ["Salvador García Piñero.", "Tomás Chaveli.", "Alfonso Berraquero."] },
+            { q: "¿Cuál es el origen de la imagen de María Salomé de la Soledad (reformada por Berraquero en 1986)?", a: "Era la antigua Virgen de los Dolores de Lepe.", e: ["Era la antigua Virgen de la Piedad de Cádiz.", "Era una antigua imagen de San José deshechada.", "Era una Magdalena olvidada por los Servitas."] },
+            { q: "¿Qué corporación organizaba en el pasado un prolongado receso a mitad de su itinerario dentro de la Iglesia Mayor Parroquial?", a: "La Vera Cruz.", e: ["La Soledad.", "El Nazareno.", "La Expiración."] },
+            { q: "¿Quién labró la nueva imagen del titular de la Hermandad de la Sagrada Resurrección bendecida en el año 2006?", a: "Alfonso Berraquero.", e: ["Antonio Dubé de Luque.", "Luis González Rey.", "Juan Carlos García Díaz."] },
+            { q: "¿Los penitentes de qué cofradía isleña visten dos túnicas distintas, una para las secciones del Cristo y otra para las secciones de la Virgen?", a: "El Ecce Homo.", e: ["La Columna.", "El Prendimiento.", "Los Estudiantes."] },
+            { q: "¿En qué hermandad se levantó y bendijo un vistoso retablo neobarroco tallado por Guzmán Bejarano en el año 1959?", a: "Medinaceli.", e: ["La Misericordia.", "Los Afligidos.", "La Expiración."] },
+            { q: "¿Cuál es la cofradía que ostenta históricamente el título del Tercio del Sur de Infantería de Marina como Hermano Honorario?", a: "El Perdón.", e: ["La Misericordia.", "La Expiración.", "La Caridad."] },
+            { q: "¿Qué asociación de fieles ha establecido su día de salida en el Sábado de Pasión?", a: "Coronación de Espinas.", e: ["María Auxiliadora.", "Santa Elena.", "San José."] },
+            { q: "¿Qué cofradía portaba en sus inicios unas características cruces de penitencia en sus manos en lugar de los tradicionales cirios de luz?", a: "El Perdón.", e: ["La Expiración.", "El Rosario Doloroso.", "Los Desamparados."] },
+            { q: "¿En el paso de misterio de qué cofradía figuran personajes secundarios como Barrabás, Claudia Prócula y un esclavo etíope?", a: "En el Ecce Homo.", e: ["En el Prendimiento.", "En la Columna.", "En los Afligidos."] },
+            { q: "¿En qué año se produjo la desamortización exclaustradora del convento que paralizó bruscamente a la hermandad del Carmen?", a: "En 1835.", e: ["En 1769.", "En 1873.", "En 1931."] },
+            { q: "¿Qué fraile capuchino propulsó la advocación a la Divina Pastora en la Isla de León tras sus predicaciones de 1781?", a: "Fray Diego José de Cádiz.", e: ["Fray Isidoro de Sevilla.", "Fray Tomás del Valle.", "Fray Cayetano Quijada."] },
+            { q: "¿A qué imagen donó una valiosa diadema de plata el gobernador de la Isla Diego de Molina y Carvajal en 1773?", a: "A la Virgen de la Soledad.", e: ["A la Virgen del Carmen.", "A la Virgen de los Dolores.", "A la Divina Pastora."] },
+            { q: "¿Qué escultor valenciano fue el autor original de la talla de la Virgen de las Lágrimas (Columna) en 1899?", a: "Vicente Tena.", e: ["Antonio Castillo Lastrucci.", "Sebastián Santos.", "Samuel Howe."] },
+            { q: "¿De qué parroquia se vio precisada a salir finalmente la cofradía de la Sagrada Resurrección en su primera procesión oficial de 2005?", a: "De la Parroquia de San José Artesano.", e: ["De la Iglesia Mayor Parroquial.", "De la Iglesia Conventual del Carmen.", "De la Iglesia de la Pastora."] },
+            { q: "¿En qué año talló Castillo Lastrucci las imágenes originales de la Verónica y el Simón Cireneo para el misterio de la Misericordia?", a: "En 1966.", e: ["En 1957.", "En 1975.", "En 1982."] },
+            { q: "¿Qué hermandad penitencial organiza cada 2 de agosto una procesión de gloria por la barriada Bazán?", a: "El Gran Poder (con la Virgen de los Ángeles).", e: ["La Humildad y Paciencia.", "La Pastora.", "El Rocío."] },
+            { q: "¿Con qué orden mendicante mantiene una especial 'carta de hermandad' la cofradía de Medinaceli desde 1988?", a: "Con la Orden Franciscana Capuchina.", e: ["Con los Carmelitas Descalzos.", "Con los Hermanos de La Salle.", "Con la Tercera Orden de los Servitas."] },
+            { q: "¿Cuál era considerada oficiosamente la «procesión oficial» de la Semana Santa local a la que acudían representaciones militares a partir de 1942?", a: "El Santo Entierro.", e: ["La Soledad.", "El Nazareno.", "La Resurrección."] },
+            { q: "¿Qué dolorosa se vio inmersa en un pleito en 1993 donde la justicia obligó a restituirla a su estado original deshaciendo su restauración?", a: "La Virgen de la Caridad.", e: ["La Virgen del Buen Fin.", "La Virgen de la Trinidad.", "La Virgen del Mayor Dolor en su Soledad."] },
+            { q: "¿Qué cofradía isleña luce en la zona central de su emblema una Cruz de Penitencia recubierta con un sudario con forma de letra 'M'?", a: "La Soledad.", e: ["La Vera Cruz.", "La Expiración.", "El Descendimiento."] },
+            { q: "¿Con qué famosa cofradía sevillana comparte expresamente la advocación de Nuestro Padre Jesús del Soberano Poder la hermandad del Prendimiento?", a: "Con la hermandad de San Benito.", e: ["Con la hermandad de los Panaderos.", "Con la hermandad de la Macarena.", "Con la hermandad del Gran Poder."] },
+            { q: "¿Qué obra de artesanía construyó el afamado taller de Angulo de Lucena para la titular de la Soledad en 1954?", a: "Una Diadema de Plata para la Virgen.", e: ["Un paso completamente plateado.", "Unos candelabros de cola repujados.", "Una portentosa cruz de guía."] },
+            { q: "¿A qué hermandad se refería un artículo histórico al recordar que en el franquismo algunos alcaldes compaginaban su rol municipal con el de Hermano Mayor?", a: "A la Hermandad del Nazareno.", e: ["A la Hermandad de la Expiración.", "A la Hermandad del Carmen.", "A la Hermandad del Santo Entierro."] },
+            { q: "¿Qué imagen mariana de candelero del Misterio de la Soledad transmite 'tranquilidad' según los expertos y fue donada a Berraquero?", a: "María Salomé.", e: ["María de Cleofás.", "Santa Marta.", "María Magdalena."] },
+            { q: "¿Dónde se ubicaba la antigua capilla construida en 1789 que rendía devoción original al Señor de la Humildad (Varón de Dolores)?", a: "En la zona del Zaporito.", e: ["Cerca del antiguo Mesón del Duque.", "En el Barrio del Monte.", "En los terrenos anexos al Hospital de San José."] },
+            { q: "¿Qué veterana asociación cultural isleña fue la que originó e impulsó la idea de fundar la actual hermandad de la Resurrección?", a: "La Venera.", e: ["Juven-Pas.", "El Güichi de Carlos.", "Patrimonio La Isla."] },
+            { q: "¿Qué advocación tiene el Cristo que porta en su regazo la Virgen de la Caridad?", a: "El Cristo de la Salvación.", e: ["El Cristo de la Redención.", "El Cristo de la Piedad.", "El Cristo Yacente."] },
+            { q: "¿Con qué extinguida cofradía mantuvo pleitos de precedencia y antigüedad en el siglo XVIII la Hermandad de la Virgen del Carmen?", a: "Con la antigua Hermandad de Nuestra Señora del Rosario (del Castillo).", e: ["Con la Hermandad de la Soledad.", "Con la Orden Tercera de Servitas.", "Con la Hermandad del Nazareno."] },
+            { q: "¿A qué Virgen isleña se le bordó en 1910 un valioso manto de salida que la imagen titular sigue conservando?", a: "A la Divina Pastora.", e: ["A la Virgen de la Soledad.", "A la Virgen del Carmen.", "A la Virgen de las Lágrimas."] },
+            { q: "¿Qué paso de talla neobarroca fue adquirido por la Hermandad de la Soledad en 1985 a la hermandad homónima del pueblo sevillano de Paradas?", a: "El de su paso de Misterio de Traslado al Sepulcro.", e: ["El del Ecce Homo.", "El de la Misericordia.", "El del Cristo de la Sangre."] },
+            { q: "¿En qué año fue erigida formal y canónicamente por el Obispado la Hermandad de los Estudiantes (Afligidos)?", a: "En 1944.", e: ["En 1939.", "En 1942.", "En 1950."] },
+            { q: "Según los historiadores de la ciudad, ¿cómo definen el funcionamiento originario de la hermandad del Nazareno impulsada por montañeses?", a: "De naturaleza gremial, cerrada y excluyente.", e: ["Aperturista y cívica con todos los estratos.", "Humilde, penitencial y austera.", "Eminentemente eclesiástica y nobiliaria."] },
+            { q: "¿Qué advocación gloriosa ostenta formalmente los honores militares de Capitán General de la Armada en San Fernando?", a: "La Virgen del Carmen.", e: ["La Divina Pastora.", "La Virgen de los Desamparados.", "La Virgen de la Esperanza."] },
+            { q: "¿En qué céntrica calle isleña posee la cofradía de la Soledad su antiquísima Casa de Hermandad desde hace siglos tras sortear desamortizaciones?", a: "En la antigua calle del Óleo (actual callejón Virgen de la Soledad).", e: ["En la calle de Las Siete Revueltas.", "En la plaza de la Iglesia Mayor.", "En la calle Constructora Naval."] },
+            { q: "¿De dónde procedía la imagen anónima del Nazareno (Cristo del Buen Viaje) que la cofradía de la Misericordia adaptó con Lastrucci?", a: "Se veneraba desde tiempo inmemorial en una capilla lateral de la iglesia de la Pastora.", e: ["Fue comprada en unos prestigiosos talleres de Génova.", "Fue donada generosamente por un alto mando militar de San Carlos.", "Se encontró milagrosamente en un convento abandonado tras la epidemia."] },
+            { q: "¿Qué dos imágenes, en sus orígenes, fueron erigidas como cotitulares formales tras una iniciativa de obreros de la Carraca en 1893?", a: "Santísimo Señor de la Columna y Nuestra Señora de las Lágrimas.", e: ["Señor de los Afligidos y Virgen de la Amargura.", "Señor del Ecce Homo y Nuestra Señora de la Salud.", "Señor Orando en el Huerto y Virgen de Gracia y Esperanza."] },
+            { q: "¿Bajo qué específica advocación operaba la modesta Orden Tercera fundada en 1759 antes de fusionarse con la cofradía Mater Amabilis?", a: "Orden de Servitas de Nuestra Señora de los Dolores.", e: ["Orden de Servitas de Nuestra Señora del Mayor Dolor.", "Orden de Servitas de la Soledad.", "Orden de Servitas de la Piedad."] },
+            { q: "¿Qué hermandad formó en sus orígenes una agrupación piadosa denominada 'Nuestra Madre y Señora la Virgen de las Angustias en la Sagrada Mortaja'?", a: "La Caridad.", e: ["Los Desamparados.", "El Santo Entierro.", "La Soledad."] },
+            { q: "¿En la década de qué año organizó la hermandad de Afligidos un histórico concurso de saetas (primero en San Fernando)?", a: "En la década de 1940.", e: ["En la de 1970.", "En la de 1930.", "En la de 1960."] },
+            { q: "¿Qué día se conocía antiguamente como \"de Oro\" por el dorado de sus pasos de misterio?", a: "El Lunes Santo.", e: ["El Domingo de Ramos.", "El Jueves Santo.", "El Viernes Santo."] },
+            { q: "Históricamente, en la época de esplendor de la Carrera Oficial de la Calle Rosario (1968), ¿quién organizaba y cobraba las sillas para sentarse a ver los pasos?", a: "La Sociedad de Fomento.", e: ["El Consejo de Hermandades y Cofradías.", "El Ayuntamiento de la ciudad.", "La Iglesia Mayor Parroquial."] }
+        ];
 
         let progresoInterval;
         let modalProgresoInterval;
@@ -762,7 +863,15 @@
             window.trivialPlayers = n.map(p => ({ nombre: p, puntos: 0 }));
             window.trivialRound = 1;
             window.totalRondasTrivial = n.length === 1 ? 10 : 5;
-            window.qBank = [...window.bancoPreguntasTrivial].sort(() => Math.random() - 0.5);
+            
+            // Mezcla robusta de Fisher-Yates
+            let shuffled = [...window.bancoPreguntasTrivial];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            window.qBank = shuffled;
+            
             window.trivialTurn = 0;
             window.flujoTurnoTrivial();
         };
@@ -783,7 +892,7 @@
 
         window.mostrarPreguntaTrivial = function() {
             const q = window.qBank.pop();
-            if(!q) { window.finalizarTrivial(); return; }
+            if(!q) { window.mostrarClasificacionTrivial(true); return; }
             window.currentQ = q;
             window.opcionesActuales = [q.a, ...q.e].sort(() => Math.random() - 0.5);
             
@@ -845,18 +954,89 @@
 
         window.siguienteTurnoTrivial = function() {
             window.trivialTurn++;
-            if(window.trivialTurn < window.trivialPlayers.length) window.flujoTurnoTrivial();
-            else {
-                window.trivialRound++;
-                if(window.trivialRound > window.totalRondasTrivial) window.finalizarTrivial();
-                else { window.trivialTurn = 0; window.flujoTurnoTrivial(); }
+            if(window.trivialTurn < window.trivialPlayers.length) {
+                window.flujoTurnoTrivial();
+            } else {
+                if (window.trivialPlayers.length === 1) {
+                    window.trivialRound++;
+                    if(window.trivialRound > window.totalRondasTrivial) window.mostrarPantallaVictoria();
+                    else { window.trivialTurn = 0; window.flujoTurnoTrivial(); }
+                } else {
+                    const esFinal = window.trivialRound >= window.totalRondasTrivial;
+                    if (esFinal) {
+                        window.mostrarPantallaVictoria();
+                    } else {
+                        window.mostrarClasificacionTrivial(false);
+                    }
+                }
             }
         };
 
-        window.finalizarTrivial = function() {
+        window.mostrarPantallaVictoria = function() {
             const ranking = [...window.trivialPlayers].sort((a,b) => b.puntos - a.puntos);
-            let html = ranking.map(p => `<div class="flex justify-between p-4 bg-gray-800 rounded-xl border border-gray-700 mb-2"><span>${p.nombre}</span><span class="font-bold text-amber-400">${p.puntos} pts</span></div>`).join('');
-            document.getElementById('juegosContenido').innerHTML = `<div class="w-full max-w-sm"><h3 class="text-2xl font-bold mb-6 text-center">Clasificación Final</h3>${html}<button onclick="window.renderJuegosMenu()" class="w-full bg-blue-600 p-4 rounded-xl mt-4 font-bold">Terminar</button></div>`;
+            const ganador = ranking[0];
+            
+            let empates = ranking.filter(p => p.puntos === ganador.puntos);
+            let textoGanador = `¡Enhorabuena ${ganador.nombre}, has ganado!`;
+            
+            if (empates.length > 1) {
+                const nombresEmpate = empates.map(e => e.nombre).join(' y ');
+                textoGanador = `¡Enhorabuena ${nombresEmpate}, habéis empatado!`;
+            }
+            if (window.trivialPlayers.length === 1) {
+                textoGanador = `¡Buen trabajo, ${ganador.nombre}!`;
+            }
+
+            document.getElementById('juegosContenido').innerHTML = `
+                <div class="w-full max-w-sm flex flex-col items-center justify-center fade-in text-center py-4">
+                    <div class="text-7xl mb-4 pop-in">🏆</div>
+                    <h2 class="text-3xl md:text-4xl font-black text-amber-400 mb-4 leading-tight pop-in">${textoGanador}</h2>
+                    <p class="text-gray-300 mb-8 text-lg">Has completado todas las rondas del Trivial Cofrade.</p>
+                    
+                    <div class="flex flex-col gap-4 w-full">
+                        <button onclick="window.mostrarClasificacionTrivial(true)" class="w-full bg-amber-500 text-gray-900 font-bold py-4 rounded-xl shadow-lg hover:bg-amber-400 transition active:scale-95 text-lg">
+                            Ver clasificación final
+                        </button>
+                        <button onclick="window.renderJuegosMenu()" class="w-full bg-gray-700 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-gray-600 transition active:scale-95 text-lg">
+                            Terminar juego
+                        </button>
+                    </div>
+                </div>`;
+        };
+
+        window.mostrarClasificacionTrivial = function(esFinal) {
+            const ranking = [...window.trivialPlayers].sort((a,b) => b.puntos - a.puntos);
+            let html = ranking.map((p, i) => {
+                let medalla = '';
+                if (esFinal && i === 0) medalla = '🏆 ';
+                else if (esFinal && i === 1) medalla = '🥈 ';
+                else if (esFinal && i === 2) medalla = '🥉 ';
+                else medalla = `<span class="text-gray-500 w-6 inline-block text-center">${i+1}</span>`;
+                return `<div class="flex justify-between items-center p-4 bg-gray-800 rounded-xl border border-gray-700 mb-2"><div><span class="text-xl">${medalla}</span><span class="font-bold text-white ml-2">${p.nombre}</span></div><span class="font-black text-amber-400">${p.puntos} pts</span></div>`;
+            }).join('');
+            
+            let tituloHTML = esFinal 
+                ? `<h2 class="text-3xl font-black text-amber-400 mb-2 text-center">¡Juego Terminado!</h2><p class="text-gray-300 text-center mb-6">Clasificación Final</p>`
+                : `<h3 class="text-2xl font-bold text-white mb-2 text-center">Clasificación Parcial</h3><p class="text-gray-400 text-center mb-6">Fin de la Ronda ${window.trivialRound}</p>`;
+                
+            let botonHTML = esFinal
+                ? `<button onclick="window.renderJuegosMenu()" class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-blue-500 transition active:scale-95 mt-4">Terminar Juego</button>`
+                : `<button onclick="window.avanzarRondaTrivial()" class="w-full bg-rose-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-rose-500 transition active:scale-95 mt-4">Comenzar Ronda ${window.trivialRound + 1}</button>`;
+
+            document.getElementById('juegosContenido').innerHTML = `
+                <div class="w-full max-w-sm flex flex-col fade-in">
+                    ${tituloHTML}
+                    <div class="flex flex-col">
+                        ${html}
+                    </div>
+                    ${botonHTML}
+                </div>`;
+        };
+
+        window.avanzarRondaTrivial = function() {
+            window.trivialRound++;
+            window.trivialTurn = 0;
+            window.flujoTurnoTrivial();
         };
 
         // App Init
