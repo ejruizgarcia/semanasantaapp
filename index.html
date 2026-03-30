@@ -532,6 +532,9 @@
                     inicioTs: obtenerTimestampAbsoluto(diaActual, cof.entradaCOCruz), // Entrada Carrera Oficial
                     finTs: obtenerTimestampAbsoluto(diaActual, cof.salidaCOPaso),    // Salida Último Paso Carrera Oficial
                     salidaCruzTs: obtenerTimestampAbsoluto(diaActual, cof.salidaCruz),
+                    entradaCOTs: obtenerTimestampAbsoluto(diaActual, cof.entradaCOCruz),
+                    salidaCOTs: obtenerTimestampAbsoluto(diaActual, cof.salidaCOPaso),
+                    recogidaCruzTs: obtenerTimestampAbsoluto(diaActual, cof.recogidaCruz),
                     recogidaPasoTs: obtenerTimestampAbsoluto(diaActual, cof.recogidaPaso)
                 });
             });
@@ -558,6 +561,30 @@
                 barra.boton.classList.remove('ring-2', 'ring-rose-500', 'border-transparent', 'border-gray-200');
                 if (enCalle) barra.boton.classList.add('ring-2', 'ring-rose-500', 'border-transparent');
                 else barra.boton.classList.add('border-gray-200');
+                
+                const windowMs = 120000; 
+                if (!notificados.has(barra.nombre + 'salida') && ahora >= barra.salidaCruzTs && ahora <= barra.salidaCruzTs + windowMs) {
+                    notificados.add(barra.nombre + 'salida');
+                    mostrarNotificacion(`¡La Cruz de Guía de ${barra.nombre} ya está en la calle!`, '🚪');
+                }
+                if (!notificados.has(barra.nombre + 'co') && ahora >= barra.entradaCOTs && ahora <= barra.entradaCOTs + windowMs) {
+                    notificados.add(barra.nombre + 'co');
+                    mostrarNotificacion(`¡La Cruz de Guía de ${barra.nombre} entra en Carrera Oficial!`, '✨');
+                    barra.boton.classList.add('shimmer-flash');
+                    setTimeout(() => barra.boton.classList.remove('shimmer-flash'), 3500);
+                }
+                if (!notificados.has(barra.nombre + 'salidaCO') && ahora >= barra.salidaCOTs && ahora <= barra.salidaCOTs + windowMs) {
+                    notificados.add(barra.nombre + 'salidaCO');
+                    mostrarNotificacion(`¡El último paso de ${barra.nombre} sale de Carrera Oficial!`, '👋');
+                }
+                if (!notificados.has(barra.nombre + 'recogida') && ahora >= barra.recogidaCruzTs && ahora <= barra.recogidaCruzTs + windowMs) {
+                    notificados.add(barra.nombre + 'recogida');
+                    mostrarNotificacion(`¡La Cruz de Guía de ${barra.nombre} ha llegado a su templo!`, '⛪');
+                }
+                if (!notificados.has(barra.nombre + 'recogidaPaso') && ahora >= barra.recogidaPasoTs && ahora <= barra.recogidaPasoTs + windowMs) {
+                    notificados.add(barra.nombre + 'recogidaPaso');
+                    mostrarNotificacion(`¡El último paso de ${barra.nombre} ha entrado en su templo!`, '⛪');
+                }
             });
         };
 
