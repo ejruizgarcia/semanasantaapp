@@ -65,6 +65,7 @@
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans h-screen flex flex-col overflow-hidden relative">
 
+    <!-- Splash Screen (Cartel) -->
     <div id="splashScreen" class="fixed inset-0 z-[100] flex flex-col bg-black transition-opacity duration-500 ease-in-out">
         <img src="https://raw.githubusercontent.com/ejruizgarcia/images/main/cartel.jpg" alt="Cartel Semana Santa" class="w-full h-full object-cover">
     </div>
@@ -109,6 +110,7 @@
         <div id="listaCofradias" class="flex flex-col gap-4 max-w-lg mx-auto pb-6"></div>
     </main>
 
+    <!-- Botones Flotantes Inferiores -->
     <div class="fixed bottom-6 inset-x-6 flex justify-between items-center pointer-events-none z-40">
         <button onclick="abrirJuegos()" class="pointer-events-auto p-4 bg-rose-950 text-white rounded-full shadow-lg hover:bg-rose-900 transition active:scale-95 border-2 border-white" aria-label="Juegos Cofrades">
             <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -124,6 +126,7 @@
         </button>
     </div>
 
+    <!-- Modal de Configuración -->
     <div id="configuracionModal" class="fixed inset-0 z-50 hidden flex-col h-full w-full bg-white/95 backdrop-blur-sm">
         <div class="bg-rose-950 text-white p-4 flex justify-between items-center shadow-md shrink-0">
             <h2 class="text-xl font-bold">Configuración</h2>
@@ -167,6 +170,7 @@
         </div>
     </div>
 
+    <!-- Modal de Detalle -->
     <div id="detalleModal" class="fixed inset-0 z-50 hidden flex-col h-full w-full">
         <div class="bg-rose-950 text-white p-4 flex justify-between items-center shadow-md shrink-0">
             <div class="flex items-center min-w-0">
@@ -275,38 +279,7 @@
         </div>
     </div>
 
-    <div id="fbModal" class="fixed inset-0 bg-white z-50 hidden flex-col h-full w-full">
-        <div class="bg-blue-800 text-white p-4 flex items-center shadow-md shrink-0">
-            <button onclick="cerrarFb()" class="mr-4 p-2 bg-blue-700 rounded-full hover:bg-blue-600 transition active:scale-95">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-            </button>
-            <h2 class="text-xl font-bold truncate">Perfiles de Facebook</h2>
-        </div>
-        <div class="flex-1 overflow-y-auto p-5 bg-gray-50 flex flex-col gap-4">
-            <div class="max-w-lg mx-auto w-full space-y-4 slide-up">
-                <p class="text-gray-600 mb-6 font-medium">Accede a las páginas oficiales para más información y novedades.</p>
-                <a href="https://www.facebook.com/islapasion?locale=es_ES" target="_blank" class="block w-full bg-white border border-blue-200 p-4 rounded-xl shadow-sm hover:shadow-md transition flex items-center gap-4 group">
-                    <svg class="w-8 h-8 text-blue-600 group-hover:scale-110 transition" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/></svg>
-                    <span class="font-bold text-gray-800 text-lg">IslaPasión</span>
-                </a>
-                <a href="https://www.facebook.com/share/1D2s6nfzTH/" target="_blank" class="block w-full bg-white border border-blue-200 p-4 rounded-xl shadow-sm hover:shadow-md transition flex items-center gap-4 group">
-                    <svg class="w-8 h-8 text-blue-600 group-hover:scale-110 transition" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/></svg>
-                    <span class="font-bold text-gray-800 text-lg">San Fernando Cofrade</span>
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <div id="juegosModal" class="fixed inset-0 bg-gray-900 z-50 hidden flex-col h-full w-full text-white">
-        <div class="p-4 flex items-center shadow-md shrink-0 bg-gray-800">
-            <button onclick="cerrarJuegos()" class="mr-4 p-2 bg-gray-700 rounded-full hover:bg-gray-600 transition active:scale-95">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-            </button>
-            <h2 id="juegosTitulo" class="text-xl font-bold truncate">Juegos Cofrades</h2>
-        </div>
-        <div id="juegosContenido" class="flex-1 overflow-y-auto p-5 flex flex-col items-center justify-center gap-6"></div>
-    </div>
-
+    <!-- Firebase SDK e Identificación Invisible -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
@@ -320,6 +293,7 @@
 
         let userId = null;
 
+        // Guardar preferencia de forma remota vinculada al navegador
         window.saveSortingPreference = async (criteria) => {
             if (!userId) return;
             try {
@@ -330,6 +304,7 @@
             }
         };
 
+        // Cargar preferencia al iniciar
         async function loadSettings(uid) {
             try {
                 const settingsRef = doc(db, 'artifacts', appId, 'users', uid, 'preferences', 'settings');
@@ -338,6 +313,9 @@
                     const data = docSnap.data();
                     if (data.sortingCriteria) {
                         window.criterioOrdenActual = data.sortingCriteria;
+                        // Actualizar UI si la app ya cargó el día
+                        if (typeof window.actualizarUIOrdenacion === 'function') window.actualizarUIOrdenacion();
+                        if (typeof window.cargarDia === 'function') window.cargarDia(window.diaSeleccionadoActual);
                     }
                 }
             } catch (error) {
@@ -358,7 +336,6 @@
                 userId = user.uid;
                 await loadSettings(userId);
             }
-            window.startAppFlow();
         });
 
         initFirebase();
@@ -408,7 +385,7 @@
 
         let progresoInterval;
         let modalProgresoInterval;
-        let diaSeleccionadoActual = 'domingo';
+        window.diaSeleccionadoActual = 'domingo';
         window.criterioOrdenActual = 'carrera'; 
         const notificados = new Set(); 
 
@@ -483,7 +460,7 @@
         }
 
         function seleccionarDia(dia) {
-            diaSeleccionadoActual = dia;
+            window.diaSeleccionadoActual = dia;
             document.querySelectorAll('.dia-btn').forEach(btn => {
                 if (btn.dataset.dia === dia) {
                     btn.classList.remove('bg-rose-800', 'text-rose-100', 'hover:bg-rose-700');
@@ -494,11 +471,12 @@
                     btn.classList.remove('bg-white', 'text-rose-900', 'shadow-sm');
                 }
             });
-            cargarDia(dia);
+            window.cargarDia(dia);
         }
 
-        function cargarDia(diaActual) {
+        window.cargarDia = function(diaActual) {
             const contenedor = document.getElementById('listaCofradias');
+            if (!contenedor) return;
             contenedor.innerHTML = '';
             if (progresoInterval) clearInterval(progresoInterval);
             const cofradiasDia = datosSemanaSanta[diaActual] || [];
@@ -638,7 +616,7 @@
         }
 
         function abrirConfiguracion() {
-            actualizarUIOrdenacion();
+            window.actualizarUIOrdenacion();
             const modal = document.getElementById('configuracionModal');
             modal.classList.remove('hidden');
             modal.classList.add('flex', 'fade-in');
@@ -653,12 +631,12 @@
         function cambiarOrden(nuevoCriterio) {
             window.criterioOrdenActual = nuevoCriterio;
             if (typeof window.saveSortingPreference === 'function') window.saveSortingPreference(nuevoCriterio);
-            actualizarUIOrdenacion();
-            cargarDia(diaSeleccionadoActual);
+            window.actualizarUIOrdenacion();
+            window.cargarDia(window.diaSeleccionadoActual);
             setTimeout(cerrarConfiguracion, 200);
         }
 
-        function actualizarUIOrdenacion() {
+        window.actualizarUIOrdenacion = function() {
             const ids = { carrera: 'btnOrdenCarrera', salida: 'btnOrdenSalida', recogida: 'btnOrdenRecogida' };
             Object.keys(ids).forEach(key => {
                 const btn = document.getElementById(ids[key]);
@@ -852,10 +830,6 @@
         function avanzarRondaTrivial() { trivialRondaActual++; trivialTurnoActual = 0; flujoTrivialTurno(); }
 
         window.startAppFlow = function() {
-            setTimeout(() => {
-                const splash = document.getElementById('splashScreen');
-                if (splash) { splash.classList.add('opacity-0'); setTimeout(() => splash.classList.add('hidden'), 500); }
-            }, 1000);
             const hoy = new Date(), mes = hoy.getMonth(), fecha = hoy.getDate(), hora = hoy.getHours();
             let diaInicial = 'domingo';
             if (mes === 2 && fecha === 30) diaInicial = 'lunes';
@@ -864,8 +838,22 @@
             else if (mes === 3 && fecha === 2) diaInicial = 'jueves';
             else if (mes === 3 && fecha === 3) diaInicial = (hora < 7) ? 'madrugada' : 'viernes';
             else if (mes === 3 && fecha === 5) diaInicial = 'resurreccion';
-            setTimeout(() => seleccionarDia(diaInicial), 100);
+            seleccionarDia(diaInicial);
         };
+
+        // Lógica de Splash Screen (Cartel) desacoplada de la base de datos
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const splash = document.getElementById('splashScreen');
+                if (splash) {
+                    splash.classList.add('opacity-0');
+                    setTimeout(() => splash.classList.add('hidden'), 500);
+                }
+            }, 1000);
+            
+            // Iniciar flujo de carga de datos básica por si la base de datos tarda
+            window.startAppFlow();
+        });
     </script>
 </body>
 </html>
