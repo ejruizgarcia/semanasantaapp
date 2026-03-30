@@ -1077,6 +1077,37 @@
             window.flujoTurnoTrivial();
         };
 
+        const ordenDiasSwipe = ['domingo', 'lunes', 'martes', 'miercoles', 'jueves', 'madrugada', 'viernes', 'resurreccion'];
+        let touchstartX = 0;
+        let touchendX = 0;
+
+        function manejarSwipe() {
+            const umbral = 60; 
+            const indexActual = ordenDiasSwipe.indexOf(window.diaSeleccionadoActual);
+            
+            if (touchstartX - touchendX > umbral) {
+                if (indexActual < ordenDiasSwipe.length - 1) {
+                    window.seleccionarDia(ordenDiasSwipe[indexActual + 1]);
+                }
+            }
+            
+            if (touchendX - touchstartX > umbral) {
+                if (indexActual > 0) {
+                    window.seleccionarDia(ordenDiasSwipe[indexActual - 1]);
+                }
+            }
+        }
+
+        const mainContenedorSwipe = document.getElementById('mainContainer');
+        mainContenedorSwipe.addEventListener('touchstart', e => {
+            touchstartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        mainContenedorSwipe.addEventListener('touchend', e => {
+            touchendX = e.changedTouches[0].screenX;
+            manejarSwipe();
+        }, { passive: true });
+
         // App Init
         window.addEventListener('load', () => {
             setTimeout(() => {
