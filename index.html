@@ -788,7 +788,7 @@
                     const indiceCorte = Math.floor(textoItinerario.length * (p / 100));
                     const parteColoreada = textoItinerario.substring(0, indiceCorte);
                     const parteRestante = textoItinerario.substring(indiceCorte);
-                    document.getElementById('modalItinerario').innerHTML = `<span class="text-rose-900 font-semibold">${parteColoreada}</span><span class="text-gray-700">${parteRestante}</span>`;
+                    document.getElementById('modalItinerario').innerHTML = `<span class="text-rose-900 font-semibold bg-gray-200">${parteColoreada}</span><span class="text-gray-700">${parteRestante}</span>`;
                 }
             };
             updateModalBar();
