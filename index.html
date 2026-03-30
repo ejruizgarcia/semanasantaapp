@@ -65,7 +65,6 @@
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans h-screen flex flex-col overflow-hidden relative">
 
-    <!-- Splash Screen (Cartel) -->
     <div id="splashScreen" class="fixed inset-0 z-[100] flex flex-col bg-black transition-opacity duration-500 ease-in-out">
         <img src="https://raw.githubusercontent.com/ejruizgarcia/images/main/cartel.jpg" alt="Cartel Semana Santa" class="w-full h-full object-cover">
     </div>
@@ -110,6 +109,7 @@
         <div id="listaCofradias" class="flex flex-col gap-4 max-w-lg mx-auto pb-6"></div>
     </main>
 
+    <!-- Botones Flotantes Inferiores -->
     <div class="fixed bottom-6 inset-x-6 flex justify-between items-center pointer-events-none z-40">
         <button onclick="abrirJuegos()" class="pointer-events-auto p-4 bg-rose-950 text-white rounded-full shadow-lg hover:bg-rose-900 transition active:scale-95 border-2 border-white" aria-label="Juegos Cofrades">
             <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -125,7 +125,8 @@
         </button>
     </div>
 
-    <div id="configuracionModal" class="fixed inset-0 z-50 hidden flex-col h-full w-full bg-white/95 backdrop-blur-sm">
+    <!-- Modal de Configuración -->
+    <div id="configuracionModal" class="fixed inset-0 z-[70] hidden flex-col h-full w-full bg-white/95 backdrop-blur-sm">
         <div class="bg-rose-950 text-white p-4 flex justify-between items-center shadow-md shrink-0">
             <h2 class="text-xl font-bold">Configuración</h2>
             <button onclick="cerrarConfiguracion()" class="p-2 bg-rose-800 rounded-full hover:bg-rose-700 transition active:scale-95">
@@ -168,27 +169,58 @@
         </div>
     </div>
 
-    <div id="detalleModal" class="fixed inset-0 z-50 hidden flex-col h-full w-full">
+    <!-- Modal de Facebook -->
+    <div id="fbModal" class="fixed inset-0 z-[70] bg-white hidden flex-col h-full w-full">
+        <div class="bg-blue-800 text-white p-4 flex items-center shadow-md shrink-0">
+            <button onclick="cerrarFb()" class="mr-4 p-2 bg-blue-700 rounded-full hover:bg-blue-600 transition active:scale-95">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+            </button>
+            <h2 class="text-xl font-bold truncate">Perfiles de Facebook</h2>
+        </div>
+        <div class="flex-1 overflow-y-auto p-5 bg-gray-50 flex flex-col gap-4">
+            <div class="max-w-lg mx-auto w-full space-y-4 slide-up">
+                <p class="text-gray-600 mb-6 font-medium">Accede a las páginas oficiales para más información.</p>
+                <a href="https://www.facebook.com/islapasion?locale=es_ES" target="_blank" class="block w-full bg-white border border-blue-200 p-4 rounded-xl shadow-sm hover:shadow-md transition flex items-center gap-4 group">
+                    <svg class="w-8 h-8 text-blue-600 group-hover:scale-110 transition" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/></svg>
+                    <span class="font-bold text-gray-800 text-lg">IslaPasión</span>
+                </a>
+                <a href="https://www.facebook.com/share/1D2s6nfzTH/" target="_blank" class="block w-full bg-white border border-blue-200 p-4 rounded-xl shadow-sm hover:shadow-md transition flex items-center gap-4 group">
+                    <svg class="w-8 h-8 text-blue-600 group-hover:scale-110 transition" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/></svg>
+                    <span class="font-bold text-gray-800 text-lg">San Fernando Cofrade</span>
+                </a>
+                <!-- Enlaces restaurados -->
+                <a href="https://www.facebook.com/AytoSanFdo?locale=es_ES" target="_blank" class="block w-full bg-white border border-blue-200 p-4 rounded-xl shadow-sm hover:shadow-md transition flex items-center gap-4 group">
+                    <svg class="w-8 h-8 text-blue-600 group-hover:scale-110 transition" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/></svg>
+                    <span class="font-bold text-gray-800 text-lg">Ayuntamiento de San Fernando</span>
+                </a>
+                <a href="https://www.facebook.com/profile.php?id=100080499935607&locale=es_ES" target="_blank" class="block w-full bg-white border border-blue-200 p-4 rounded-xl shadow-sm hover:shadow-md transition flex items-center gap-4 group">
+                    <svg class="w-8 h-8 text-blue-600 group-hover:scale-110 transition" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/></svg>
+                    <span class="font-bold text-gray-800 text-lg">La Venera</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Detalle -->
+    <div id="detalleModal" class="fixed inset-0 z-[70] hidden flex-col h-full w-full">
         <div class="bg-rose-950 text-white p-4 flex justify-between items-center shadow-md shrink-0">
             <div class="flex items-center min-w-0">
-                <button onclick="cerrarDetalle()" class="mr-4 p-2 bg-rose-800 rounded-full hover:bg-rose-700 transition active:scale-95 shrink-0" aria-label="Volver">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                <button onclick="cerrarDetalle()" class="mr-4 p-2 bg-rose-800 rounded-full hover:bg-rose-700 transition active:scale-95 shrink-0">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                 </button>
                 <h2 id="modalTitulo" class="text-xl font-bold truncate">Detalle</h2>
             </div>
         </div>
-        
         <div class="flex-1 overflow-y-auto p-5">
             <div class="max-w-lg mx-auto bg-white rounded-xl shadow-sm border border-gray-100 p-6 space-y-6 slide-up relative z-10">
-                <button onclick="cerrarDetalle()" class="absolute top-4 right-4 text-rose-900 hover:text-rose-700 bg-rose-50 hover:bg-rose-100 p-1.5 rounded-full transition active:scale-95" aria-label="Cerrar Ficha">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+                <button onclick="cerrarDetalle()" class="absolute top-4 right-4 text-rose-900 hover:text-rose-700 bg-rose-50 hover:bg-rose-100 p-1.5 rounded-full transition">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
-
                 <div class="border-b border-gray-100 pb-4">
                     <div class="pr-8">
                         <div class="flex items-center gap-2 mb-2">
                             <h3 id="modalTituloInterior" class="text-2xl font-bold text-rose-900"></h3>
-                            <button onclick="toggleNombreOficial()" class="text-rose-600 bg-rose-100 hover:bg-rose-200 rounded-full p-1.5 transition active:scale-95" aria-label="Ver nombre oficial">
+                            <button onclick="toggleNombreOficial()" class="text-rose-600 bg-rose-100 hover:bg-rose-200 rounded-full p-1.5 transition">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             </button>
                         </div>
@@ -196,111 +228,99 @@
                             <p id="modalNombreOficial" class="text-sm text-rose-800 font-medium italic leading-relaxed"></p>
                         </div>
                     </div>
-
                     <p class="text-sm text-gray-500 uppercase font-semibold tracking-wider mb-1 mt-2">Sede Canónica</p>
                     <p id="modalSede" class="text-lg text-gray-800 font-medium mb-4"></p>
-                    
                     <div class="w-full">
                         <div class="flex justify-between text-xs text-rose-800 font-bold mb-1">
-                            <span>Progreso en la calle</span>
+                            <span>Progreso en Carrera Oficial</span>
                             <span id="modalProgresoTexto">0%</span>
                         </div>
                         <div class="w-full bg-rose-100 rounded-full h-2.5 overflow-hidden shadow-inner">
-                            <div id="modalProgressBar" class="bg-rose-600 h-2.5 rounded-full transition-all duration-1000 ease-linear" style="width: 0%"></div>
+                            <div id="modalProgressBar" class="bg-rose-600 h-2.5 rounded-full transition-all duration-1000 ease-linear"></div>
                         </div>
                     </div>
                 </div>
-
                 <div class="grid grid-cols-2 gap-4">
                     <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
                         <p class="text-xs text-gray-500 uppercase font-bold mb-2">Salida</p>
-                        <div class="flex justify-between text-sm mb-1">
-                            <span class="text-gray-600 font-medium">Cruz de Guía:</span>
-                            <span id="modalSalidaCruz" class="font-bold text-gray-800"></span>
-                        </div>
-                        <div class="flex justify-between text-sm">
-                            <span class="text-gray-600 font-medium">Último Paso:</span>
-                            <span id="modalSalidaPaso" class="font-bold text-gray-800"></span>
-                        </div>
+                        <div class="flex justify-between text-sm mb-1"><span class="text-gray-600 font-medium">Cruz:</span><span id="modalSalidaCruz" class="font-bold text-gray-800"></span></div>
+                        <div class="flex justify-between text-sm"><span class="text-gray-600 font-medium">Último:</span><span id="modalSalidaPaso" class="font-bold text-gray-800"></span></div>
                     </div>
                     <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
                         <p class="text-xs text-gray-500 uppercase font-bold mb-2">Recogida</p>
-                        <div class="flex justify-between text-sm mb-1">
-                            <span class="text-gray-600 font-medium">Cruz de Guía:</span>
-                            <span id="modalRecogidaCruz" class="font-bold text-gray-800"></span>
-                        </div>
-                        <div class="flex justify-between text-sm">
-                            <span class="text-gray-600 font-medium">Último Paso:</span>
-                            <span id="modalRecogidaPaso" class="font-bold text-gray-800"></span>
-                        </div>
+                        <div class="flex justify-between text-sm mb-1"><span class="text-gray-600 font-medium">Cruz:</span><span id="modalRecogidaCruz" class="font-bold text-gray-800"></span></div>
+                        <div class="flex justify-between text-sm"><span class="text-gray-600 font-medium">Último:</span><span id="modalRecogidaPaso" class="font-bold text-gray-800"></span></div>
                     </div>
                 </div>
-
                 <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-lg shadow-sm my-2">
                     <p class="text-sm text-amber-800 uppercase font-bold tracking-wider mb-3">Carrera Oficial</p>
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <p class="text-xs text-amber-700 uppercase font-bold mb-1 border-b border-amber-200 pb-1">Entrada</p>
-                            <div class="flex justify-between text-sm mb-1 mt-2">
-                                <span class="text-amber-900">Cruz:</span>
-                                <span id="modalEntradaCOCruz" class="font-bold text-amber-800"></span>
-                            </div>
-                            <div class="flex justify-between text-sm">
-                                <span class="text-amber-900">Paso:</span>
-                                <span id="modalEntradaCOPaso" class="font-bold text-amber-800"></span>
-                            </div>
+                            <div class="flex justify-between text-sm mb-1 mt-2"><span class="text-amber-900">Cruz:</span><span id="modalEntradaCOCruz" class="font-bold text-amber-800"></span></div>
+                            <div class="flex justify-between text-sm"><span class="text-amber-900">Paso:</span><span id="modalEntradaCOPaso" class="font-bold text-amber-800"></span></div>
                         </div>
                         <div>
                             <p class="text-xs text-amber-700 uppercase font-bold mb-1 border-b border-amber-200 pb-1">Salida</p>
-                            <div class="flex justify-between text-sm mb-1 mt-2">
-                                <span class="text-amber-900">Cruz:</span>
-                                <span id="modalSalidaCOCruz" class="font-bold text-amber-800"></span>
-                            </div>
-                            <div class="flex justify-between text-sm">
-                                <span class="text-amber-900">Paso:</span>
-                                <span id="modalSalidaCOPaso" class="font-bold text-amber-800"></span>
-                            </div>
+                            <div class="flex justify-between text-sm mb-1 mt-2"><span class="text-amber-900">Cruz:</span><span id="modalSalidaCOCruz" class="font-bold text-amber-800"></span></div>
+                            <div class="flex justify-between text-sm"><span class="text-amber-900">Paso:</span><span id="modalSalidaCOPaso" class="font-bold text-amber-800"></span></div>
                         </div>
                     </div>
                 </div>
-
                 <div class="pt-2">
                     <p class="text-sm text-gray-500 uppercase font-semibold tracking-wider mb-2">Itinerario</p>
-                    <p id="modalItinerario" class="text-gray-700 leading-relaxed"></p>
+                    <p id="modalItinerario" class="text-gray-700 leading-relaxed text-sm"></p>
                 </div>
-
-                <button onclick="cerrarDetalle()" class="w-full bg-rose-950 text-white font-bold py-4 rounded-xl shadow-md hover:bg-rose-900 transition active:scale-95 mt-4">
-                    Cerrar Ficha
-                </button>
+                <button onclick="cerrarDetalle()" class="w-full bg-rose-950 text-white font-bold py-4 rounded-xl shadow-md hover:bg-rose-900 transition mt-4">Cerrar Ficha</button>
             </div>
         </div>
     </div>
 
-    <!-- Firebase SDK e Identificación Invisible -->
+    <!-- Modal de Juegos -->
+    <div id="juegosModal" class="fixed inset-0 z-[70] bg-gray-900 hidden flex-col h-full w-full text-white">
+        <div class="p-4 flex items-center shadow-md shrink-0 bg-gray-800">
+            <button onclick="cerrarJuegos()" class="mr-4 p-2 bg-gray-700 rounded-full hover:bg-gray-600 transition">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+            </button>
+            <h2 id="juegosTitulo" class="text-xl font-bold truncate">Juegos Cofrades</h2>
+        </div>
+        <div id="juegosContenido" class="flex-1 overflow-y-auto p-5 flex flex-col items-center justify-center gap-6"></div>
+    </div>
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        const firebaseConfig = JSON.parse(__firebase_config);
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        let auth, db, appId, userId = null;
 
-        let userId = null;
+        try {
+            const firebaseConfig = JSON.parse(__firebase_config);
+            const app = initializeApp(firebaseConfig);
+            auth = getAuth(app);
+            db = getFirestore(app);
+            appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
 
-        window.saveSortingPreference = async (criteria) => {
-            if (!userId) return;
-            try {
-                const settingsRef = doc(db, 'artifacts', appId, 'users', userId, 'preferences', 'settings');
-                await setDoc(settingsRef, { sortingCriteria: criteria }, { merge: true });
-            } catch (error) {
-                console.error("Error al guardar preferencia:", error);
-            }
-        };
+            const initAuth = async () => {
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+            };
+
+            onAuthStateChanged(auth, async (user) => {
+                if (user) {
+                    userId = user.uid;
+                    await loadSettings(userId);
+                }
+            });
+
+            initAuth();
+        } catch (e) { console.warn("Firebase no disponible."); }
 
         async function loadSettings(uid) {
+            if (!db) return;
             try {
                 const settingsRef = doc(db, 'artifacts', appId, 'users', uid, 'preferences', 'settings');
                 const docSnap = await getDoc(settingsRef);
@@ -312,27 +332,16 @@
                         if (typeof window.cargarDia === 'function') window.cargarDia(window.diaSeleccionadoActual);
                     }
                 }
-            } catch (error) {
-                console.error("Error al cargar configuración:", error);
-            }
+            } catch (error) { console.error("Error al cargar configuración:", error); }
         }
 
-        const initFirebase = async () => {
-            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                await signInWithCustomToken(auth, __initial_auth_token);
-            } else {
-                await signInAnonymously(auth);
-            }
+        window.saveSortingPreference = async (criteria) => {
+            if (!userId || !db) return;
+            try {
+                const settingsRef = doc(db, 'artifacts', appId, 'users', userId, 'preferences', 'settings');
+                await setDoc(settingsRef, { sortingCriteria: criteria }, { merge: true });
+            } catch (error) { console.error("Error al guardar preferencia:", error); }
         };
-
-        onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                userId = user.uid;
-                await loadSettings(userId);
-            }
-        });
-
-        initFirebase();
     </script>
 
     <script>
@@ -412,8 +421,8 @@
         function actualizarProgresoLive(barras) {
             const ahora = Date.now();
             barras.forEach(barra => {
-                const inicio = barra.inicioTs;
-                const fin = barra.finTs;
+                const inicio = barra.inicioTs; // Carrera Oficial Entrada
+                const fin = barra.finTs;       // Carrera Oficial Salida
                 let porcentaje = 0;
                 if (ahora >= fin) {
                     porcentaje = 100;
@@ -423,12 +432,14 @@
                     if (ahora > inicio) porcentaje = ((ahora - inicio) / (fin - inicio)) * 100;
                 }
                 barra.elemento.style.width = porcentaje + '%';
-                const enCalle = ahora >= barra.salidaTs && ahora < barra.recogidaPasoTs;
+                
+                const enCalle = ahora >= barra.salidaCruzTs && ahora < barra.recogidaPasoTs;
                 barra.boton.classList.remove('ring-2', 'ring-rose-500', 'border-transparent', 'border-gray-200');
                 if (enCalle) barra.boton.classList.add('ring-2', 'ring-rose-500', 'border-transparent');
                 else barra.boton.classList.add('border-gray-200');
+                
                 const windowMs = 120000; 
-                if (!notificados.has(barra.nombre + 'salida') && ahora >= barra.salidaTs && ahora <= barra.salidaTs + windowMs) {
+                if (!notificados.has(barra.nombre + 'salida') && ahora >= barra.salidaCruzTs && ahora <= barra.salidaCruzTs + windowMs) {
                     notificados.add(barra.nombre + 'salida');
                     mostrarNotificacion(`¡La Cruz de Guía de ${barra.nombre} ya está en la calle!`, '🚪');
                 }
@@ -537,7 +548,7 @@
                     nombre: cofradia.nombre, boton: btn, elemento: barraFondo,
                     inicioTs: obtenerTimestampAbsoluto(diaActual, cofradia.entradaCOCruz),
                     finTs: obtenerTimestampAbsoluto(diaActual, cofradia.salidaCOCruz),
-                    salidaTs: obtenerTimestampAbsoluto(diaActual, cofradia.salidaCruz),
+                    salidaCruzTs: obtenerTimestampAbsoluto(diaActual, cofradia.salidaCruz),
                     recogidaCruzTs: obtenerTimestampAbsoluto(diaActual, cofradia.recogidaCruz),
                     recogidaPasoTs: obtenerTimestampAbsoluto(diaActual, cofradia.recogidaPaso)
                 });
@@ -547,18 +558,18 @@
             progresoInterval = setInterval(() => actualizarProgresoLive(barrasParaActualizar), 10000);
         }
 
-        function actualizarModalProgreso(inicio, fin) {
+        window.actualizarModalProgreso = function(inicio, fin) {
             const ahora = Date.now();
             let porcentaje = 0;
             const bar = document.getElementById('modalProgressBar');
             const txt = document.getElementById('modalProgresoTexto');
-            if (ahora >= fin) { porcentaje = 100; txt.innerText = "Recogida"; }
-            else if (ahora <= inicio) { porcentaje = 0; txt.innerText = "En el templo"; }
+            if (ahora >= fin) { porcentaje = 100; txt.innerText = "Salida Carrera Oficial"; }
+            else if (ahora <= inicio) { porcentaje = 0; txt.innerText = "Antes de Carrera Oficial"; }
             else { porcentaje = ((ahora - inicio) / (fin - inicio)) * 100; txt.innerText = Math.round(porcentaje) + "%"; }
             bar.style.width = porcentaje + '%';
-        }
+        };
 
-        function mostrarDetalle(dia, index) {
+        window.mostrarDetalle = function(dia, index) {
             const cofradia = datosSemanaSanta[dia][index];
             document.getElementById('modalTitulo').innerText = "Detalle de la Cofradía";
             document.getElementById('modalTituloInterior').innerText = cofradia.nombre;
@@ -574,61 +585,52 @@
             document.getElementById('modalEntradaCOPaso').innerText = cofradia.entradaCOPaso;
             document.getElementById('modalSalidaCOCruz').innerText = cofradia.salidaCOCruz;
             document.getElementById('modalSalidaCOPaso').innerText = cofradia.salidaCOPaso;
-            const inicioTs = obtenerTimestampAbsoluto(dia, cofradia.salidaCruz);
-            const finTs = obtenerTimestampAbsoluto(dia, cofradia.recogidaPaso);
-            actualizarModalProgreso(inicioTs, finTs);
+            
+            const inicioTs = obtenerTimestampAbsoluto(dia, cofradia.entradaCOCruz);
+            const finTs = obtenerTimestampAbsoluto(dia, cofradia.salidaCOCruz);
+            
+            window.actualizarModalProgreso(inicioTs, finTs);
             if (modalProgresoInterval) clearInterval(modalProgresoInterval);
-            modalProgresoInterval = setInterval(() => actualizarModalProgreso(inicioTs, finTs), 10000);
+            modalProgresoInterval = setInterval(() => window.actualizarModalProgreso(inicioTs, finTs), 10000);
+            
             const modal = document.getElementById('detalleModal');
             modal.classList.remove('hidden');
             modal.classList.add('flex', 'fade-in');
-        }
+        };
 
-        function cerrarDetalle() {
+        window.cerrarDetalle = function() {
             const modal = document.getElementById('detalleModal');
             modal.classList.add('hidden');
             modal.classList.remove('flex', 'fade-in');
             if (modalProgresoInterval) clearInterval(modalProgresoInterval);
-        }
+        };
 
-        function toggleNombreOficial() {
+        window.toggleNombreOficial = function() {
             const container = document.getElementById('modalNombreOficialContainer');
             container.classList.toggle('hidden');
             container.classList.toggle('fade-in');
-        }
+        };
 
-        function abrirFb() {
-            const modal = document.getElementById('fbModal');
-            modal.classList.remove('hidden');
-            modal.classList.add('flex', 'fade-in');
-        }
-
-        function cerrarFb() {
-            const modal = document.getElementById('fbModal');
-            modal.classList.add('hidden');
-            modal.classList.remove('flex', 'fade-in');
-        }
-
-        function abrirConfiguracion() {
+        window.abrirConfiguracion = function() {
             window.actualizarUIOrdenacion();
             const modal = document.getElementById('configuracionModal');
             modal.classList.remove('hidden');
             modal.classList.add('flex', 'fade-in');
-        }
+        };
 
-        function cerrarConfiguracion() {
+        window.cerrarConfiguracion = function() {
             const modal = document.getElementById('configuracionModal');
             modal.classList.add('hidden');
             modal.classList.remove('flex', 'fade-in');
-        }
+        };
 
-        function cambiarOrden(nuevoCriterio) {
+        window.cambiarOrden = function(nuevoCriterio) {
             window.criterioOrdenActual = nuevoCriterio;
             if (typeof window.saveSortingPreference === 'function') window.saveSortingPreference(nuevoCriterio);
             window.actualizarUIOrdenacion();
             window.cargarDia(window.diaSeleccionadoActual);
-            setTimeout(cerrarConfiguracion, 200);
-        }
+            setTimeout(window.cerrarConfiguracion, 200);
+        };
 
         window.actualizarUIOrdenacion = function() {
             const ids = { carrera: 'btnOrdenCarrera', salida: 'btnOrdenSalida', recogida: 'btnOrdenRecogida' };
@@ -646,182 +648,7 @@
                     dot.classList.add('hidden');
                 }
             });
-        }
-
-        let juegoSeleccionado = ''; 
-
-        function abrirJuegos() {
-            const modal = document.getElementById('juegosModal');
-            modal.classList.remove('hidden');
-            modal.classList.add('flex', 'fade-in');
-            document.getElementById('juegosTitulo').innerText = 'Juegos Cofrades';
-            renderJuegosMenu();
-        }
-
-        function cerrarJuegos() {
-            const modal = document.getElementById('juegosModal');
-            modal.classList.add('hidden');
-            modal.classList.remove('flex', 'fade-in');
-            setTimeout(renderJuegosMenu, 300);
-        }
-
-        function renderJuegosMenu() {
-            const contenedor = document.getElementById('juegosContenido');
-            contenedor.innerHTML = `
-                <div class="w-full max-w-sm flex flex-col gap-4 fade-in text-center">
-                    <p class="text-gray-300 mb-4">Selecciona un juego para pasar el rato.</p>
-                    <button onclick="seleccionarJuego('impostor')" class="w-full bg-rose-700 text-white font-bold py-6 px-4 rounded-2xl shadow-lg hover:bg-rose-600 transition active:scale-95 text-xl border border-rose-500">
-                        🕵️ El Impostor Cofrade
-                    </button>
-                    <button onclick="seleccionarJuego('trivial')" class="w-full bg-blue-700 text-white font-bold py-6 px-4 rounded-2xl shadow-lg hover:bg-blue-600 transition active:scale-95 text-xl border border-blue-500">
-                        🧠 Trivial Cofrade
-                    </button>
-                </div>
-            `;
-        }
-
-        function seleccionarJuego(juego) {
-            juegoSeleccionado = juego;
-            document.getElementById('juegosTitulo').innerText = juego === 'impostor' ? 'El Impostor Cofrade' : 'Trivial Cofrade';
-            renderJuegosSetup();
-        }
-
-        function generarInputsNombresJuegos() {
-            const num = parseInt(document.getElementById('numJugadoresJuegos').value);
-            const contenedorNombres = document.getElementById('contenedorNombresJuegos');
-            contenedorNombres.innerHTML = '';
-            for (let i = 1; i <= num; i++) {
-                const input = document.createElement('input');
-                input.type = 'text';
-                input.className = 'w-full bg-gray-700 text-white border border-gray-600 rounded-lg p-3 focus:outline-none focus:border-rose-500';
-                input.placeholder = num === 1 ? 'Tu nombre' : `Nombre del jugador ${i}`;
-                input.id = `nombreJugadorJuegos${i}`;
-                contenedorNombres.appendChild(input);
-            }
-        }
-
-        function renderJuegosSetup() {
-            const contenedor = document.getElementById('juegosContenido');
-            let opcionesSelect = '';
-            if (juegoSeleccionado === 'trivial') {
-                opcionesSelect += '<option value="1">Modo Solitario</option><option value="2">2 Jugadores</option><option value="3">3 Jugadores</option><option value="4" selected>4 Jugadores</option><option value="5">5 Jugadores</option><option value="6">6 Jugadores</option><option value="7">7 Jugadores</option><option value="8">8 Jugadores</option>';
-            } else {
-                opcionesSelect += '<option value="3">3 Jugadores</option><option value="4" selected>4 Jugadores</option><option value="5">5 Jugadores</option><option value="6">6 Jugadores</option><option value="7">7 Jugadores</option><option value="8">8 Jugadores</option>';
-            }
-            contenedor.innerHTML = `<div class="w-full max-w-sm flex flex-col gap-6 fade-in text-center"><p class="text-gray-300">Introduce los participantes para comenzar.</p><div class="flex flex-col gap-2 text-left"><label class="text-sm font-bold text-gray-400 uppercase tracking-wider">Número de jugadores</label><select id="numJugadoresJuegos" onchange="generarInputsNombresJuegos()" class="w-full bg-gray-700 text-white border border-gray-600 rounded-lg p-3 focus:outline-none">${opcionesSelect}</select></div><div id="contenedorNombresJuegos" class="flex flex-col gap-3"></div><button onclick="iniciarJuegoGeneral()" class="w-full ${juegoSeleccionado === 'impostor' ? 'bg-rose-600 hover:bg-rose-500' : 'bg-blue-600 hover:bg-blue-500'} text-white font-bold py-4 rounded-xl shadow-lg transition active:scale-95 text-lg mt-2">Comenzar Partida</button><button onclick="renderJuegosMenu()" class="text-gray-400 hover:text-white transition text-sm">Volver al menú de juegos</button></div>`;
-            generarInputsNombresJuegos();
-        }
-
-        function iniciarJuegoGeneral() {
-            const num = parseInt(document.getElementById('numJugadoresJuegos').value);
-            let nombres = [];
-            for (let i = 1; i <= num; i++) nombres.push(document.getElementById(`nombreJugadorJuegos${i}`).value.trim() || `Jugador ${i}`);
-            if (juegoSeleccionado === 'impostor') { impJugadoresOriginal = nombres; iniciarSiguienteRondaImpostor(); }
-            else iniciarTrivial(nombres);
-        }
-
-        const diccionarioCofrade = ["Carrera Oficial", "Capirote", "Incienso", "Cargador", "Capataz", "Trabajadera", "Marcha procesional", "Iglesia Mayor", "La Isla", "Torrija", "Nazareno", "Cruz de Guía", "Paso de palio", "Paso de misterio", "Saeta", "Candelabro", "Llamador", "Penitente", "Calle Real", "Carga isleña", "Cirial", "Respiradero", "Faldón", "Varal", "Manto", "Corona", "Túnica", "Cíngulo", "Cirio", "Pregón", "Plaza de la Pastora", "Rosario", "Campana", "Recogida", "Antifaz", "Corneta", "Tambor", "Acólito"];
-        let impJugadoresOriginal = [], impJugadores = [], impImpostorIndex = -1, impPalabraSecreta = '', impTurnoActual = 0, impJugadorInicia = '';
-
-        function iniciarSiguienteRondaImpostor() {
-            impJugadores = [...impJugadoresOriginal].sort(() => Math.random() - 0.5);
-            impImpostorIndex = Math.floor(Math.random() * impJugadores.length);
-            impPalabraSecreta = diccionarioCofrade[Math.floor(Math.random() * diccionarioCofrade.length)];
-            impTurnoActual = 0;
-            impJugadorInicia = impJugadores[Math.floor(Math.random() * impJugadores.length)];
-            mostrarTurnoPassImpostor();
-        }
-
-        function mostrarTurnoPassImpostor() {
-            const contenedor = document.getElementById('juegosContenido');
-            const nombreActual = impJugadores[impTurnoActual];
-            contenedor.innerHTML = `<div class="w-full max-w-sm flex flex-col items-center gap-8 fade-in text-center"><svg class="w-20 h-20 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg><div><p class="text-xl text-gray-400 mb-2">Pasa el dispositivo a</p><h3 class="text-4xl font-bold text-white text-rose-500">${nombreActual}</h3></div><button onclick="revelarRolImpostor()" class="w-full bg-gray-700 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-gray-600 transition active:scale-95 text-lg">Soy ${nombreActual}, ver mi rol</button></div>`;
-        }
-
-        function revelarRolImpostor() {
-            const contenedor = document.getElementById('juegosContenido');
-            const esImpostor = (impTurnoActual === impImpostorIndex);
-            let contenidoRol = esImpostor ? `<p class="text-2xl font-bold text-red-500 mb-2">¡ERES EL IMPOSTOR!</p><p class="text-gray-300">Disimula y adivina la palabra por el contexto de los demás.</p>` : `<p class="text-gray-400 uppercase tracking-widest text-sm mb-1">Palabra Secreta</p><p class="text-4xl font-bold text-white mb-2">${impPalabraSecreta}</p><p class="text-gray-400">Mantenla en secreto.</p>`;
-            contenedor.innerHTML = `<div class="w-full max-w-sm flex flex-col items-center gap-8 fade-in text-center"><div class="bg-gray-800 p-8 rounded-2xl border border-gray-700 w-full shadow-inner">${contenidoRol}</div><button onclick="siguienteTurnoImpostor()" class="w-full bg-rose-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-rose-500 transition active:scale-95 text-lg">Ocultar y continuar</button></div>`;
-        }
-
-        function siguienteTurnoImpostor() {
-            impTurnoActual++;
-            if (impTurnoActual < impJugadores.length) mostrarTurnoPassImpostor();
-            else mostrarFinPreparacionImpostor();
-        }
-
-        function mostrarFinPreparacionImpostor() {
-            const contenedor = document.getElementById('juegosContenido');
-            contenedor.innerHTML = `<div class="w-full max-w-sm flex flex-col items-center gap-6 fade-in text-center"><svg class="w-24 h-24 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"></path></svg><div><h3 class="text-3xl font-bold text-white mb-3">Todos listos</h3><p class="text-gray-300">Que empiece el debate.</p><p class="text-xl font-bold text-amber-400 mt-4 border border-amber-500/30 bg-amber-500/10 py-3 rounded-lg">Empieza: <span class="text-white">${impJugadorInicia}</span></p></div><button onclick="revelarImpostorFinal()" class="w-full bg-amber-500 text-gray-900 font-bold py-4 rounded-xl shadow-lg hover:bg-amber-400 transition active:scale-95 text-lg mt-2">Revelar Impostor</button></div>`;
-        }
-
-        function revelarImpostorFinal() {
-            const contenedor = document.getElementById('juegosContenido');
-            const nombreImpostor = impJugadores[impImpostorIndex];
-            contenedor.innerHTML = `<div class="w-full max-w-sm flex flex-col items-center gap-8 fade-in text-center"><div class="bg-gray-800 p-8 rounded-2xl border border-rose-700 w-full shadow-inner"><p class="text-gray-400 uppercase tracking-widest text-sm mb-1">El impostor era...</p><p class="text-4xl font-bold text-rose-500 mb-6">${nombreImpostor}</p><p class="text-gray-400 uppercase tracking-widest text-sm mb-1 border-t border-gray-700 pt-6">La palabra era</p><p class="text-2xl font-bold text-white mb-2">${impPalabraSecreta}</p></div><button onclick="iniciarSiguienteRondaImpostor()" class="w-full bg-rose-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-rose-500 transition active:scale-95 text-lg">Siguiente Ronda</button><button onclick="cerrarJuegos()" class="w-full text-gray-400 hover:text-white font-bold py-2 transition mt-2">Terminar Juego</button></div>`;
-        }
-
-        const bancoPreguntasTrivial = [{ q: "¿Cuál es la cofradía más antigua de San Fernando?", a: "La Soledad.", e: ["El Nazareno.", "La Vera Cruz.", "El Carmen."] }, { q: "¿Qué escultor talló al Cristo de la Expiración?", a: "José Tomás de Cirartegui.", e: ["Alfonso Berraquero.", "Castillo Lastrucci.", "Bey Olvera."] }, { q: "¿En qué barrio procesiona el Gran Poder?", a: "La Bazán.", e: ["La Ardila.", "La Casería.", "La Pastora."] }];
-        let trivialJugadores = [], trivialRondaActual = 1, totalRondasTrivial = 5, trivialTurnoActual = 0, trivialOrdenDeJuego = [], preguntasDisponibles = [], preguntaSeleccionada = null, opcionesActuales = [];
-
-        function iniciarTrivial(nombres) {
-            trivialJugadores = nombres.map(n => ({ nombre: n, puntos: 0 }));
-            trivialRondaActual = 1; totalRondasTrivial = (trivialJugadores.length === 1) ? 10 : 5;
-            preguntasDisponibles = [...bancoPreguntasTrivial].sort(() => Math.random() - 0.5);
-            const numJugadores = trivialJugadores.length, inicioAzar = Math.floor(Math.random() * numJugadores);
-            trivialOrdenDeJuego = [];
-            for(let i = 0; i < numJugadores; i++) trivialOrdenDeJuego.push((inicioAzar + i) % numJugadores);
-            trivialTurnoActual = 0; flujoTrivialTurno();
-        }
-
-        function flujoTrivialTurno() { if (trivialJugadores.length === 1) mostrarPantallaTrivial(); else mostrarTurnoPasoTrivial(); }
-
-        function mostrarTurnoPasoTrivial() {
-            const contenedor = document.getElementById('juegosContenido');
-            const nombreActual = trivialJugadores[trivialOrdenDeJuego[trivialTurnoActual]].nombre;
-            contenedor.innerHTML = `<div class="w-full max-w-sm flex flex-col items-center gap-8 fade-in text-center"><svg class="w-20 h-20 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg><div><p class="text-xl text-gray-400 mb-2">Pasa el dispositivo a</p><h3 class="text-4xl font-bold text-white text-blue-400">${nombreActual}</h3></div><button onclick="mostrarPantallaTrivial()" class="w-full bg-gray-700 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-gray-600 transition active:scale-95 text-lg">Soy ${nombreActual}, jugar</button></div>`;
-        }
-
-        function mostrarPantallaTrivial() {
-            const contenedor = document.getElementById('juegosContenido');
-            const jugadorActual = trivialJugadores[trivialOrdenDeJuego[trivialTurnoActual]];
-            preguntaSeleccionada = preguntasDisponibles.pop();
-            opcionesActuales = [preguntaSeleccionada.a, ...preguntaSeleccionada.e].sort(() => Math.random() - 0.5);
-            let opcionesHTML = '';
-            opcionesActuales.forEach((opcion, i) => { opcionesHTML += `<button id="btnOpcion${i}" onclick="seleccionarRespuesta(${i})" class="w-full bg-gray-700 text-white text-left p-4 rounded-xl shadow border border-gray-600 hover:bg-blue-600 transition text-sm">${opcion}</button>`; });
-            contenedor.innerHTML = `<div class="w-full max-w-lg flex flex-col gap-4 fade-in"><div class="flex justify-between items-center bg-gray-800 p-3 rounded-xl border border-gray-700"><span class="text-blue-400 font-bold uppercase text-sm">Ronda ${trivialRondaActual}</span><span class="text-white font-bold">${jugadorActual.nombre}</span></div><div class="bg-blue-900 text-white p-6 rounded-2xl shadow-inner border border-blue-700 mb-2"><p class="text-lg font-bold">${preguntaSeleccionada.q}</p></div><div class="flex flex-col gap-3" id="contenedorOpciones">${opcionesHTML}</div><div id="contenedorContinuar" class="hidden mt-4"><button onclick="siguienteTurnoTrivial()" class="w-full bg-amber-500 text-gray-900 font-bold py-4 rounded-xl shadow-lg active:scale-95 text-lg">Siguiente</button></div></div>`;
-        }
-
-        function seleccionarRespuesta(idx) {
-            const esCorrecta = (opcionesActuales[idx] === preguntaSeleccionada.a);
-            for(let i = 0; i < 4; i++) {
-                const btn = document.getElementById(`btnOpcion${i}`);
-                btn.onclick = null;
-                if (opcionesActuales[i] === preguntaSeleccionada.a) btn.classList.add('bg-green-600', 'border-green-400');
-                else if (i === idx) btn.classList.add('bg-red-600', 'border-red-400');
-                else btn.classList.add('bg-gray-800', 'opacity-50');
-            }
-            if (esCorrecta) trivialJugadores[trivialOrdenDeJuego[trivialTurnoActual]].puntos += 100;
-            document.getElementById('contenedorContinuar').classList.remove('hidden');
-        }
-
-        function siguienteTurnoTrivial() {
-            trivialTurnoActual++;
-            if (trivialTurnoActual >= trivialJugadores.length) {
-                if (trivialJugadores.length === 1 && trivialRondaActual < totalRondasTrivial) avanzarRondaTrivial();
-                else mostrarClasificacionTrivial();
-            } else flujoTrivialTurno();
-        }
-
-        function mostrarClasificacionTrivial() {
-            const contenedor = document.getElementById('juegosContenido'), esFinal = (trivialRondaActual === totalRondasTrivial), ranking = [...trivialJugadores].sort((a, b) => b.puntos - a.puntos);
-            let rankingHTML = '';
-            ranking.forEach((jug, i) => { rankingHTML += `<div class="flex justify-between items-center bg-gray-800 p-4 rounded-xl border border-gray-700 mb-2"><span class="text-white">${jug.nombre}</span><span class="font-black text-amber-400">${jug.puntos} pts</span></div>`; });
-            contenedor.innerHTML = `<div class="w-full max-w-sm flex flex-col fade-in"><h2 class="text-2xl font-bold text-center mb-6">Clasificación</h2>${rankingHTML}<button onclick="${esFinal ? 'renderJuegosMenu()' : 'avanzarRondaTrivial()'}" class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl mt-4">${esFinal ? 'Volver' : 'Continuar'}</button></div>`;
-        }
-
-        function avanzarRondaTrivial() { trivialRondaActual++; trivialTurnoActual = 0; flujoTrivialTurno(); }
+        };
 
         window.startAppFlow = function() {
             const hoy = new Date(), mes = hoy.getMonth(), fecha = hoy.getDate(), hora = hoy.getHours();
@@ -843,9 +670,160 @@
                     setTimeout(() => splash.classList.add('hidden'), 500);
                 }
             }, 1000);
-            
             window.startAppFlow();
         });
+
+        // Lógica de Juegos Restaurada
+        let juegoSeleccionado = '';
+        const diccionarioCofrade = ["Carrera Oficial", "Capirote", "Incienso", "Cargador", "Capataz", "Trabajadera", "Marcha procesional", "Iglesia Mayor", "La Isla", "Torrija", "Mantilla", "Nazareno", "Cruz de Guía", "Paso de palio", "Paso de misterio", "Saeta", "Candelabro", "Llamador", "Banda de música", "Penitente", "IslaPasión", "La Venera", "Calle Real", "Carga isleña", "Almohada", "Aguaor", "Cirial", "Respiradero", "Faldón", "Varal", "Manto", "Corona", "Potencias", "Túnica", "Cíngulo", "Cirio", "Hermano Mayor", "Pregón", "Plaza de la Pastora", "Rosario", "Campana", "Recogida", "Antifaz", "Corneta", "Tambor", "Sacerdote", "Acólito"];
+        
+        const bancoPreguntasTrivial = [
+            { q: "¿Cuál es la cofradía de penitencia más antigua de San Fernando?", a: "La Hermandad de la Soledad.", e: ["El Nazareno.", "La Vera Cruz.", "El Carmen."] },
+            { q: "¿En qué barrio procesiona el Gran Poder?", a: "La Bazán.", e: ["La Ardila.", "La Casería.", "La Pastora."] },
+            { q: "¿Qué escultor talló al Cristo de la Expiración?", a: "José Tomás de Cirartegui.", e: ["Alfonso Berraquero.", "Castillo Lastrucci.", "Bey Olvera."] },
+            { q: "¿Qué calle fue la carrera oficial tradicional durante décadas?", a: "La calle Rosario.", e: ["Calle Real.", "Calle Colón.", "Calle San Rafael."] },
+            { q: "¿Cómo se conoce popularmente a la hermandad de la Expiración?", a: "El Silencio.", e: ["Los Estudiantes.", "El Gremio.", "La Sanidad."] }
+        ];
+
+        window.abrirJuegos = function() {
+            const modal = document.getElementById('juegosModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex', 'fade-in');
+            document.getElementById('juegosTitulo').innerText = 'Juegos Cofrades';
+            window.renderJuegosMenu();
+        };
+
+        window.cerrarJuegos = function() {
+            const modal = document.getElementById('juegosModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex', 'fade-in');
+        };
+
+        window.renderJuegosMenu = function() {
+            const contenedor = document.getElementById('juegosContenido');
+            contenedor.innerHTML = `
+                <div class="w-full max-w-sm flex flex-col gap-4 fade-in text-center">
+                    <p class="text-gray-300 mb-4">Selecciona un juego para pasar el rato.</p>
+                    <button onclick="window.seleccionarJuego('impostor')" class="w-full bg-rose-700 text-white font-bold py-6 px-4 rounded-2xl shadow-lg hover:bg-rose-600 transition active:scale-95 text-xl border border-rose-500">🕵️ El Impostor Cofrade</button>
+                    <button onclick="window.seleccionarJuego('trivial')" class="w-full bg-blue-700 text-white font-bold py-6 px-4 rounded-2xl shadow-lg hover:bg-blue-600 transition active:scale-95 text-xl border border-blue-500">🧠 Trivial Cofrade</button>
+                </div>`;
+        };
+
+        window.seleccionarJuego = function(j) {
+            juegoSeleccionado = j;
+            document.getElementById('juegosTitulo').innerText = j === 'impostor' ? 'El Impostor Cofrade' : 'Trivial Cofrade';
+            window.renderJuegosSetup();
+        };
+
+        window.renderJuegosSetup = function() {
+            const contenedor = document.getElementById('juegosContenido');
+            contenedor.innerHTML = `
+                <div class="w-full max-w-sm flex flex-col gap-6 fade-in text-center">
+                    <p class="text-gray-300">Indica el número de jugadores:</p>
+                    <input id="numJugadoresJuegos" type="number" value="4" min="1" max="8" class="bg-gray-700 text-white text-center p-3 rounded-lg text-xl">
+                    <button onclick="window.iniciarJuegoGeneral()" class="w-full bg-rose-600 text-white font-bold py-4 rounded-xl shadow-lg">Comenzar Partida</button>
+                    <button onclick="window.renderJuegosMenu()" class="text-gray-400 text-sm">Volver</button>
+                </div>`;
+        };
+
+        window.iniciarJuegoGeneral = function() {
+            const n = parseInt(document.getElementById('numJugadoresJuegos').value);
+            let nombres = [];
+            for (let i = 1; i <= n; i++) nombres.push(`Jugador ${i}`);
+            if (juegoSeleccionado === 'impostor') { window.impJugadoresOriginal = nombres; window.iniciarSiguienteRondaImpostor(); }
+            else window.iniciarTrivial(nombres);
+        };
+
+        // Lógica Impostor Completa
+        window.iniciarSiguienteRondaImpostor = function() {
+            window.impJugadores = [...window.impJugadoresOriginal].sort(() => Math.random() - 0.5);
+            window.impImpostorIndex = Math.floor(Math.random() * window.impJugadores.length);
+            window.impPalabraSecreta = diccionarioCofrade[Math.floor(Math.random() * diccionarioCofrade.length)];
+            window.impTurnoActual = 0;
+            window.mostrarTurnoPassImpostor();
+        };
+
+        window.mostrarTurnoPassImpostor = function() {
+            const contenedor = document.getElementById('juegosContenido');
+            const nombre = window.impJugadores[window.impTurnoActual];
+            contenedor.innerHTML = `
+                <div class="w-full max-w-sm flex flex-col items-center gap-8 fade-in text-center">
+                    <svg class="w-20 h-20 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                    <div><p class="text-xl text-gray-400 mb-2">Pasa el dispositivo a</p><h3 class="text-4xl font-bold text-rose-500">${nombre}</h3></div>
+                    <button onclick="window.revelarRolImpostor()" class="w-full bg-gray-700 text-white font-bold py-4 rounded-xl shadow-lg">Ver mi rol</button>
+                </div>`;
+        };
+
+        window.revelarRolImpostor = function() {
+            const esImpostor = (window.impTurnoActual === window.impImpostorIndex);
+            const contenido = esImpostor ? `<p class="text-2xl font-bold text-red-500">¡ERES EL IMPOSTOR!</p>` : `<p class="text-gray-400 text-sm">Palabra Secreta</p><p class="text-4xl font-bold">${window.impPalabraSecreta}</p>`;
+            document.getElementById('juegosContenido').innerHTML = `
+                <div class="w-full max-w-sm flex flex-col items-center gap-8 fade-in text-center">
+                    <div class="bg-gray-800 p-8 rounded-2xl w-full border border-gray-700">${contenido}</div>
+                    <button onclick="window.siguienteTurnoImpostor()" class="w-full bg-rose-600 font-bold py-4 rounded-xl">Ocultar y continuar</button>
+                </div>`;
+        };
+
+        window.siguienteTurnoImpostor = function() {
+            window.impTurnoActual++;
+            if (window.impTurnoActual < window.impJugadores.length) window.mostrarTurnoPassImpostor();
+            else document.getElementById('juegosContenido').innerHTML = `<div class="text-center"><p class="text-2xl font-bold mb-6">Debate Iniciado</p><button onclick="window.revelarImpostorFinal()" class="bg-amber-500 text-gray-900 p-4 rounded-xl font-bold">Revelar Impostor</button></div>`;
+        };
+
+        window.revelarImpostorFinal = function() {
+            const nombre = window.impJugadores[window.impImpostorIndex];
+            document.getElementById('juegosContenido').innerHTML = `
+                <div class="text-center fade-in">
+                    <p class="text-gray-400 mb-2">El impostor era...</p>
+                    <p class="text-4xl font-bold text-rose-500 mb-8">${nombre}</p>
+                    <button onclick="window.iniciarSiguienteRondaImpostor()" class="bg-rose-600 p-4 rounded-xl w-full font-bold mb-4">Siguiente Ronda</button>
+                    <button onclick="window.renderJuegosMenu()" class="text-gray-400">Volver al menú</button>
+                </div>`;
+        };
+
+        // Trivial Completo
+        window.iniciarTrivial = function(nombres) {
+            window.trivialJugadores = nombres.map(n => ({ nombre: n, puntos: 0 }));
+            window.trivialRondaActual = 1;
+            window.preguntasDisponibles = [...bancoPreguntasTrivial].sort(() => Math.random() - 0.5);
+            window.trivialTurnoActual = 0;
+            window.mostrarPantallaTrivial();
+        };
+
+        window.mostrarPantallaTrivial = function() {
+            const q = window.preguntasDisponibles.pop();
+            if (!q) { window.mostrarClasificacionTrivial(true); return; }
+            window.preguntaActual = q;
+            const opts = [q.a, ...q.e].sort(() => Math.random() - 0.5);
+            document.getElementById('juegosContenido').innerHTML = `
+                <div class="w-full max-w-lg fade-in">
+                    <div class="bg-blue-900 p-6 rounded-2xl mb-6 font-bold text-lg">${q.q}</div>
+                    <div class="flex flex-col gap-3">
+                        ${opts.map((o, i) => `<button onclick="window.checkTrivial(${i}, '${o}')" class="bg-gray-700 p-4 rounded-xl text-left border border-gray-600 transition hover:bg-blue-600">${o}</button>`).join('')}
+                    </div>
+                </div>`;
+        };
+
+        window.checkTrivial = function(idx, val) {
+            const correct = (val === window.preguntaActual.a);
+            if (correct) window.trivialJugadores[0].puntos += 100; // Simplificado para solitario/demo
+            document.getElementById('juegosContenido').innerHTML = `
+                <div class="text-center fade-in">
+                    <p class="text-4xl mb-4">${correct ? '✅ ¡Correcto!' : '❌ Incorrecto'}</p>
+                    <p class="mb-8">La respuesta era: ${window.preguntaActual.a}</p>
+                    <button onclick="window.mostrarPantallaTrivial()" class="bg-blue-600 p-4 rounded-xl w-full font-bold">Siguiente Pregunta</button>
+                </div>`;
+        };
+
+        window.mostrarClasificacionTrivial = function(final) {
+            document.getElementById('juegosContenido').innerHTML = `
+                <div class="text-center">
+                    <h3 class="text-2xl font-bold mb-6">Fin del juego</h3>
+                    <p class="text-4xl font-black text-amber-400 mb-8">${window.trivialJugadores[0].puntos} pts</p>
+                    <button onclick="window.renderJuegosMenu()" class="bg-blue-600 p-4 rounded-xl w-full font-bold">Volver al menú</button>
+                </div>`;
+        };
+
     </script>
 </body>
 </html>
