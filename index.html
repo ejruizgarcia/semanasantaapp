@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Semana Santa San Fernando</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -63,7 +63,7 @@
         }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans h-screen flex flex-col overflow-hidden relative">
+<body class="bg-gray-50 text-gray-800 font-sans fixed inset-0 w-full h-full flex flex-col overflow-hidden">
 
     <div id="splashScreen" class="fixed inset-0 z-[100] flex flex-col bg-black transition-opacity duration-500 ease-in-out">
         <img src="https://raw.githubusercontent.com/ejruizgarcia/images/main/cartel.jpg" alt="Cartel Semana Santa" class="w-full h-full object-cover">
@@ -73,10 +73,10 @@
 
     <div id="toastContainer" class="fixed top-1/3 inset-x-0 z-[60] flex flex-col items-center gap-3 pointer-events-none px-4"></div>
 
-    <header class="bg-rose-900 text-white pt-4 pb-2 shadow-md z-10 shrink-0 relative">
-        <div class="flex justify-between items-center mb-3 px-4">
-            <h1 class="text-xl font-bold">Semana Santa San Fernando</h1>
-            <div class="flex items-center gap-2">
+    <header class="bg-rose-900 text-white shadow-md z-20 flex-none w-full">
+        <div class="flex justify-between items-center px-4 pt-4 pb-3">
+            <h1 class="text-xl font-bold truncate">Semana Santa San Fernando</h1>
+            <div class="flex items-center gap-2 shrink-0 ml-2">
                 <button onclick="abrirYt()" class="p-2 bg-rose-800 rounded-full hover:bg-rose-700 transition active:scale-95" aria-label="Directos en YouTube">
                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.5 12 3.5 12 3.5s-7.505 0-9.377.55a3.016 3.016 0 0 0-2.122 2.136C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.55 9.376.55 9.376.55s7.505 0 9.377-.55a3.016 3.016 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
@@ -526,10 +526,11 @@
                 btn.prepend(barraFondo);
                 contenedor.appendChild(btn);
 
+                // La tarjeta principal SIEMPRE mide el progreso de la Carrera Oficial, independientemente de cómo se ordene
                 barrasParaActualizar.push({
                     nombre: cof.nombre, boton: btn, elemento: barraFondo,
-                    inicioTs: obtenerTimestampAbsoluto(diaActual, cof.entradaCOCruz),
-                    finTs: obtenerTimestampAbsoluto(diaActual, cof.salidaCOPaso),
+                    inicioTs: obtenerTimestampAbsoluto(diaActual, cof.entradaCOCruz), // Entrada Carrera Oficial
+                    finTs: obtenerTimestampAbsoluto(diaActual, cof.salidaCOPaso),    // Salida Último Paso Carrera Oficial
                     salidaCruzTs: obtenerTimestampAbsoluto(diaActual, cof.salidaCruz),
                     recogidaPasoTs: obtenerTimestampAbsoluto(diaActual, cof.recogidaPaso)
                 });
@@ -576,6 +577,7 @@
             document.getElementById('modalSalidaCOCruz').innerText = cof.salidaCOCruz;
             document.getElementById('modalSalidaCOPaso').innerText = cof.salidaCOPaso;
             
+            // La ficha SIEMPRE mide el progreso total en la calle
             const start = obtenerTimestampAbsoluto(dia, cof.salidaCruz);
             const end = obtenerTimestampAbsoluto(dia, cof.recogidaPaso);
             
@@ -760,7 +762,7 @@
             
             let opcionesHTML = '';
             window.opcionesActuales.forEach((opcion, i) => {
-                opcionesHTML += `<button id="btnOpcion${i}" onclick="window.seleccionarRespuestaTrivial(${i})" class="w-full bg-gray-700 text-white text-left p-4 rounded-xl shadow border border-gray-600 hover:bg-blue-600 transition text-sm md:text-base">${opcion}</button>`;
+                opcionesHTML += `<button id="btnOpcion${i}" onclick="window.checkTrivial(${i})" class="w-full bg-gray-700 text-white text-left p-4 rounded-xl shadow border border-gray-600 hover:bg-blue-600 transition text-sm md:text-base">${opcion}</button>`;
             });
 
             const jugadorActual = window.trivialPlayers[window.trivialTurn];
@@ -788,7 +790,7 @@
                 </div>`;
         };
 
-        window.seleccionarRespuestaTrivial = function(indexSeleccionado) {
+        window.checkTrivial = function(indexSeleccionado) {
             const textoSeleccionado = window.opcionesActuales[indexSeleccionado];
             const esCorrecta = (textoSeleccionado === window.currentQ.a);
 
