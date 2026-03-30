@@ -681,19 +681,27 @@
                 const inicio = barra.inicioTs;
                 const fin = barra.finTs;
                 let porcentaje = 0;
+                
                 if (ahora >= fin) {
                     porcentaje = 100;
-                    barra.boton.classList.add('opacity-40', 'grayscale');
-                } else {
-                    barra.boton.classList.remove('opacity-40', 'grayscale');
-                    if (ahora > inicio) porcentaje = ((ahora - inicio) / (fin - inicio)) * 100;
+                } else if (ahora > inicio) {
+                    porcentaje = ((ahora - inicio) / (fin - inicio)) * 100;
                 }
+                
                 barra.elemento.style.width = porcentaje + '%';
                 
                 const enCalle = ahora >= barra.salidaCruzTs && ahora < barra.recogidaPasoTs;
-                barra.boton.classList.remove('ring-2', 'ring-rose-500', 'border-transparent', 'border-gray-200');
-                if (enCalle) barra.boton.classList.add('ring-2', 'ring-rose-500', 'border-transparent');
-                else barra.boton.classList.add('border-gray-200');
+                const yaRecogida = ahora >= barra.recogidaPasoTs;
+                
+                barra.boton.classList.remove('ring-2', 'ring-rose-500', 'border-transparent', 'border-gray-200', 'opacity-40', 'grayscale', 'border-dashed', 'border-gray-400');
+                
+                if (yaRecogida) {
+                    barra.boton.classList.add('opacity-40', 'grayscale', 'border-dashed', 'border-gray-400');
+                } else if (enCalle) {
+                    barra.boton.classList.add('ring-2', 'ring-rose-500', 'border-transparent');
+                } else {
+                    barra.boton.classList.add('border-gray-200');
+                }
                 
                 const windowMs = 120000; 
                 if (!notificados.has(barra.nombre + 'salida') && ahora >= barra.salidaCruzTs && ahora <= barra.salidaCruzTs + windowMs) {
