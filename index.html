@@ -258,7 +258,7 @@
                         </div>
                     </div>
                     <p id="modalSede" class="text-lg text-gray-800 font-medium mb-4 mt-2"></p>
-                    <div class="w-full">
+                    <div id="modalProgresoContainer" class="w-full">
                         <div class="flex justify-between text-xs text-rose-800 font-bold mb-1">
                             <span>Progreso en la calle</span>
                             <span id="modalProgresoTexto">0%</span>
@@ -711,16 +711,20 @@
                 const fin = barra.finTs;
                 let porcentaje = 0;
                 
-                if (ahora >= fin) {
-                    porcentaje = 100;
-                } else if (ahora > inicio) {
-                    porcentaje = ((ahora - inicio) / (fin - inicio)) * 100;
-                }
-                
-                barra.elemento.style.width = porcentaje + '%';
-                
                 const enCalle = ahora >= barra.salidaCruzTs && ahora < barra.recogidaPasoTs;
                 const yaRecogida = ahora >= barra.recogidaPasoTs;
+                
+                if (yaRecogida) {
+                    barra.elemento.style.display = 'none';
+                } else {
+                    barra.elemento.style.display = 'block';
+                    if (ahora >= fin) {
+                        porcentaje = 100;
+                    } else if (ahora > inicio) {
+                        porcentaje = ((ahora - inicio) / (fin - inicio)) * 100;
+                    }
+                    barra.elemento.style.width = porcentaje + '%';
+                }
                 
                 barra.boton.classList.remove('ring-2', 'ring-rose-500', 'border-transparent', 'border-gray-200', 'opacity-40', 'grayscale', 'border-dashed', 'border-gray-400');
                 
@@ -780,9 +784,22 @@
             const updateModalBar = () => {
                 const ahora = Date.now();
                 let p = 0;
-                if (ahora >= end) { p = 100; document.getElementById('modalProgresoTexto').innerText = "Recogida"; }
-                else if (ahora <= start) { p = 0; document.getElementById('modalProgresoTexto').innerText = "En el templo"; }
-                else { p = ((ahora - start) / (end - start)) * 100; document.getElementById('modalProgresoTexto').innerText = Math.round(p) + "%"; }
+                const contenedorProgreso = document.getElementById('modalProgresoContainer');
+                
+                if (ahora >= end) { 
+                    p = 100; 
+                    contenedorProgreso.style.display = 'none';
+                }
+                else if (ahora <= start) { 
+                    p = 0; 
+                    document.getElementById('modalProgresoTexto').innerText = "En el templo"; 
+                    contenedorProgreso.style.display = 'block';
+                }
+                else { 
+                    p = ((ahora - start) / (end - start)) * 100; 
+                    document.getElementById('modalProgresoTexto').innerText = Math.round(p) + "%"; 
+                    contenedorProgreso.style.display = 'block';
+                }
                 document.getElementById('modalProgressBar').style.width = p + '%';
                 
                 const textoItinerario = cof.itinerario;
