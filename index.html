@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Semana Santa San Fernando</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -107,6 +107,9 @@
 
     <main class="flex-1 overflow-y-auto p-4 pb-24 relative z-10" id="mainContainer">
         <div id="listaCofradias" class="flex flex-col gap-4 max-w-lg mx-auto pb-6"></div>
+        <div class="text-center pt-2 pb-8 text-[10px] text-gray-500 font-medium">
+            App creada por @ejruigarcia con la IA de Gemini.<br>Licencia Creative Commons CC BY-NC-SA 4.0
+        </div>
     </main>
 
     <div class="fixed bottom-6 inset-x-6 flex justify-between items-center pointer-events-none z-40">
@@ -164,6 +167,9 @@
                     </button>
                 </div>
             </div>
+            <div class="mt-auto text-center pt-8 text-[10px] text-gray-400 font-medium">
+                App creada por @ejruigarcia con la IA de Gemini.<br>Licencia Creative Commons CC BY-NC-SA 4.0
+            </div>
         </div>
     </div>
 
@@ -194,6 +200,9 @@
                     <span class="font-bold text-gray-800 text-lg">La Venera</span>
                 </a>
             </div>
+            <div class="mt-auto text-center pt-8 text-[10px] text-gray-400 font-medium">
+                App creada por @ejruigarcia con la IA de Gemini.<br>Licencia Creative Commons CC BY-NC-SA 4.0
+            </div>
         </div>
     </div>
 
@@ -215,6 +224,9 @@
                     <svg class="w-8 h-8 text-red-600 group-hover:scale-110 transition" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.5 12 3.5 12 3.5s-7.505 0-9.377.55a3.016 3.016 0 0 0-2.122 2.136C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.55 9.376.55 9.376.55s7.505 0 9.377-.55a3.016 3.016 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
                     <span class="font-bold text-gray-800 text-lg">San Fernando Cofrade</span>
                 </a>
+            </div>
+            <div class="mt-auto text-center pt-8 text-[10px] text-gray-400 font-medium">
+                App creada por @ejruigarcia con la IA de Gemini.<br>Licencia Creative Commons CC BY-NC-SA 4.0
             </div>
         </div>
     </div>
@@ -290,6 +302,9 @@
                 </div>
                 <button onclick="cerrarDetalle()" class="w-full bg-rose-950 text-white font-bold py-4 rounded-xl shadow-md hover:bg-rose-900 transition mt-4">Cerrar Ficha</button>
             </div>
+            <div class="text-center pt-8 text-[10px] text-gray-400 font-medium">
+                App creada por @ejruigarcia con la IA de Gemini.<br>Licencia Creative Commons CC BY-NC-SA 4.0
+            </div>
         </div>
     </div>
 
@@ -301,7 +316,12 @@
             </button>
             <h2 id="juegosTitulo" class="text-xl font-bold truncate">Juegos Cofrades</h2>
         </div>
-        <div id="juegosContenido" class="flex-1 overflow-y-auto p-5 flex flex-col items-center justify-center gap-6"></div>
+        <div class="flex-1 overflow-y-auto p-5 flex flex-col items-center justify-center relative">
+            <div id="juegosContenido" class="w-full max-w-sm flex flex-col items-center justify-center gap-6 z-10"></div>
+            <div class="absolute bottom-4 left-0 right-0 text-center text-[10px] text-gray-500 font-medium">
+                App creada por @ejruigarcia con la IA de Gemini.<br>Licencia Creative Commons CC BY-NC-SA 4.0
+            </div>
+        </div>
     </div>
 
     <script type="module">
@@ -559,6 +579,19 @@
             document.getElementById('detalleModal').classList.remove('flex', 'fade-in');
             if (modalProgresoInterval) clearInterval(modalProgresoInterval);
         };
+        
+        window.mostrarNotificacion = function(mensaje, icono) {
+            const container = document.getElementById('toastContainer');
+            if (!container) return;
+            const toast = document.createElement('div');
+            toast.className = 'bg-rose-900 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4 pop-in border border-rose-700 max-w-sm w-full z-50';
+            toast.innerHTML = `<span class="text-3xl">${icono}</span><span class="font-bold text-lg leading-tight">${mensaje}</span>`;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'transition-opacity', 'duration-500');
+                setTimeout(() => toast.remove(), 500);
+            }, 6000);
+        };
 
         function obtenerTimestampAbsoluto(dia, horaString) {
             let offset = diasOffset[dia];
@@ -627,11 +660,10 @@
                 btn.prepend(barraFondo);
                 contenedor.appendChild(btn);
 
-                // La tarjeta principal SIEMPRE mide el progreso de la Carrera Oficial, independientemente de cómo se ordene
                 barrasParaActualizar.push({
                     nombre: cof.nombre, boton: btn, elemento: barraFondo,
-                    inicioTs: obtenerTimestampAbsoluto(diaActual, cof.entradaCOCruz), // Entrada Carrera Oficial
-                    finTs: obtenerTimestampAbsoluto(diaActual, cof.salidaCOPaso),    // Salida Último Paso Carrera Oficial
+                    inicioTs: obtenerTimestampAbsoluto(diaActual, cof.entradaCOCruz),
+                    finTs: obtenerTimestampAbsoluto(diaActual, cof.salidaCOPaso),
                     salidaCruzTs: obtenerTimestampAbsoluto(diaActual, cof.salidaCruz),
                     entradaCOTs: obtenerTimestampAbsoluto(diaActual, cof.entradaCOCruz),
                     salidaCOTs: obtenerTimestampAbsoluto(diaActual, cof.salidaCOPaso),
@@ -666,25 +698,25 @@
                 const windowMs = 120000; 
                 if (!notificados.has(barra.nombre + 'salida') && ahora >= barra.salidaCruzTs && ahora <= barra.salidaCruzTs + windowMs) {
                     notificados.add(barra.nombre + 'salida');
-                    mostrarNotificacion(`¡La Cruz de Guía de ${barra.nombre} ya está en la calle!`, '🚪');
+                    window.mostrarNotificacion(`¡La Cruz de Guía de ${barra.nombre} ya está en la calle!`, '🚪');
                 }
                 if (!notificados.has(barra.nombre + 'co') && ahora >= barra.entradaCOTs && ahora <= barra.entradaCOTs + windowMs) {
                     notificados.add(barra.nombre + 'co');
-                    mostrarNotificacion(`¡La Cruz de Guía de ${barra.nombre} entra en Carrera Oficial!`, '✨');
+                    window.mostrarNotificacion(`¡La Cruz de Guía de ${barra.nombre} entra en Carrera Oficial!`, '✨');
                     barra.boton.classList.add('shimmer-flash');
                     setTimeout(() => barra.boton.classList.remove('shimmer-flash'), 3500);
                 }
                 if (!notificados.has(barra.nombre + 'salidaCO') && ahora >= barra.salidaCOTs && ahora <= barra.salidaCOTs + windowMs) {
                     notificados.add(barra.nombre + 'salidaCO');
-                    mostrarNotificacion(`¡El último paso de ${barra.nombre} sale de Carrera Oficial!`, '👋');
+                    window.mostrarNotificacion(`¡El último paso de ${barra.nombre} sale de Carrera Oficial!`, '👋');
                 }
                 if (!notificados.has(barra.nombre + 'recogida') && ahora >= barra.recogidaCruzTs && ahora <= barra.recogidaCruzTs + windowMs) {
                     notificados.add(barra.nombre + 'recogida');
-                    mostrarNotificacion(`¡La Cruz de Guía de ${barra.nombre} ha llegado a su templo!`, '⛪');
+                    window.mostrarNotificacion(`¡La Cruz de Guía de ${barra.nombre} ha llegado a su templo!`, '⛪');
                 }
                 if (!notificados.has(barra.nombre + 'recogidaPaso') && ahora >= barra.recogidaPasoTs && ahora <= barra.recogidaPasoTs + windowMs) {
                     notificados.add(barra.nombre + 'recogidaPaso');
-                    mostrarNotificacion(`¡El último paso de ${barra.nombre} ha entrado en su templo!`, '⛪');
+                    window.mostrarNotificacion(`¡El último paso de ${barra.nombre} ha entrado en su templo!`, '⛪');
                 }
             });
         };
@@ -705,7 +737,6 @@
             document.getElementById('modalSalidaCOCruz').innerText = cof.salidaCOCruz;
             document.getElementById('modalSalidaCOPaso').innerText = cof.salidaCOPaso;
             
-            // La ficha SIEMPRE mide el progreso total en la calle
             const start = obtenerTimestampAbsoluto(dia, cof.salidaCruz);
             const end = obtenerTimestampAbsoluto(dia, cof.recogidaPaso);
             
@@ -864,7 +895,6 @@
             window.trivialRound = 1;
             window.totalRondasTrivial = n.length === 1 ? 10 : 5;
             
-            // Mezcla robusta de Fisher-Yates
             let shuffled = [...window.bancoPreguntasTrivial];
             for (let i = shuffled.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -892,7 +922,7 @@
 
         window.mostrarPreguntaTrivial = function() {
             const q = window.qBank.pop();
-            if(!q) { window.mostrarClasificacionTrivial(true); return; }
+            if(!q) { window.mostrarPantallaVictoria(); return; }
             window.currentQ = q;
             window.opcionesActuales = [q.a, ...q.e].sort(() => Math.random() - 0.5);
             
