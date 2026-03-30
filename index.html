@@ -269,7 +269,7 @@
                     </div>
                 </div>
                 
-                <div class="bg-gray-50 p-4 rounded-lg border border-gray-100 mb-4">
+                <div id="containerSalida" class="bg-gray-50 p-4 rounded-lg border border-gray-100 mb-4 transition-colors duration-500">
                     <p class="text-xs text-gray-500 uppercase font-bold mb-2">Salida</p>
                     <div class="flex justify-between text-sm">
                         <div><span class="text-gray-600 font-medium">Cruz de Guía:</span> <span id="modalSalidaCruz" class="font-bold text-gray-800 ml-1"></span></div>
@@ -277,7 +277,7 @@
                     </div>
                 </div>
 
-                <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-lg shadow-sm mb-4">
+                <div id="containerCO" class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-lg shadow-sm mb-4 transition-colors duration-500">
                     <p class="text-sm text-amber-800 uppercase font-bold tracking-wider mb-3">Carrera Oficial</p>
                     <div class="grid grid-cols-2 gap-4">
                         <div>
@@ -293,7 +293,7 @@
                     </div>
                 </div>
 
-                <div class="bg-gray-50 p-4 rounded-lg border border-gray-100 mb-4">
+                <div id="containerRecogida" class="bg-gray-50 p-4 rounded-lg border border-gray-100 mb-4 transition-colors duration-500">
                     <p class="text-xs text-gray-500 uppercase font-bold mb-2">Recogida</p>
                     <div class="flex justify-between text-sm">
                         <div><span class="text-gray-600 font-medium">Cruz de Guía:</span> <span id="modalRecogidaCruz" class="font-bold text-gray-800 ml-1"></span></div>
@@ -781,6 +781,15 @@
             const start = obtenerTimestampAbsoluto(dia, cof.salidaCruz);
             const end = obtenerTimestampAbsoluto(dia, cof.recogidaPaso);
             
+            const salidaPasoTs = obtenerTimestampAbsoluto(dia, cof.salidaPaso);
+            const entradaCOTs = obtenerTimestampAbsoluto(dia, cof.entradaCOCruz);
+            const salidaCOTs = obtenerTimestampAbsoluto(dia, cof.salidaCOPaso);
+            const recogidaCruzTs = obtenerTimestampAbsoluto(dia, cof.recogidaCruz);
+
+            const containerSalida = document.getElementById('containerSalida');
+            const containerCO = document.getElementById('containerCO');
+            const containerRecogida = document.getElementById('containerRecogida');
+            
             const updateModalBar = () => {
                 const ahora = Date.now();
                 let p = 0;
@@ -802,6 +811,30 @@
                 }
                 document.getElementById('modalProgressBar').style.width = p + '%';
                 
+                if (ahora >= start && ahora <= salidaPasoTs) {
+                    containerSalida.classList.remove('bg-gray-50', 'border-gray-100');
+                    containerSalida.classList.add('bg-gray-200', 'border-gray-300');
+                } else {
+                    containerSalida.classList.remove('bg-gray-200', 'border-gray-300');
+                    containerSalida.classList.add('bg-gray-50', 'border-gray-100');
+                }
+
+                if (ahora >= entradaCOTs && ahora <= salidaCOTs) {
+                    containerCO.classList.remove('bg-amber-50');
+                    containerCO.classList.add('bg-amber-200');
+                } else {
+                    containerCO.classList.remove('bg-amber-200');
+                    containerCO.classList.add('bg-amber-50');
+                }
+
+                if (ahora >= recogidaCruzTs && ahora <= end) {
+                    containerRecogida.classList.remove('bg-gray-50', 'border-gray-100');
+                    containerRecogida.classList.add('bg-gray-200', 'border-gray-300');
+                } else {
+                    containerRecogida.classList.remove('bg-gray-200', 'border-gray-300');
+                    containerRecogida.classList.add('bg-gray-50', 'border-gray-100');
+                }
+
                 const textoItinerario = cof.itinerario;
                 if (ahora >= end || ahora <= start) {
                     document.getElementById('modalItinerario').innerHTML = `<span class="text-gray-700">${textoItinerario}</span>`;
