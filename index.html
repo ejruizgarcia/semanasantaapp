@@ -241,7 +241,7 @@
         </div>
     </div>
 
-    <div id="detalleModal" class="fixed inset-0 z-[70] hidden flex-col h-full w-full">
+    <div id="detalleModal" class="fixed inset-0 z-[70] hidden flex-col h-full w-full bg-gray-50/90 backdrop-blur-sm">
         <div class="bg-rose-950 text-white p-4 flex justify-between items-center shadow-md shrink-0">
             <div class="flex items-center min-w-0">
                 <button onclick="cerrarDetalle()" class="mr-4 p-2 bg-rose-800 rounded-full hover:bg-rose-700 transition active:scale-95 shrink-0">
@@ -251,7 +251,7 @@
             </div>
         </div>
         <div class="flex-1 overflow-y-auto p-5">
-            <div class="max-w-lg mx-auto bg-white rounded-xl shadow-sm border border-gray-100 p-6 space-y-6 slide-up relative z-10">
+            <div class="max-w-[34rem] w-full mx-auto bg-white rounded-xl shadow-2xl border border-gray-100 p-6 space-y-6 slide-up relative z-10">
                 <button onclick="cerrarDetalle()" class="absolute top-4 right-4 text-rose-900 hover:text-rose-700 bg-rose-50 hover:bg-rose-100 p-1.5 rounded-full transition">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
@@ -932,6 +932,7 @@
             
             const salidaPasoTs = obtenerTimestampAbsoluto(dia, cof.salidaPaso);
             const entradaCOTs = obtenerTimestampAbsoluto(dia, cof.entradaCOCruz);
+            const salidaCOCruzTs = obtenerTimestampAbsoluto(dia, cof.salidaCOCruz);
             const salidaCOTs = obtenerTimestampAbsoluto(dia, cof.salidaCOPaso);
             const recogidaCruzTs = obtenerTimestampAbsoluto(dia, cof.recogidaCruz);
 
@@ -988,17 +989,64 @@
                 if (ahora >= end || ahora <= start) {
                     document.getElementById('modalItinerario').innerHTML = `<span class="text-gray-700">${textoItinerario}</span>`;
                 } else {
-                    let pItinerario = 0;
-                    if (ahora >= recogidaCruzTs) {
-                        pItinerario = 100;
-                    } else if (ahora > start) {
-                        pItinerario = ((ahora - start) / (recogidaCruzTs - start)) * 100;
-                    }
+                    const coStart = textoItinerario.indexOf('Carrera Oficial');
                     
-                    const indiceCorte = Math.floor(textoItinerario.length * (pItinerario / 100));
-                    const parteColoreada = textoItinerario.substring(0, indiceCorte);
-                    const parteRestante = textoItinerario.substring(indiceCorte);
-                    document.getElementById('modalItinerario').innerHTML = `<span class="text-rose-900 font-semibold bg-gray-200">${parteColoreada}</span><span class="text-gray-700">${parteRestante}</span>`;
+                    if (coStart === -1) {
+                        let pItinerario = 0;
+                        if (ahora >= recogidaCruzTs) {
+                            pItinerario = 100;
+                        } else if (ahora > start) {
+                            pItinerario = ((ahora - start) / (recogidaCruzTs - start)) * 100;
+                        }
+                        const indiceCorte = Math.floor(textoItinerario.length * (pItinerario / 100));
+                        const parteColoreada = textoItinerario.substring(0, indiceCorte);
+                        const parteRestante = textoItinerario.substring(indiceCorte);
+                        document.getElementById('modalItinerario').innerHTML = `<span class="text-rose-900 font-semibold bg-gray-200">${parteColoreada}</span><span class="text-gray-700">${parteRestante}</span>`;
+                    } else {
+                        const coEnd = coStart + 15;
+                        let indiceCorte = 0;
+                        
+                        if (ahora < entradaCOTs) {
+                            const dur = entradaCOTs - start;
+                            const pct = dur > 0 ? (ahora - start) / dur : 1;
+                            indiceCorte = Math.floor(coStart * pct);
+                        } else if (ahora >= entradaCOTs && ahora < salidaCOCruzTs) {
+                            const dur = salidaCOCruzTs - entradaCOTs;
+                            const pct = dur > 0 ? (ahora - entradaCOTs) / dur : 1;
+                            indiceCorte = coStart + Math.floor(15 * pct);
+                        } else {
+                            const dur = recogidaCruzTs - salidaCOCruzTs;
+                            const pct = dur > 0 ? (ahora - salidaCOCruzTs) / dur : 1;
+                            indiceCorte = coEnd + Math.floor((textoItinerario.length - coEnd) * pct);
+                        }
+                        
+                        const renderPart = (str, startIdx, isCO) => {
+                            if (!str) return '';
+                            const localCut = indiceCorte - startIdx;
+                            if (localCut <= 0) {
+                                return `<span class="text-gray-700">${str}</span>`;
+                            } else if (localCut >= str.length) {
+                                return isCO 
+                                    ? `<span class="bg-rose-900 text-white font-bold px-1 rounded shadow-sm">${str}</span>` 
+                                    : `<span class="text-rose-900 font-semibold bg-gray-200">${str}</span>`;
+                            } else {
+                                const col = str.substring(0, localCut);
+                                const rest = str.substring(localCut);
+                                return isCO 
+                                    ? `<span class="bg-rose-900 text-white font-bold pl-1 py-0.5 rounded-l shadow-sm">${col}</span><span class="text-gray-700">${rest}</span>` 
+                                    : `<span class="text-rose-900 font-semibold bg-gray-200">${col}</span><span class="text-gray-700">${rest}</span>`;
+                            }
+                        };
+                        
+                        const part1 = textoItinerario.substring(0, coStart);
+                        const part2 = textoItinerario.substring(coStart, coEnd);
+                        const part3 = textoItinerario.substring(coEnd);
+                        
+                        document.getElementById('modalItinerario').innerHTML = 
+                            renderPart(part1, 0, false) + 
+                            renderPart(part2, coStart, true) + 
+                            renderPart(part3, coEnd, false);
+                    }
                 }
             };
             updateModalBar();
