@@ -815,9 +815,9 @@
                 btn.innerHTML = `
                     <div class="relative z-10 flex justify-between items-center pb-1">
                         <div class="flex flex-col">
-                            <div class="flex items-baseline flex-wrap gap-x-1">
+                            <div class="flex items-center flex-wrap gap-2 mb-0.5">
                                 <span class="text-xl font-bold text-rose-900">${cof.nombre}</span>
-                                <span class="estado-cofradia text-xs font-semibold text-gray-500 hidden transition-opacity"></span>
+                                <span class="estado-cofradia hidden transition-opacity"></span>
                             </div>
                             <span class="text-sm text-gray-500 font-medium">${label}: ${hora}</span>
                         </div>
@@ -871,19 +871,23 @@
                 }
                 
                 let textoEstado = '';
+                let claseColor = '';
                 if (ahora >= barra.salidaCruzTs && ahora <= barra.salidaPasoTs) {
-                    textoEstado = '- Saliendo';
+                    textoEstado = 'Saliendo';
+                    claseColor = 'bg-emerald-400';
                 } else if (ahora >= barra.entradaCOTs && ahora <= barra.salidaCOTs) {
-                    textoEstado = '- En Carrera Oficial';
+                    textoEstado = 'En Carrera Oficial';
+                    claseColor = 'bg-amber-500';
                 } else if (ahora >= barra.recogidaCruzTs && ahora <= barra.recogidaPasoTs) {
-                    textoEstado = '- De recogida';
+                    textoEstado = 'De recogida';
+                    claseColor = 'bg-indigo-400';
                 }
 
                 if (textoEstado) {
                     barra.estadoText.innerText = textoEstado;
-                    barra.estadoText.classList.remove('hidden');
+                    barra.estadoText.className = `estado-cofradia px-2 py-0.5 rounded-full text-[10px] font-bold text-white uppercase tracking-wider shadow-sm z-10 relative transition-opacity ${claseColor}`;
                 } else {
-                    barra.estadoText.classList.add('hidden');
+                    barra.estadoText.className = 'estado-cofradia hidden';
                 }
                 
                 if (window.diaSeleccionadoActual === diaReal && !yaRecogida) {
