@@ -1718,7 +1718,7 @@
                 <div class="w-full max-w-sm flex flex-col items-center gap-8 fade-in text-center">
                     <p class="text-xl text-gray-400 mb-2">Turno de</p>
                     <h3 class="text-4xl font-bold text-blue-400">${p.nombre}</h3>
-                    <button onclick="window.mostrarPreguntaTrivial()" class="w-full bg-gray-700 font-bold py-4 rounded-xl shadow-lg">Responder</button>
+                    <button onclick="window.mostrarPreguntaTrivial()" class="w-full bg-gray-700 text-white font-bold py-4 rounded-xl shadow-lg transition active:scale-95 text-lg border border-gray-600 hover:bg-gray-600">Responder</button>
                 </div>`;
         };
 
@@ -1764,6 +1764,7 @@
 
             for(let i = 0; i < 4; i++) {
                 const btn = document.getElementById(`btnOpcion${i}`);
+                if (!btn) continue;
                 btn.onclick = null;
                 btn.classList.remove('hover:bg-blue-600', 'bg-gray-700');
                 
@@ -1805,6 +1806,7 @@
         };
 
         window.mostrarPantallaVictoria = function() {
+            window.toggleDisclaimer(true);
             const ranking = [...window.trivialPlayers].sort((a,b) => b.puntos - a.puntos);
             const ganador = ranking[0];
             
@@ -1841,6 +1843,7 @@
         };
 
         window.mostrarClasificacionTrivial = function(esFinal) {
+            window.toggleDisclaimer(true);
             const ranking = [...window.trivialPlayers].sort((a,b) => b.puntos - a.puntos);
             let html = ranking.map((p, i) => {
                 let medalla = '';
@@ -1873,6 +1876,285 @@
             window.trivialRound++;
             window.trivialTurn = 0;
             window.flujoTurnoTrivial();
+        };
+
+        window.formatTimeString = function(secs) {
+            const m = Math.floor(secs / 60);
+            const s = secs % 60;
+            return `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
+        };
+
+        window.iniciarParejasMulti = function(playersArray) {
+            let arr = [...playersArray];
+            if (arr.length > 1) {
+                arr = arr.sort(() => Math.random() - 0.5);
+            }
+            window.parejasPlayers = arr.map(p => ({ nombre: p, puntos: 0, eliminado: false }));
+            window.parejasRound = 1;
+            window.parejasTurn = 0;
+            
+            if (window.parejasPlayers.length > 1) {
+                window.mostrarSorteoTurnoParejas();
+            } else {
+                window.flujoTurnoParejas();
+            }
+        };
+
+        window.mostrarSorteoTurnoParejas = function() {
+            window.toggleDisclaimer(false);
+            const primerJugador = window.parejasPlayers[0].nombre;
+            
+            document.getElementById('juegosContenido').innerHTML = `
+                <div class="w-full max-w-sm flex flex-col items-center gap-6 fade-in text-center">
+                    <h3 class="text-3xl font-bold text-white">¡Todos listos!</h3>
+                    <p class="text-xl text-gray-400">¿Preparados para empezar?</p>
+                    
+                    <div id="animacionSorteoParejas" class="text-6xl my-6 pop-in">⏳</div>
+                    
+                    <div id="resultadoSorteoParejas" class="hidden flex-col items-center gap-4 w-full pop-in">
+                        <p class="text-gray-300">El juego lo empieza...</p>
+                        <h4 class="text-4xl font-black text-rose-500 mb-4">¡${primerJugador}!</h4>
+                        <button onclick="window.flujoTurnoParejas()" class="w-full bg-rose-600 text-white font-bold py-4 rounded-xl shadow-lg transition active:scale-95">Comenzar juego</button>
+                    </div>
+                </div>`;
+
+            let contador = 0;
+            const iconos = ['⏱️', '🃏', '🤔', '👀', '🎲'];
+            const animacionElement = document.getElementById('animacionSorteoParejas');
+            
+            const intervaloAnimacion = setInterval(() => {
+                if(animacionElement) animacionElement.innerText = iconos[contador % iconos.length];
+                contador++;
+            }, 400);
+
+            setTimeout(() => {
+                clearInterval(intervaloAnimacion);
+                if(animacionElement) animacionElement.classList.add('hidden');
+                const res = document.getElementById('resultadoSorteoParejas');
+                if(res) {
+                    res.classList.remove('hidden');
+                    res.classList.add('flex');
+                }
+            }, 2500);
+        };
+
+        window.flujoTurnoParejas = function() {
+            while(window.parejasTurn < window.parejasPlayers.length && window.parejasPlayers[window.parejasTurn].eliminado) {
+                window.parejasTurn++;
+            }
+            
+            if (window.parejasTurn >= window.parejasPlayers.length) {
+                window.evaluarFinRondaParejas();
+                return;
+            }
+
+            const p = window.parejasPlayers[window.parejasTurn];
+            window.toggleDisclaimer(false);
+
+            document.getElementById('juegosContenido').innerHTML = `
+                <div class="w-full max-w-sm flex flex-col items-center gap-8 fade-in text-center">
+                    <p class="text-xl text-gray-400 mb-2">Ronda ${window.parejasRound}</p>
+                    <h3 class="text-4xl font-bold text-rose-500 mb-2">${p.nombre}</h3>
+                    <p class="text-gray-400 mb-6">Encuentra todas las parejas antes de que acabe el tiempo.</p>
+                    <button onclick="window.iniciarTableroParejas()" class="w-full bg-rose-600 text-white font-bold py-4 rounded-xl shadow-lg transition active:scale-95">Comenzar</button>
+                </div>`;
+        };
+
+        window.iniciarTableroParejas = function() {
+            window.toggleDisclaimer(false);
+            const allImages = [...window.bancoImagenesParejas].sort(() => Math.random() - 0.5);
+            const selectedImages = allImages.slice(0, 6);
+            let deck = [...selectedImages, ...selectedImages].sort(() => Math.random() - 0.5);
+            
+            window.memCards = deck.map((img, idx) => ({ id: idx, img: img, isFlipped: false, isMatched: false }));
+            window.memFlipped = [];
+            window.memLock = false;
+            window.memMatches = 0;
+            
+            const reduccion = Math.floor((window.parejasRound - 1) / 2) * 10;
+            window.memTime = Math.max(10, 60 - reduccion);
+            
+            const hTimer = document.getElementById('juegosHeaderTimer');
+            if (hTimer) {
+                hTimer.classList.remove('hidden');
+                hTimer.innerText = window.formatTimeString(window.memTime);
+            }
+            
+            if (window.parejasTimer) clearInterval(window.parejasTimer);
+            window.parejasTimer = setInterval(() => {
+                window.memTime--;
+                if (hTimer) hTimer.innerText = window.formatTimeString(window.memTime);
+                
+                if (window.memTime <= 0) {
+                    clearInterval(window.parejasTimer);
+                    window.resultadoTurnoParejas(false);
+                }
+            }, 1000);
+            
+            window.renderBoardParejas();
+        };
+
+        window.renderBoardParejas = function() {
+            let cardsHTML = '';
+            window.memCards.forEach((c) => {
+                cardsHTML += `
+                    <div class="mem-card" id="memCardWrap${c.id}" onclick="window.flipMemCard(${c.id})">
+                        <div class="mem-card-inner shadow-md" id="memCardInner${c.id}">
+                            <div class="mem-card-front flex items-center justify-center">
+                                <span class="text-4xl opacity-20">✝️</span>
+                            </div>
+                            <div class="mem-card-back">
+                                <img src="https://raw.githubusercontent.com/ejruizgarcia/images/main/${c.img}" alt="Imagen Cofrade">
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('juegosContenido').innerHTML = `
+                <div class="w-full max-w-sm flex flex-col items-center fade-in gap-4 px-2 pb-6 mt-4">
+                    <div class="flex justify-center w-full items-center bg-gray-800 p-4 rounded-xl border border-gray-700">
+                        <span class="text-gray-400 font-bold uppercase tracking-wider text-xs">Parejas encontradas: <span class="text-white text-lg ml-2" id="memScore">0 / 6</span></span>
+                    </div>
+                    <div class="grid grid-cols-3 grid-rows-4 gap-3 w-full mt-2">
+                        ${cardsHTML}
+                    </div>
+                    <button onclick="window.volverJuegos()" class="mt-6 text-gray-400 hover:text-white transition text-sm font-bold bg-gray-800 py-3 px-6 rounded-full">Rendirse y salir</button>
+                </div>
+            `;
+        };
+
+        window.flipMemCard = function(idx) {
+            if (window.memLock) return;
+            const card = window.memCards[idx];
+            if (card.isFlipped || card.isMatched) return;
+
+            card.isFlipped = true;
+            document.getElementById('memCardWrap' + idx).classList.add('flipped');
+            window.memFlipped.push(idx);
+
+            if (window.memFlipped.length === 2) {
+                window.memLock = true;
+                const idx1 = window.memFlipped[0];
+                const idx2 = window.memFlipped[1];
+                
+                if (window.memCards[idx1].img === window.memCards[idx2].img) {
+                    window.memCards[idx1].isMatched = true;
+                    window.memCards[idx2].isMatched = true;
+                    window.memMatches++;
+                    document.getElementById('memScore').innerText = window.memMatches + ' / 6';
+                    
+                    document.getElementById('memCardInner' + idx1).classList.add('flash-match');
+                    document.getElementById('memCardInner' + idx2).classList.add('flash-match');
+                    
+                    window.memFlipped = [];
+                    window.memLock = false;
+                    
+                    if (window.memMatches === 6) {
+                        clearInterval(window.parejasTimer);
+                        setTimeout(() => window.resultadoTurnoParejas(true), 600);
+                    }
+                } else {
+                    setTimeout(() => {
+                        window.memCards[idx1].isFlipped = false;
+                        window.memCards[idx2].isFlipped = false;
+                        document.getElementById('memCardWrap' + idx1).classList.remove('flipped');
+                        document.getElementById('memCardWrap' + idx2).classList.remove('flipped');
+                        window.memFlipped = [];
+                        window.memLock = false;
+                    }, 1000);
+                }
+            }
+        };
+
+        window.resultadoTurnoParejas = function(victoria) {
+            const hTimer = document.getElementById('juegosHeaderTimer');
+            if (hTimer) hTimer.classList.add('hidden');
+            const p = window.parejasPlayers[window.parejasTurn];
+            window.toggleDisclaimer(true);
+
+            let titulo, color, subtitulo, icono;
+            if (victoria) {
+                let puntosObtenidos = 100 + (window.memTime * 10);
+                p.puntos += puntosObtenidos;
+                titulo = '¡Conseguido!';
+                color = 'text-emerald-400';
+                subtitulo = `Has sumado <span class="font-bold text-white">${puntosObtenidos} pts</span> (sobraron ${window.memTime}s).`;
+                icono = '🎉';
+            } else {
+                p.eliminado = true;
+                titulo = '¡Eliminado!';
+                color = 'text-rose-500';
+                subtitulo = 'Te has quedado sin tiempo en esta ronda.';
+                icono = '💀';
+            }
+
+            document.getElementById('juegosContenido').innerHTML = `
+                <div class="w-full max-w-sm flex flex-col items-center text-center fade-in py-8">
+                    <div class="text-7xl mb-4 pop-in">${icono}</div>
+                    <h3 class="text-4xl font-black ${color} mb-4 leading-tight pop-in">${titulo}</h3>
+                    <p class="text-gray-300 text-lg mb-8">${subtitulo}</p>
+                    
+                    <button onclick="window.siguienteTurnoParejas()" class="w-full bg-rose-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-rose-500 transition active:scale-95 mb-4 text-lg">Siguiente</button>
+                </div>
+            `;
+        };
+
+        window.siguienteTurnoParejas = function() {
+            window.parejasTurn++;
+            window.flujoTurnoParejas();
+        };
+
+        window.evaluarFinRondaParejas = function() {
+            const activos = window.parejasPlayers.filter(p => !p.eliminado);
+            const esFinal = (window.parejasPlayers.length > 1 && activos.length <= 1) || (window.parejasPlayers.length === 1 && activos.length === 0);
+            
+            window.mostrarClasificacionParejas(esFinal);
+        };
+
+        window.mostrarClasificacionParejas = function(esFinal) {
+            window.toggleDisclaimer(true);
+            const ranking = [...window.parejasPlayers].sort((a,b) => b.puntos - a.puntos);
+            
+            let html = ranking.map((p, i) => {
+                let medalla = '';
+                if (esFinal && i === 0 && !p.eliminado && window.parejasPlayers.length > 1) medalla = '🏆 ';
+                else if (esFinal && i === 0) medalla = '🥇 ';
+                else if (esFinal && i === 1) medalla = '🥈 ';
+                else if (esFinal && i === 2) medalla = '🥉 ';
+                else medalla = `<span class="text-gray-500 w-6 inline-block text-center">${i+1}</span>`;
+
+                let opacidad = p.eliminado ? 'opacity-50' : '';
+                let estadoText = p.eliminado ? '<span class="text-rose-500 text-xs ml-2 font-bold uppercase">Eliminado</span>' : '';
+
+                return `<div class="flex justify-between items-center p-4 bg-gray-800 rounded-xl border border-gray-700 mb-2 ${opacidad}">
+                    <div><span class="text-xl">${medalla}</span><span class="font-bold text-white ml-2">${p.nombre}</span>${estadoText}</div>
+                    <span class="font-black text-rose-400">${p.puntos} pts</span>
+                </div>`;
+            }).join('');
+
+            let tituloHTML = esFinal 
+                ? `<h2 class="text-3xl font-black text-rose-400 mb-2 text-center">¡Juego Terminado!</h2><p class="text-gray-300 text-center mb-6">Clasificación Final</p>`
+                : `<h3 class="text-2xl font-bold text-white mb-2 text-center">Clasificación Parcial</h3><p class="text-gray-400 text-center mb-6">Fin de la Ronda ${window.parejasRound}</p>`;
+                
+            let botonHTML = esFinal
+                ? `<button onclick="window.volverJuegos()" class="w-full bg-gray-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-gray-500 transition active:scale-95 mt-4">Volver al Menú</button>`
+                : `<button onclick="window.avanzarRondaParejas()" class="w-full bg-rose-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-rose-500 transition active:scale-95 mt-4">Comenzar Ronda ${window.parejasRound + 1}</button>`;
+
+            document.getElementById('juegosContenido').innerHTML = `
+                <div class="w-full max-w-sm flex flex-col fade-in">
+                    ${tituloHTML}
+                    <div class="flex flex-col">
+                        ${html}
+                    </div>
+                    ${botonHTML}
+                </div>`;
+        };
+
+        window.avanzarRondaParejas = function() {
+            window.parejasRound++;
+            window.parejasTurn = 0;
+            window.flujoTurnoParejas();
         };
 
         window.iniciarFlashMulti = function(playersArray) {
