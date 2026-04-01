@@ -1465,8 +1465,9 @@
             const contenedor = document.getElementById('juegosContenido');
             let opciones = '';
             const min = window.selectedGame === 'impostor' ? 3 : 1;
+            const defecto = window.selectedGame === 'impostor' ? 3 : 1;
             for(let i=min; i<=8; i++) {
-                opciones += `<option value="${i}" ${i===4?'selected':''}>${i===1?'Modo Solitario':i+' Jugadores'}</option>`;
+                opciones += `<option value="${i}" ${i===defecto?'selected':''}>${i===1?'Modo Solitario':i+' Jugadores'}</option>`;
             }
             contenedor.innerHTML = `
                 <div class="w-full max-w-sm flex flex-col gap-6 fade-in text-center">
@@ -1555,7 +1556,7 @@
                         </div>
                     </div>
                     
-                    <button id="impRevealBtn" class="w-full bg-rose-600 text-white font-bold py-4 rounded-xl shadow-lg transition active:scale-95 mt-2 text-lg select-none touch-none">Mantén pulsado aquí</button>
+                    <button id="impRevealBtn" class="w-full bg-rose-600 text-white font-bold py-4 rounded-xl shadow-lg transition active:scale-95 mt-2 text-lg select-none touch-none">Pulsa aquí</button>
                     <p class="text-sm text-gray-500 italic transition-opacity duration-300 opacity-0" id="impReleaseText">Suelta para ocultar</p>
                 </div>`;
 
