@@ -441,7 +441,7 @@
         </div>
         <div class="flex-1 overflow-y-auto p-5 flex flex-col items-center justify-center relative">
             <div id="juegosContenido" class="w-full max-w-sm flex flex-col items-center justify-center gap-6 z-10"></div>
-            <div class="absolute bottom-4 left-0 right-0 text-center text-[10px] text-gray-500 font-medium">
+            <div id="juegosDisclaimer" class="absolute bottom-4 left-0 right-0 text-center text-[10px] text-gray-500 font-medium">
                 App creada por @ejruizgarcia con la IA de Gemini.<br>Licencia Creative Commons CC BY-NC-SA 4.0
             </div>
         </div>
@@ -884,6 +884,11 @@
             }
         };
 
+        window.toggleDisclaimer = function(mostrar) {
+            const d = document.getElementById('juegosDisclaimer');
+            if (d) d.style.display = mostrar ? 'block' : 'none';
+        };
+
         // UI Functions
         window.abrirNovedades = function() {
             window.ocultarBotonesFlotantes();
@@ -1202,7 +1207,7 @@
             
             const salidaPasoTs = obtenerTimestampAbsoluto(dia, cof.salidaPaso);
             const entradaCOTs = obtenerTimestampAbsoluto(dia, cof.entradaCOCruz);
-            const salidaCOCruzTs = obtenerTimestampAbsoluto(dia, cof.salidaCOCruz);
+            const salidaCOCruzTs = obtenerTimestampAbsoluto(dia, salidaCOCruzTs);
             const salidaCOTs = obtenerTimestampAbsoluto(dia, cof.salidaCOPaso);
             const recogidaCruzTs = obtenerTimestampAbsoluto(dia, cof.recogidaCruz);
 
@@ -1365,6 +1370,7 @@
 
         // Games Logic
         window.renderJuegosMenu = function() {
+            window.toggleDisclaimer(true);
             document.getElementById('juegosTitulo').innerText = 'Juegos Cofrades';
             document.getElementById('juegosContenido').innerHTML = `
                 <div class="w-full max-w-sm flex flex-col gap-4 fade-in text-center pb-8">
@@ -1379,14 +1385,11 @@
 
         window.seleccionarJuego = function(j) {
             window.selectedGame = j;
-            if (j === 'parejas') {
-                window.iniciarJuegoParejas();
-            } else {
-                window.renderJuegosSetup();
-            }
+            window.renderJuegosSetup();
         };
 
         window.renderJuegosSetup = function() {
+            window.toggleDisclaimer(true);
             document.getElementById('juegosTitulo').innerText = '';
             const contenedor = document.getElementById('juegosContenido');
             let opciones = '';
@@ -1427,6 +1430,8 @@
             if(window.selectedGame === 'impostor') {
                 window.impPlayersOriginal = [...window.players];
                 window.iniciarSiguienteRondaImpostor();
+            } else if (window.selectedGame === 'parejas') {
+                window.iniciarParejasMulti(window.players);
             } else {
                 window.iniciarTrivial(window.players);
             }
@@ -1789,7 +1794,7 @@
                         <button onclick="window.mostrarClasificacionTrivial(true)" class="w-full bg-amber-500 text-gray-900 font-bold py-4 rounded-xl shadow-lg hover:bg-amber-400 transition active:scale-95 text-lg">
                             Ver clasificación final
                         </button>
-                        <button onclick="window.renderJuegosMenu()" class="w-full bg-gray-700 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-gray-600 transition active:scale-95 text-lg">
+                        <button onclick="window.volverJuegos()" class="w-full bg-gray-700 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-gray-600 transition active:scale-95 text-lg">
                             Terminar juego
                         </button>
                     </div>
@@ -1812,7 +1817,7 @@
                 : `<h3 class="text-2xl font-bold text-white mb-2 text-center">Clasificación Parcial</h3><p class="text-gray-400 text-center mb-6">Fin de la Ronda ${window.trivialRound}</p>`;
                 
             let botonHTML = esFinal
-                ? `<button onclick="window.renderJuegosMenu()" class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-blue-500 transition active:scale-95 mt-4">Terminar Juego</button>`
+                ? `<button onclick="window.volverJuegos()" class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-blue-500 transition active:scale-95 mt-4">Terminar Juego</button>`
                 : `<button onclick="window.avanzarRondaTrivial()" class="w-full bg-rose-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-rose-500 transition active:scale-95 mt-4">Comenzar Ronda ${window.trivialRound + 1}</button>`;
 
             document.getElementById('juegosContenido').innerHTML = `
@@ -1831,8 +1836,81 @@
             window.flujoTurnoTrivial();
         };
 
-        window.iniciarJuegoParejas = function() {
-            document.getElementById('juegosTitulo').innerText = '';
+        window.iniciarParejasMulti = function(playersArray) {
+            let arr = [...playersArray];
+            if (arr.length > 1) {
+                arr = arr.sort(() => Math.random() - 0.5);
+            }
+            window.parejasPlayers = arr.map(p => ({ nombre: p, puntos: 0, eliminado: false }));
+            window.parejasRound = 1;
+            window.parejasTurn = 0;
+            
+            if (window.parejasPlayers.length > 1) {
+                window.mostrarSorteoTurnoParejas();
+            } else {
+                window.flujoTurnoParejas();
+            }
+        };
+
+        window.mostrarSorteoTurnoParejas = function() {
+            window.toggleDisclaimer(false);
+            const primerJugador = window.parejasPlayers[0].nombre;
+            
+            document.getElementById('juegosContenido').innerHTML = `
+                <div class="w-full max-w-sm flex flex-col items-center gap-6 fade-in text-center">
+                    <h3 class="text-3xl font-bold text-white">¡Todos listos!</h3>
+                    <p class="text-xl text-gray-400">¿Preparados para empezar?</p>
+                    
+                    <div id="animacionSorteoParejas" class="text-6xl my-6 pop-in">⏳</div>
+                    
+                    <div id="resultadoSorteoParejas" class="hidden flex-col items-center gap-4 w-full pop-in">
+                        <p class="text-gray-300">El juego lo empieza...</p>
+                        <h4 class="text-4xl font-black text-rose-500 mb-4">¡${primerJugador}!</h4>
+                        <button onclick="window.flujoTurnoParejas()" class="w-full bg-rose-600 text-white font-bold py-4 rounded-xl shadow-lg transition active:scale-95">Comenzar juego</button>
+                    </div>
+                </div>`;
+
+            let contador = 0;
+            const iconos = ['⏱️', '🃏', '🤔', '👀', '🎲'];
+            const animacionElement = document.getElementById('animacionSorteoParejas');
+            
+            const intervaloAnimacion = setInterval(() => {
+                animacionElement.innerText = iconos[contador % iconos.length];
+                contador++;
+            }, 400);
+
+            setTimeout(() => {
+                clearInterval(intervaloAnimacion);
+                animacionElement.classList.add('hidden');
+                document.getElementById('resultadoSorteoParejas').classList.remove('hidden');
+                document.getElementById('resultadoSorteoParejas').classList.add('flex');
+            }, 2500);
+        };
+
+        window.flujoTurnoParejas = function() {
+            while(window.parejasTurn < window.parejasPlayers.length && window.parejasPlayers[window.parejasTurn].eliminado) {
+                window.parejasTurn++;
+            }
+            
+            if (window.parejasTurn >= window.parejasPlayers.length) {
+                window.evaluarFinRondaParejas();
+                return;
+            }
+
+            const p = window.parejasPlayers[window.parejasTurn];
+            window.toggleDisclaimer(false);
+
+            document.getElementById('juegosContenido').innerHTML = `
+                <div class="w-full max-w-sm flex flex-col items-center gap-8 fade-in text-center">
+                    <p class="text-xl text-gray-400 mb-2">Ronda ${window.parejasRound}</p>
+                    <h3 class="text-4xl font-bold text-rose-500 mb-2">${p.nombre}</h3>
+                    <p class="text-gray-400 mb-6">Encuentra todas las parejas antes de que acabe el tiempo.</p>
+                    <button onclick="window.iniciarTableroParejas()" class="w-full bg-rose-600 text-white font-bold py-4 rounded-xl shadow-lg transition active:scale-95">Comenzar</button>
+                </div>`;
+        };
+
+        window.iniciarTableroParejas = function() {
+            window.toggleDisclaimer(false);
             const allImages = [...window.bancoImagenesParejas].sort(() => Math.random() - 0.5);
             const selectedImages = allImages.slice(0, 6);
             let deck = [...selectedImages, ...selectedImages].sort(() => Math.random() - 0.5);
@@ -1851,7 +1929,7 @@
                 
                 if (window.memTime <= 0) {
                     clearInterval(window.parejasTimer);
-                    window.finalizarJuegoParejas(false);
+                    window.resultadoTurnoParejas(false);
                 }
             }, 1000);
             
@@ -1914,7 +1992,7 @@
                     
                     if (window.memMatches === 6) {
                         clearInterval(window.parejasTimer);
-                        setTimeout(() => window.finalizarJuegoParejas(true), 600);
+                        setTimeout(() => window.resultadoTurnoParejas(true), 600);
                     }
                 } else {
                     setTimeout(() => {
@@ -1929,11 +2007,25 @@
             }
         };
 
-        window.finalizarJuegoParejas = function(victoria) {
-            const titulo = victoria ? '¡Nivel Completado!' : '¡Tiempo agotado!';
-            const color = victoria ? 'text-emerald-400' : 'text-rose-500';
-            const subtitulo = victoria ? 'Te han sobrado ' + window.memTime + ' segundos.' : 'No has podido encontrar todas las parejas a tiempo.';
-            const icono = victoria ? '🎉' : '⏳';
+        window.resultadoTurnoParejas = function(victoria) {
+            const p = window.parejasPlayers[window.parejasTurn];
+            window.toggleDisclaimer(true);
+
+            let titulo, color, subtitulo, icono;
+            if (victoria) {
+                let puntosObtenidos = 100 + (window.memTime * 10);
+                p.puntos += puntosObtenidos;
+                titulo = '¡Conseguido!';
+                color = 'text-emerald-400';
+                subtitulo = `Has sumado <span class="font-bold text-white">${puntosObtenidos} pts</span> (sobraron ${window.memTime}s).`;
+                icono = '🎉';
+            } else {
+                p.eliminado = true;
+                titulo = '¡Eliminado!';
+                color = 'text-rose-500';
+                subtitulo = 'Te has quedado sin tiempo en esta ronda.';
+                icono = '💀';
+            }
 
             document.getElementById('juegosContenido').innerHTML = `
                 <div class="w-full max-w-sm flex flex-col items-center text-center fade-in py-8">
@@ -1941,10 +2033,66 @@
                     <h3 class="text-4xl font-black ${color} mb-4 leading-tight pop-in">${titulo}</h3>
                     <p class="text-gray-300 text-lg mb-8">${subtitulo}</p>
                     
-                    <button onclick="window.iniciarJuegoParejas()" class="w-full bg-rose-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-rose-500 transition active:scale-95 mb-4 text-lg">Jugar de nuevo</button>
-                    <button onclick="window.volverJuegos()" class="text-gray-400 text-sm hover:text-white transition">Volver al menú</button>
+                    <button onclick="window.siguienteTurnoParejas()" class="w-full bg-rose-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-rose-500 transition active:scale-95 mb-4 text-lg">Siguiente</button>
                 </div>
             `;
+        };
+
+        window.siguienteTurnoParejas = function() {
+            window.parejasTurn++;
+            window.flujoTurnoParejas();
+        };
+
+        window.evaluarFinRondaParejas = function() {
+            const activos = window.parejasPlayers.filter(p => !p.eliminado);
+            const esFinal = (window.parejasPlayers.length > 1 && activos.length <= 1) || (window.parejasPlayers.length === 1 && activos.length === 0);
+            
+            window.mostrarClasificacionParejas(esFinal);
+        };
+
+        window.mostrarClasificacionParejas = function(esFinal) {
+            window.toggleDisclaimer(true);
+            const ranking = [...window.parejasPlayers].sort((a,b) => b.puntos - a.puntos);
+            
+            let html = ranking.map((p, i) => {
+                let medalla = '';
+                if (esFinal && i === 0 && !p.eliminado && window.parejasPlayers.length > 1) medalla = '🏆 ';
+                else if (esFinal && i === 0) medalla = '🥇 ';
+                else if (esFinal && i === 1) medalla = '🥈 ';
+                else if (esFinal && i === 2) medalla = '🥉 ';
+                else medalla = `<span class="text-gray-500 w-6 inline-block text-center">${i+1}</span>`;
+
+                let opacidad = p.eliminado ? 'opacity-50' : '';
+                let estadoText = p.eliminado ? '<span class="text-rose-500 text-xs ml-2 font-bold uppercase">Eliminado</span>' : '';
+
+                return `<div class="flex justify-between items-center p-4 bg-gray-800 rounded-xl border border-gray-700 mb-2 ${opacidad}">
+                    <div><span class="text-xl">${medalla}</span><span class="font-bold text-white ml-2">${p.nombre}</span>${estadoText}</div>
+                    <span class="font-black text-rose-400">${p.puntos} pts</span>
+                </div>`;
+            }).join('');
+
+            let tituloHTML = esFinal 
+                ? `<h2 class="text-3xl font-black text-rose-400 mb-2 text-center">¡Juego Terminado!</h2><p class="text-gray-300 text-center mb-6">Clasificación Final</p>`
+                : `<h3 class="text-2xl font-bold text-white mb-2 text-center">Clasificación Parcial</h3><p class="text-gray-400 text-center mb-6">Fin de la Ronda ${window.parejasRound}</p>`;
+                
+            let botonHTML = esFinal
+                ? `<button onclick="window.volverJuegos()" class="w-full bg-gray-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-gray-500 transition active:scale-95 mt-4">Volver al Menú</button>`
+                : `<button onclick="window.avanzarRondaParejas()" class="w-full bg-rose-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-rose-500 transition active:scale-95 mt-4">Comenzar Ronda ${window.parejasRound + 1}</button>`;
+
+            document.getElementById('juegosContenido').innerHTML = `
+                <div class="w-full max-w-sm flex flex-col fade-in">
+                    ${tituloHTML}
+                    <div class="flex flex-col">
+                        ${html}
+                    </div>
+                    ${botonHTML}
+                </div>`;
+        };
+
+        window.avanzarRondaParejas = function() {
+            window.parejasRound++;
+            window.parejasTurn = 0;
+            window.flujoTurnoParejas();
         };
 
         const ordenDiasSwipe = ['domingo', 'lunes', 'martes', 'miercoles', 'jueves', 'madrugada', 'viernes', 'resurreccion'];
