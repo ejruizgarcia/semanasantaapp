@@ -1592,26 +1592,26 @@
             window.toggleDisclaimer(false);
             let opcionesHTML = '';
             window.flashCurrentOptions.forEach((opt, i) => {
-                opcionesHTML += `<button id="btnFlash${i}" onclick="window.checkFlash(${i})" class="w-full h-full min-h-[120px] bg-gray-700 text-white font-bold text-2xl md:text-3xl rounded-3xl shadow-lg border-2 border-gray-600 hover:bg-orange-600 transition active:scale-95 flex items-center justify-center p-4 break-words leading-tight">${opt.name}</button>`;
+                opcionesHTML += `<button id="btnFlash${i}" onclick="window.checkFlash(${i})" class="w-full h-full min-h-[70px] sm:min-h-[100px] bg-gray-700 text-white font-bold text-xl md:text-2xl rounded-2xl shadow-lg border-2 border-gray-600 hover:bg-orange-600 transition active:scale-95 flex items-center justify-center p-3 break-words leading-tight">${opt.name}</button>`;
             });
 
             const jugadorActual = window.flashPlayers[window.flashTurn];
 
             document.getElementById('juegosContenido').innerHTML = `
-                <div class="w-full h-full max-h-[800px] max-w-2xl flex flex-col gap-4 fade-in mx-auto pb-4">
+                <div class="w-full h-full max-h-[800px] max-w-2xl flex flex-col gap-3 fade-in mx-auto pb-2">
                     <div class="flex justify-between items-center bg-gray-800 p-3 rounded-xl border border-gray-700 shrink-0">
                         <span class="text-orange-400 font-bold uppercase text-xs md:text-sm tracking-widest">Ronda ${window.flashRound} de ${window.totalRondasFlash}</span>
                         <span class="text-white font-bold text-sm md:text-base">${jugadorActual.nombre}</span>
                     </div>
                     
-                    <p class="text-center text-gray-300 font-bold tracking-widest uppercase text-lg md:text-xl shrink-0 mt-2">¿Qué paso era?</p>
+                    <p class="text-center text-gray-300 font-bold tracking-widest uppercase text-base md:text-lg shrink-0 mt-1">¿Qué paso era?</p>
                     
-                    <div class="grid grid-cols-1 sm:grid-cols-2 grid-rows-4 sm:grid-rows-2 gap-4 flex-1 w-full pb-2">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 grid-rows-4 sm:grid-rows-2 gap-2 sm:gap-4 flex-1 w-full pb-2">
                         ${opcionesHTML}
                     </div>
 
                     <div id="contenedorContinuarFlash" class="hidden mt-auto shrink-0">
-                        <button onclick="window.siguienteTurnoFlash()" class="w-full bg-amber-500 text-gray-900 font-bold py-4 rounded-xl shadow-lg hover:bg-amber-400 transition active:scale-95 text-xl">
+                        <button onclick="window.siguienteTurnoFlash()" class="w-full bg-amber-500 text-gray-900 font-bold py-3 md:py-4 rounded-xl shadow-lg hover:bg-amber-400 transition active:scale-95 text-lg md:text-xl">
                             Siguiente Turno
                         </button>
                     </div>
