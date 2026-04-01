@@ -147,6 +147,15 @@
             object-fit: cover;
             border-radius: 0.5rem;
         }
+
+        @keyframes flashMatchAnim {
+            0% { filter: brightness(1); box-shadow: 0 0 0px transparent; }
+            50% { filter: brightness(1.3); box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.8); }
+            100% { filter: brightness(1); box-shadow: 0 0 0px transparent; }
+        }
+        .flash-match {
+            animation: flashMatchAnim 0.6s ease-out;
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans fixed inset-0 w-full h-full flex flex-col overflow-hidden">
@@ -236,14 +245,6 @@
                         <p class="text-rose-700 text-xs mt-1 font-medium">Toca aquí para jugar ➡️</p>
                     </div>
                 </button>
-                <button onclick="cerrarNovedades(); abrirJuegos(); seleccionarJuego('pasion');" class="w-full text-left p-4 bg-purple-50 rounded-xl shadow-sm border border-purple-200 flex gap-3 items-start relative overflow-hidden hover:bg-purple-100 transition active:scale-95 cursor-pointer">
-                    <div class="absolute top-0 right-0 bg-purple-600 text-white text-[10px] font-bold px-2 py-1 rounded-bl-lg">¡NUEVO!</div>
-                    <span class="text-purple-600 mt-0.5 text-lg">✝️</span>
-                    <div>
-                        <p class="text-purple-900 font-bold pr-8">¡Nuevo juego! Trivial de la Pasión.</p>
-                        <p class="text-purple-700 text-xs mt-1 font-medium">Toca aquí para jugar ➡️</p>
-                    </div>
-                </button>
                 <button onclick="cerrarNovedades(); abrirJuegos(); seleccionarJuego('teologico');" class="w-full text-left p-4 bg-emerald-50 rounded-xl shadow-sm border border-emerald-200 flex gap-3 items-start relative overflow-hidden hover:bg-emerald-100 transition active:scale-95 cursor-pointer">
                     <div class="absolute top-0 right-0 bg-emerald-600 text-white text-[10px] font-bold px-2 py-1 rounded-bl-lg">¡NUEVO!</div>
                     <span class="text-emerald-600 mt-0.5 text-lg">📖</span>
@@ -252,6 +253,10 @@
                         <p class="text-emerald-700 text-xs mt-1 font-medium">Toca aquí para jugar ➡️</p>
                     </div>
                 </button>
+                <div class="p-4 bg-white rounded-xl shadow-sm border border-gray-100 flex gap-3 items-start">
+                    <span class="text-amber-500 mt-0.5">✨</span>
+                    <p class="text-gray-700 font-medium">Nuevo modo competición en el juego de parejas cofrades.</p>
+                </div>
                 <div class="p-4 bg-white rounded-xl shadow-sm border border-gray-100 flex gap-3 items-start">
                     <span class="text-amber-500 mt-0.5">✨</span>
                     <p class="text-gray-700 font-medium">Novedades en el juego del impostor: 2 impostores a partir de 6 jugadores y cambio de diseño de las tarjetas de palabras.</p>
@@ -433,11 +438,12 @@
 
     <!-- Modal de Juegos -->
     <div id="juegosModal" class="fixed inset-0 z-[70] bg-gray-900 hidden flex-col h-full w-full text-white">
-        <div class="p-4 flex items-center shadow-md shrink-0 bg-gray-800">
+        <div class="p-4 flex items-center shadow-md shrink-0 bg-gray-800 relative">
             <button onclick="volverJuegos()" class="mr-4 p-2 bg-gray-700 rounded-full hover:bg-gray-600 transition">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
             </button>
             <h2 id="juegosTitulo" class="text-xl font-bold truncate">Juegos Cofrades</h2>
+            <div id="juegosHeaderTimer" class="ml-auto font-mono text-2xl font-bold text-rose-400 hidden">01:00</div>
         </div>
         <div class="flex-1 overflow-y-auto p-5 flex flex-col items-center justify-center relative">
             <div id="juegosContenido" class="w-full max-w-sm flex flex-col items-center justify-center gap-6 z-10"></div>
@@ -929,6 +935,7 @@
         };
         window.cerrarJuegos = function() {
             if (window.parejasTimer) clearInterval(window.parejasTimer);
+            document.getElementById('juegosHeaderTimer').classList.add('hidden');
             window.mostrarBotonesFlotantes();
             document.getElementById('juegosModal').classList.add('hidden');
             document.getElementById('juegosModal').classList.remove('flex', 'fade-in');
@@ -937,6 +944,7 @@
             if (window.impMouseUpHandler) window.removeEventListener('mouseup', window.impMouseUpHandler);
             if (window.impTouchEndHandler) window.removeEventListener('touchend', window.impTouchEndHandler);
             if (window.parejasTimer) clearInterval(window.parejasTimer);
+            document.getElementById('juegosHeaderTimer').classList.add('hidden');
             
             if (document.getElementById('juegosTitulo').innerText === 'Juegos Cofrades') {
                 window.cerrarJuegos();
@@ -1909,6 +1917,12 @@
                 </div>`;
         };
 
+        window.formatTimeString = function(secs) {
+            const m = Math.floor(secs / 60);
+            const s = secs % 60;
+            return `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
+        };
+
         window.iniciarTableroParejas = function() {
             window.toggleDisclaimer(false);
             const allImages = [...window.bancoImagenesParejas].sort(() => Math.random() - 0.5);
@@ -1919,13 +1933,18 @@
             window.memFlipped = [];
             window.memLock = false;
             window.memMatches = 0;
-            window.memTime = 60;
+            
+            const reduccion = Math.floor((window.parejasRound - 1) / 2) * 10;
+            window.memTime = Math.max(10, 60 - reduccion);
+            
+            const hTimer = document.getElementById('juegosHeaderTimer');
+            hTimer.classList.remove('hidden');
+            hTimer.innerText = window.formatTimeString(window.memTime);
             
             if (window.parejasTimer) clearInterval(window.parejasTimer);
             window.parejasTimer = setInterval(() => {
                 window.memTime--;
-                const timerEl = document.getElementById('memTimer');
-                if (timerEl) timerEl.innerText = window.memTime;
+                hTimer.innerText = window.formatTimeString(window.memTime);
                 
                 if (window.memTime <= 0) {
                     clearInterval(window.parejasTimer);
@@ -1954,10 +1973,9 @@
             });
 
             document.getElementById('juegosContenido').innerHTML = `
-                <div class="w-full max-w-sm flex flex-col items-center fade-in gap-4 px-2 pb-6">
-                    <div class="flex justify-between w-full items-center bg-gray-800 p-4 rounded-xl border border-gray-700">
-                        <span class="text-gray-400 font-bold uppercase tracking-wider text-xs">Parejas: <span class="text-white text-lg ml-2" id="memScore">0 / 6</span></span>
-                        <span class="text-rose-400 font-black text-xl flex items-center gap-2">⏱ <span id="memTimer">${window.memTime}</span>s</span>
+                <div class="w-full max-w-sm flex flex-col items-center fade-in gap-4 px-2 pb-6 mt-4">
+                    <div class="flex justify-center w-full items-center bg-gray-800 p-4 rounded-xl border border-gray-700">
+                        <span class="text-gray-400 font-bold uppercase tracking-wider text-xs">Parejas encontradas: <span class="text-white text-lg ml-2" id="memScore">0 / 6</span></span>
                     </div>
                     <div class="grid grid-cols-3 grid-rows-4 gap-3 w-full mt-2">
                         ${cardsHTML}
@@ -1987,6 +2005,9 @@
                     window.memMatches++;
                     document.getElementById('memScore').innerText = window.memMatches + ' / 6';
                     
+                    document.getElementById('memCardInner' + idx1).classList.add('flash-match');
+                    document.getElementById('memCardInner' + idx2).classList.add('flash-match');
+                    
                     window.memFlipped = [];
                     window.memLock = false;
                     
@@ -2008,6 +2029,7 @@
         };
 
         window.resultadoTurnoParejas = function(victoria) {
+            document.getElementById('juegosHeaderTimer').classList.add('hidden');
             const p = window.parejasPlayers[window.parejasTurn];
             window.toggleDisclaimer(true);
 
