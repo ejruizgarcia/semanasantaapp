@@ -237,11 +237,19 @@
         </div>
         <div class="flex-1 p-6 flex flex-col gap-6 max-w-lg mx-auto w-full overflow-y-auto">
             <div class="flex flex-col gap-3">
+                <button onclick="cerrarNovedades(); abrirJuegos(); seleccionarJuego('flash');" class="w-full text-left p-4 bg-orange-50 rounded-xl shadow-sm border border-orange-200 flex gap-3 items-start relative overflow-hidden hover:bg-orange-100 transition active:scale-95 cursor-pointer">
+                    <div class="absolute top-0 right-0 bg-orange-600 text-white text-[10px] font-bold px-2 py-1 rounded-bl-lg">¡NUEVO!</div>
+                    <span class="text-orange-600 mt-0.5 text-lg">📸</span>
+                    <div>
+                        <p class="text-orange-900 font-bold pr-8">¡Nuevo juego! Flash Photo.</p>
+                        <p class="text-orange-700 text-xs mt-1 font-medium">Toca aquí para jugar ➡️</p>
+                    </div>
+                </button>
                 <button onclick="cerrarNovedades(); abrirJuegos(); seleccionarJuego('parejas');" class="w-full text-left p-4 bg-rose-50 rounded-xl shadow-sm border border-rose-200 flex gap-3 items-start relative overflow-hidden hover:bg-rose-100 transition active:scale-95 cursor-pointer">
                     <div class="absolute top-0 right-0 bg-rose-600 text-white text-[10px] font-bold px-2 py-1 rounded-bl-lg">¡NUEVO!</div>
                     <span class="text-rose-600 mt-0.5 text-lg">🃏</span>
                     <div>
-                        <p class="text-rose-900 font-bold pr-8">¡Nuevo juego! Parejas Cofrades.</p>
+                        <p class="text-rose-900 font-bold pr-8">Parejas Cofrades.</p>
                         <p class="text-rose-700 text-xs mt-1 font-medium">Toca aquí para jugar ➡️</p>
                     </div>
                 </button>
@@ -249,7 +257,7 @@
                     <div class="absolute top-0 right-0 bg-emerald-600 text-white text-[10px] font-bold px-2 py-1 rounded-bl-lg">¡NUEVO!</div>
                     <span class="text-emerald-600 mt-0.5 text-lg">📖</span>
                     <div>
-                        <p class="text-emerald-900 font-bold pr-8">¡Nuevo juego! Trivial Teológico de la Pasión.</p>
+                        <p class="text-emerald-900 font-bold pr-8">Trivial Teológico de la Pasión.</p>
                         <p class="text-emerald-700 text-xs mt-1 font-medium">Toca aquí para jugar ➡️</p>
                     </div>
                 </button>
@@ -762,7 +770,7 @@
 
         window.bancoPreguntasTeologico = [
             { q: "¿Qué término teológico describe el vaciamiento de la propia voluntad de Cristo para llegar a ser enteramente receptivo a la voluntad divina durante su encarnación y pasión?", a: "Kenosis", e: ["Hipóstasis", "Theotokos", "Perijóresis"] },
-            { q: "En el contexto de las teorías de la expiación, ¿cuál sostiene que la muerte de Cristo fue un pago a Satanás para liberar a la humanidad?", a: "Teoría del rescate", e: ["Teoría de la satisfacción", "Teoría de la influencia moral", "Teoría de la sustitución penal"] },
+            { q: "En el contexto de las teorías de la expiación, ¿cuál sostiene que la muerte de Cristo fue un pago a Satanás para liberar a la humanidad?", a: "Teoría del rescate", e: ["Teoría de la satisfaction", "Teoría de la influencia moral", "Teoría de la sustitución penal"] },
             { q: "¿Qué salmo comienza con las palabras que Jesús pronunció en la cruz: Dios mío, Dios mío, ¿por qué me has abandonado?", a: "Salmo 22", e: ["Salmo 51", "Salmo 23", "Salmo 110"] },
             { q: "Según la teología paulina en la Primera Carta a los Corintios, ¿cómo es llamado Cristo en relación con la resurrección de los muertos?", a: "Las primicias", e: ["El alfa y la omega", "El cordero inmolado", "El segundo Adán"] },
             { q: "¿Qué nombre recibe la condición médica que Lucas describe cuando Jesús sudó gotas como de sangre en Getsemaní?", a: "Hematidrosis", e: ["Diapédesis", "Hemólisis", "Epistaxis"] },
@@ -867,6 +875,25 @@
             'borriquita.png', 'estrella.png', 'columna.png', 'lagrimas.png', 'humildad.png', 'penas.png', 'medinaceli.png', 'trinidad.png', 'afligidos.png', 'eccehomo.png', 'salud.png', 'huerto.png', 'esperanza.png', 'caridad.png', 'prendimiento.png', 'buenfin.png'
         ];
 
+        window.bancoFlash = [
+            { file: 'borriquita.png', name: 'Borriquita' },
+            { file: 'estrella.png', name: 'Estrella' },
+            { file: 'columna.png', name: 'Columna' },
+            { file: 'lagrimas.png', name: 'Lágrimas' },
+            { file: 'humildad.png', name: 'Humildad' },
+            { file: 'penas.png', name: 'Penas' },
+            { file: 'medinaceli.png', name: 'Medinaceli' },
+            { file: 'trinidad.png', name: 'Trinidad' },
+            { file: 'afligidos.png', name: 'Afligidos' },
+            { file: 'eccehomo.png', name: 'Ecce Homo' },
+            { file: 'salud.png', name: 'Salud' },
+            { file: 'huerto.png', name: 'Huerto' },
+            { file: 'esperanza.png', name: 'Esperanza' },
+            { file: 'caridad.png', name: 'Caridad' },
+            { file: 'prendimiento.png', name: 'Prendimiento' },
+            { file: 'buenfin.png', name: 'Buen Fin' }
+        ];
+
         let progresoInterval;
         let modalProgresoInterval;
         window.diaSeleccionadoActual = 'domingo';
@@ -935,6 +962,7 @@
         };
         window.cerrarJuegos = function() {
             if (window.parejasTimer) clearInterval(window.parejasTimer);
+            if (window.flashCountdownTimer) clearInterval(window.flashCountdownTimer);
             document.getElementById('juegosHeaderTimer').classList.add('hidden');
             window.mostrarBotonesFlotantes();
             document.getElementById('juegosModal').classList.add('hidden');
@@ -944,6 +972,7 @@
             if (window.impMouseUpHandler) window.removeEventListener('mouseup', window.impMouseUpHandler);
             if (window.impTouchEndHandler) window.removeEventListener('touchend', window.impTouchEndHandler);
             if (window.parejasTimer) clearInterval(window.parejasTimer);
+            if (window.flashCountdownTimer) clearInterval(window.flashCountdownTimer);
             document.getElementById('juegosHeaderTimer').classList.add('hidden');
             
             if (document.getElementById('juegosTitulo').innerText === 'Juegos Cofrades') {
@@ -1383,11 +1412,12 @@
             document.getElementById('juegosContenido').innerHTML = `
                 <div class="w-full max-w-sm flex flex-col gap-4 fade-in text-center pb-8">
                     <p class="text-gray-300 mb-4">Selecciona un juego para pasar el rato.</p>
+                    <button onclick="window.seleccionarJuego('flash')" class="w-full bg-orange-700 text-white font-bold py-6 px-4 rounded-2xl shadow-lg hover:bg-orange-600 transition active:scale-95 text-xl border border-orange-500">📸 Flash Photo</button>
                     <button onclick="window.seleccionarJuego('impostor')" class="w-full bg-rose-700 text-white font-bold py-6 px-4 rounded-2xl shadow-lg hover:bg-rose-600 transition active:scale-95 text-xl border border-rose-500">🕵️ El Impostor Cofrade</button>
+                    <button onclick="window.seleccionarJuego('parejas')" class="w-full bg-rose-900 text-white font-bold py-6 px-4 rounded-2xl shadow-lg hover:bg-rose-800 transition active:scale-95 text-xl border border-rose-700">🃏 Parejas Cofrades</button>
                     <button onclick="window.seleccionarJuego('trivial')" class="w-full bg-blue-700 text-white font-bold py-6 px-4 rounded-2xl shadow-lg hover:bg-blue-600 transition active:scale-95 text-xl border border-blue-500">🧠 Trivial Cofrade</button>
                     <button onclick="window.seleccionarJuego('pasion')" class="w-full bg-purple-700 text-white font-bold py-6 px-4 rounded-2xl shadow-lg hover:bg-purple-600 transition active:scale-95 text-xl border border-purple-500">✝️ Trivial de la Pasión</button>
                     <button onclick="window.seleccionarJuego('teologico')" class="w-full bg-emerald-700 text-white font-bold py-6 px-4 rounded-2xl shadow-lg hover:bg-emerald-600 transition active:scale-95 text-xl border border-emerald-500">📖 Trivial Teológico</button>
-                    <button onclick="window.seleccionarJuego('parejas')" class="w-full bg-rose-900 text-white font-bold py-6 px-4 rounded-2xl shadow-lg hover:bg-rose-800 transition active:scale-95 text-xl border border-rose-700">🃏 Parejas Cofrades</button>
                 </div>`;
         };
 
@@ -1440,9 +1470,269 @@
                 window.iniciarSiguienteRondaImpostor();
             } else if (window.selectedGame === 'parejas') {
                 window.iniciarParejasMulti(window.players);
+            } else if (window.selectedGame === 'flash') {
+                window.iniciarFlashMulti(window.players);
             } else {
                 window.iniciarTrivial(window.players);
             }
+        };
+
+        window.iniciarFlashMulti = function(playersArray) {
+            let arr = [...playersArray];
+            if (arr.length > 1) {
+                arr = arr.sort(() => Math.random() - 0.5);
+            }
+            window.flashPlayers = arr.map(p => ({ nombre: p, puntos: 0 }));
+            window.flashRound = 1;
+            window.totalRondasFlash = 5; 
+            window.flashTurn = 0;
+            
+            if (window.flashPlayers.length > 1) {
+                window.mostrarSorteoTurnoFlash();
+            } else {
+                window.flujoTurnoFlash();
+            }
+        };
+
+        window.mostrarSorteoTurnoFlash = function() {
+            window.toggleDisclaimer(false);
+            const primerJugador = window.flashPlayers[0].nombre;
+            
+            document.getElementById('juegosContenido').innerHTML = `
+                <div class="w-full max-w-sm flex flex-col items-center gap-6 fade-in text-center">
+                    <h3 class="text-3xl font-bold text-white">¡Todos listos!</h3>
+                    <p class="text-xl text-gray-400">¿Preparados para empezar?</p>
+                    
+                    <div id="animacionSorteoFlash" class="text-6xl my-6 pop-in">⏳</div>
+                    
+                    <div id="resultadoSorteoFlash" class="hidden flex-col items-center gap-4 w-full pop-in">
+                        <p class="text-gray-300">El juego lo empieza...</p>
+                        <h4 class="text-4xl font-black text-orange-400 mb-4">¡${primerJugador}!</h4>
+                        <button onclick="window.flujoTurnoFlash()" class="w-full bg-orange-600 text-white font-bold py-4 rounded-xl shadow-lg transition active:scale-95">Comenzar juego</button>
+                    </div>
+                </div>`;
+
+            let contador = 0;
+            const iconos = ['⏱️', '📸', '👀', '💡', '🎲'];
+            const animacionElement = document.getElementById('animacionSorteoFlash');
+            
+            const intervaloAnimacion = setInterval(() => {
+                animacionElement.innerText = iconos[contador % iconos.length];
+                contador++;
+            }, 400);
+
+            setTimeout(() => {
+                clearInterval(intervaloAnimacion);
+                animacionElement.classList.add('hidden');
+                document.getElementById('resultadoSorteoFlash').classList.remove('hidden');
+                document.getElementById('resultadoSorteoFlash').classList.add('flex');
+            }, 2500);
+        };
+
+        window.flujoTurnoFlash = function() {
+            window.toggleDisclaimer(false);
+            if (window.flashPlayers.length === 1) {
+                window.jugarTurnoFlash();
+                return;
+            }
+            const p = window.flashPlayers[window.flashTurn];
+            document.getElementById('juegosContenido').innerHTML = `
+                <div class="w-full max-w-sm flex flex-col items-center gap-8 fade-in text-center">
+                    <p class="text-xl text-gray-400 mb-2">Turno de</p>
+                    <h3 class="text-4xl font-bold text-orange-400">${p.nombre}</h3>
+                    <button onclick="window.jugarTurnoFlash()" class="w-full bg-gray-700 text-white font-bold py-4 rounded-xl shadow-lg transition active:scale-95 text-lg border border-gray-600 hover:bg-gray-600">Estoy listo</button>
+                </div>`;
+        };
+
+        window.jugarTurnoFlash = function() {
+            window.toggleDisclaimer(false);
+            const correctImg = window.bancoFlash[Math.floor(Math.random() * window.bancoFlash.length)];
+            let wrongOptions = window.bancoFlash.filter(item => item.name !== correctImg.name).sort(() => 0.5 - Math.random()).slice(0, 3);
+            window.flashCurrentOptions = [correctImg, ...wrongOptions].sort(() => 0.5 - Math.random());
+            window.flashCurrentCorrect = correctImg;
+
+            const imgPreload = new Image();
+            imgPreload.src = `https://raw.githubusercontent.com/ejruizgarcia/images/main/${correctImg.file}`;
+
+            document.getElementById('juegosContenido').innerHTML = `
+                <div class="w-full max-w-sm flex flex-col items-center gap-8 fade-in text-center">
+                    <p class="text-2xl text-gray-400 font-medium">Atención a la pantalla...</p>
+                    <h2 class="text-9xl font-black text-orange-500 pop-in" id="flashCountdown">3</h2>
+                </div>
+            `;
+
+            let count = 3;
+            window.flashCountdownTimer = setInterval(() => {
+                count--;
+                if (count > 0) {
+                    const el = document.getElementById('flashCountdown');
+                    if (el) {
+                        el.innerText = count;
+                        el.classList.remove('pop-in');
+                        void el.offsetWidth;
+                        el.classList.add('pop-in');
+                    } else {
+                        clearInterval(window.flashCountdownTimer);
+                    }
+                } else {
+                    clearInterval(window.flashCountdownTimer);
+                    document.getElementById('juegosContenido').innerHTML = `
+                        <div class="absolute inset-0 z-[80] bg-black flex items-center justify-center p-2 md:p-6 fade-in">
+                            <img src="https://raw.githubusercontent.com/ejruizgarcia/images/main/${correctImg.file}" class="w-full h-full object-cover rounded-2xl">
+                        </div>
+                    `;
+                    setTimeout(() => {
+                        window.mostrarOpcionesFlash();
+                    }, 150); 
+                }
+            }, 1000);
+        };
+
+        window.mostrarOpcionesFlash = function() {
+            window.toggleDisclaimer(false);
+            let opcionesHTML = '';
+            window.flashCurrentOptions.forEach((opt, i) => {
+                opcionesHTML += `<button id="btnFlash${i}" onclick="window.checkFlash(${i})" class="w-full h-full min-h-[120px] bg-gray-700 text-white font-bold text-2xl md:text-3xl rounded-3xl shadow-lg border-2 border-gray-600 hover:bg-orange-600 transition active:scale-95 flex items-center justify-center p-4 break-words leading-tight">${opt.name}</button>`;
+            });
+
+            const jugadorActual = window.flashPlayers[window.flashTurn];
+
+            document.getElementById('juegosContenido').innerHTML = `
+                <div class="w-full h-full max-h-[800px] max-w-2xl flex flex-col gap-4 fade-in mx-auto pb-4">
+                    <div class="flex justify-between items-center bg-gray-800 p-3 rounded-xl border border-gray-700 shrink-0">
+                        <span class="text-orange-400 font-bold uppercase text-xs md:text-sm tracking-widest">Ronda ${window.flashRound} de ${window.totalRondasFlash}</span>
+                        <span class="text-white font-bold text-sm md:text-base">${jugadorActual.nombre}</span>
+                    </div>
+                    
+                    <p class="text-center text-gray-300 font-bold tracking-widest uppercase text-lg md:text-xl shrink-0 mt-2">¿Qué paso era?</p>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 grid-rows-4 sm:grid-rows-2 gap-4 flex-1 w-full pb-2">
+                        ${opcionesHTML}
+                    </div>
+
+                    <div id="contenedorContinuarFlash" class="hidden mt-auto shrink-0">
+                        <button onclick="window.siguienteTurnoFlash()" class="w-full bg-amber-500 text-gray-900 font-bold py-4 rounded-xl shadow-lg hover:bg-amber-400 transition active:scale-95 text-xl">
+                            Siguiente Turno
+                        </button>
+                    </div>
+                </div>
+            `;
+        };
+
+        window.checkFlash = function(indexSeleccionado) {
+            const opt = window.flashCurrentOptions[indexSeleccionado];
+            const esCorrecta = (opt.name === window.flashCurrentCorrect.name);
+
+            for(let i = 0; i < 4; i++) {
+                const btn = document.getElementById(`btnFlash${i}`);
+                if (!btn) continue;
+                btn.onclick = null;
+                btn.classList.remove('hover:bg-orange-600', 'bg-gray-700');
+                
+                if (window.flashCurrentOptions[i].name === window.flashCurrentCorrect.name) {
+                    btn.classList.add('bg-green-600', 'border-green-400');
+                } else if (i === indexSeleccionado && !esCorrecta) {
+                    btn.classList.add('bg-red-600', 'border-red-400');
+                } else {
+                    btn.classList.add('bg-gray-800', 'opacity-50');
+                }
+            }
+
+            if (esCorrecta) {
+                window.flashPlayers[window.flashTurn].puntos += 100;
+            }
+
+            document.getElementById('contenedorContinuarFlash').classList.remove('hidden');
+            document.getElementById('contenedorContinuarFlash').classList.add('fade-in');
+        };
+
+        window.siguienteTurnoFlash = function() {
+            window.flashTurn++;
+            if(window.flashTurn < window.flashPlayers.length) {
+                window.flujoTurnoFlash();
+            } else {
+                if (window.flashPlayers.length === 1) {
+                    window.flashRound++;
+                    if(window.flashRound > window.totalRondasFlash) window.mostrarPantallaVictoriaFlash();
+                    else { window.flashTurn = 0; window.flujoTurnoFlash(); }
+                } else {
+                    const esFinal = window.flashRound >= window.totalRondasFlash;
+                    if (esFinal) {
+                        window.mostrarPantallaVictoriaFlash();
+                    } else {
+                        window.mostrarClasificacionFlash(false);
+                    }
+                }
+            }
+        };
+
+        window.mostrarClasificacionFlash = function(esFinal) {
+            window.toggleDisclaimer(true);
+            const ranking = [...window.flashPlayers].sort((a,b) => b.puntos - a.puntos);
+            let html = ranking.map((p, i) => {
+                let medalla = '';
+                if (esFinal && i === 0) medalla = '🏆 ';
+                else if (esFinal && i === 1) medalla = '🥈 ';
+                else if (esFinal && i === 2) medalla = '🥉 ';
+                else medalla = `<span class="text-gray-500 w-6 inline-block text-center">${i+1}</span>`;
+                return `<div class="flex justify-between items-center p-4 bg-gray-800 rounded-xl border border-gray-700 mb-2"><div><span class="text-xl">${medalla}</span><span class="font-bold text-white ml-2">${p.nombre}</span></div><span class="font-black text-orange-400">${p.puntos} pts</span></div>`;
+            }).join('');
+            
+            let tituloHTML = esFinal 
+                ? `<h2 class="text-3xl font-black text-orange-400 mb-2 text-center">¡Juego Terminado!</h2><p class="text-gray-300 text-center mb-6">Clasificación Final</p>`
+                : `<h3 class="text-2xl font-bold text-white mb-2 text-center">Clasificación Parcial</h3><p class="text-gray-400 text-center mb-6">Fin de la Ronda ${window.flashRound}</p>`;
+                
+            let botonHTML = esFinal
+                ? `<button onclick="window.volverJuegos()" class="w-full bg-gray-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-gray-500 transition active:scale-95 mt-4">Terminar Juego</button>`
+                : `<button onclick="window.avanzarRondaFlash()" class="w-full bg-orange-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-orange-500 transition active:scale-95 mt-4">Comenzar Ronda ${window.flashRound + 1}</button>`;
+
+            document.getElementById('juegosContenido').innerHTML = `
+                <div class="w-full max-w-sm flex flex-col fade-in">
+                    ${tituloHTML}
+                    <div class="flex flex-col">
+                        ${html}
+                    </div>
+                    ${botonHTML}
+                </div>`;
+        };
+
+        window.avanzarRondaFlash = function() {
+            window.flashRound++;
+            window.flashTurn = 0;
+            window.flujoTurnoFlash();
+        };
+
+        window.mostrarPantallaVictoriaFlash = function() {
+            window.toggleDisclaimer(true);
+            const ranking = [...window.flashPlayers].sort((a,b) => b.puntos - a.puntos);
+            const ganador = ranking[0];
+            
+            let empates = ranking.filter(p => p.puntos === ganador.puntos);
+            let textoGanador = `¡Enhorabuena ${ganador.nombre}, has ganado!`;
+            
+            if (empates.length > 1) {
+                const nombresEmpate = empates.map(e => e.nombre).join(' y ');
+                textoGanador = `¡Enhorabuena ${nombresEmpate}, habéis empatado!`;
+            }
+            if (window.flashPlayers.length === 1) {
+                textoGanador = `¡Buen trabajo, ${ganador.nombre}!`;
+            }
+
+            document.getElementById('juegosContenido').innerHTML = `
+                <div class="w-full max-w-sm flex flex-col items-center justify-center fade-in text-center py-4">
+                    <div class="text-7xl mb-4 pop-in">🏆</div>
+                    <h2 class="text-3xl md:text-4xl font-black text-orange-400 mb-4 leading-tight pop-in">${textoGanador}</h2>
+                    <p class="text-gray-300 mb-8 text-lg">Has completado todas las rondas de Flash Photo.</p>
+                    
+                    <div class="flex flex-col gap-4 w-full">
+                        <button onclick="window.mostrarClasificacionFlash(true)" class="w-full bg-orange-500 text-gray-900 font-bold py-4 rounded-xl shadow-lg hover:bg-orange-400 transition active:scale-95 text-lg">
+                            Ver clasificación final
+                        </button>
+                        <button onclick="window.volverJuegos()" class="w-full bg-gray-700 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-gray-600 transition active:scale-95 text-lg">
+                            Terminar juego
+                        </button>
+                    </div>
+                </div>`;
         };
 
         window.iniciarSiguienteRondaImpostor = function() {
@@ -1842,279 +2132,6 @@
             window.trivialRound++;
             window.trivialTurn = 0;
             window.flujoTurnoTrivial();
-        };
-
-        window.iniciarParejasMulti = function(playersArray) {
-            let arr = [...playersArray];
-            if (arr.length > 1) {
-                arr = arr.sort(() => Math.random() - 0.5);
-            }
-            window.parejasPlayers = arr.map(p => ({ nombre: p, puntos: 0, eliminado: false }));
-            window.parejasRound = 1;
-            window.parejasTurn = 0;
-            
-            if (window.parejasPlayers.length > 1) {
-                window.mostrarSorteoTurnoParejas();
-            } else {
-                window.flujoTurnoParejas();
-            }
-        };
-
-        window.mostrarSorteoTurnoParejas = function() {
-            window.toggleDisclaimer(false);
-            const primerJugador = window.parejasPlayers[0].nombre;
-            
-            document.getElementById('juegosContenido').innerHTML = `
-                <div class="w-full max-w-sm flex flex-col items-center gap-6 fade-in text-center">
-                    <h3 class="text-3xl font-bold text-white">¡Todos listos!</h3>
-                    <p class="text-xl text-gray-400">¿Preparados para empezar?</p>
-                    
-                    <div id="animacionSorteoParejas" class="text-6xl my-6 pop-in">⏳</div>
-                    
-                    <div id="resultadoSorteoParejas" class="hidden flex-col items-center gap-4 w-full pop-in">
-                        <p class="text-gray-300">El juego lo empieza...</p>
-                        <h4 class="text-4xl font-black text-rose-500 mb-4">¡${primerJugador}!</h4>
-                        <button onclick="window.flujoTurnoParejas()" class="w-full bg-rose-600 text-white font-bold py-4 rounded-xl shadow-lg transition active:scale-95">Comenzar juego</button>
-                    </div>
-                </div>`;
-
-            let contador = 0;
-            const iconos = ['⏱️', '🃏', '🤔', '👀', '🎲'];
-            const animacionElement = document.getElementById('animacionSorteoParejas');
-            
-            const intervaloAnimacion = setInterval(() => {
-                animacionElement.innerText = iconos[contador % iconos.length];
-                contador++;
-            }, 400);
-
-            setTimeout(() => {
-                clearInterval(intervaloAnimacion);
-                animacionElement.classList.add('hidden');
-                document.getElementById('resultadoSorteoParejas').classList.remove('hidden');
-                document.getElementById('resultadoSorteoParejas').classList.add('flex');
-            }, 2500);
-        };
-
-        window.flujoTurnoParejas = function() {
-            while(window.parejasTurn < window.parejasPlayers.length && window.parejasPlayers[window.parejasTurn].eliminado) {
-                window.parejasTurn++;
-            }
-            
-            if (window.parejasTurn >= window.parejasPlayers.length) {
-                window.evaluarFinRondaParejas();
-                return;
-            }
-
-            const p = window.parejasPlayers[window.parejasTurn];
-            window.toggleDisclaimer(false);
-
-            document.getElementById('juegosContenido').innerHTML = `
-                <div class="w-full max-w-sm flex flex-col items-center gap-8 fade-in text-center">
-                    <p class="text-xl text-gray-400 mb-2">Ronda ${window.parejasRound}</p>
-                    <h3 class="text-4xl font-bold text-rose-500 mb-2">${p.nombre}</h3>
-                    <p class="text-gray-400 mb-6">Encuentra todas las parejas antes de que acabe el tiempo.</p>
-                    <button onclick="window.iniciarTableroParejas()" class="w-full bg-rose-600 text-white font-bold py-4 rounded-xl shadow-lg transition active:scale-95">Comenzar</button>
-                </div>`;
-        };
-
-        window.formatTimeString = function(secs) {
-            const m = Math.floor(secs / 60);
-            const s = secs % 60;
-            return `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
-        };
-
-        window.iniciarTableroParejas = function() {
-            window.toggleDisclaimer(false);
-            const allImages = [...window.bancoImagenesParejas].sort(() => Math.random() - 0.5);
-            const selectedImages = allImages.slice(0, 6);
-            let deck = [...selectedImages, ...selectedImages].sort(() => Math.random() - 0.5);
-            
-            window.memCards = deck.map((img, idx) => ({ id: idx, img: img, isFlipped: false, isMatched: false }));
-            window.memFlipped = [];
-            window.memLock = false;
-            window.memMatches = 0;
-            
-            const reduccion = Math.floor((window.parejasRound - 1) / 2) * 10;
-            window.memTime = Math.max(10, 60 - reduccion);
-            
-            const hTimer = document.getElementById('juegosHeaderTimer');
-            hTimer.classList.remove('hidden');
-            hTimer.innerText = window.formatTimeString(window.memTime);
-            
-            if (window.parejasTimer) clearInterval(window.parejasTimer);
-            window.parejasTimer = setInterval(() => {
-                window.memTime--;
-                hTimer.innerText = window.formatTimeString(window.memTime);
-                
-                if (window.memTime <= 0) {
-                    clearInterval(window.parejasTimer);
-                    window.resultadoTurnoParejas(false);
-                }
-            }, 1000);
-            
-            window.renderBoardParejas();
-        };
-
-        window.renderBoardParejas = function() {
-            let cardsHTML = '';
-            window.memCards.forEach((c) => {
-                cardsHTML += `
-                    <div class="mem-card" id="memCardWrap${c.id}" onclick="window.flipMemCard(${c.id})">
-                        <div class="mem-card-inner shadow-md" id="memCardInner${c.id}">
-                            <div class="mem-card-front flex items-center justify-center">
-                                <span class="text-4xl opacity-20">✝️</span>
-                            </div>
-                            <div class="mem-card-back">
-                                <img src="https://raw.githubusercontent.com/ejruizgarcia/images/main/${c.img}" alt="Imagen Cofrade">
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
-
-            document.getElementById('juegosContenido').innerHTML = `
-                <div class="w-full max-w-sm flex flex-col items-center fade-in gap-4 px-2 pb-6 mt-4">
-                    <div class="flex justify-center w-full items-center bg-gray-800 p-4 rounded-xl border border-gray-700">
-                        <span class="text-gray-400 font-bold uppercase tracking-wider text-xs">Parejas encontradas: <span class="text-white text-lg ml-2" id="memScore">0 / 6</span></span>
-                    </div>
-                    <div class="grid grid-cols-3 grid-rows-4 gap-3 w-full mt-2">
-                        ${cardsHTML}
-                    </div>
-                    <button onclick="window.volverJuegos()" class="mt-6 text-gray-400 hover:text-white transition text-sm font-bold bg-gray-800 py-3 px-6 rounded-full">Rendirse y salir</button>
-                </div>
-            `;
-        };
-
-        window.flipMemCard = function(idx) {
-            if (window.memLock) return;
-            const card = window.memCards[idx];
-            if (card.isFlipped || card.isMatched) return;
-
-            card.isFlipped = true;
-            document.getElementById('memCardWrap' + idx).classList.add('flipped');
-            window.memFlipped.push(idx);
-
-            if (window.memFlipped.length === 2) {
-                window.memLock = true;
-                const idx1 = window.memFlipped[0];
-                const idx2 = window.memFlipped[1];
-                
-                if (window.memCards[idx1].img === window.memCards[idx2].img) {
-                    window.memCards[idx1].isMatched = true;
-                    window.memCards[idx2].isMatched = true;
-                    window.memMatches++;
-                    document.getElementById('memScore').innerText = window.memMatches + ' / 6';
-                    
-                    document.getElementById('memCardInner' + idx1).classList.add('flash-match');
-                    document.getElementById('memCardInner' + idx2).classList.add('flash-match');
-                    
-                    window.memFlipped = [];
-                    window.memLock = false;
-                    
-                    if (window.memMatches === 6) {
-                        clearInterval(window.parejasTimer);
-                        setTimeout(() => window.resultadoTurnoParejas(true), 600);
-                    }
-                } else {
-                    setTimeout(() => {
-                        window.memCards[idx1].isFlipped = false;
-                        window.memCards[idx2].isFlipped = false;
-                        document.getElementById('memCardWrap' + idx1).classList.remove('flipped');
-                        document.getElementById('memCardWrap' + idx2).classList.remove('flipped');
-                        window.memFlipped = [];
-                        window.memLock = false;
-                    }, 1000);
-                }
-            }
-        };
-
-        window.resultadoTurnoParejas = function(victoria) {
-            document.getElementById('juegosHeaderTimer').classList.add('hidden');
-            const p = window.parejasPlayers[window.parejasTurn];
-            window.toggleDisclaimer(true);
-
-            let titulo, color, subtitulo, icono;
-            if (victoria) {
-                let puntosObtenidos = 100 + (window.memTime * 10);
-                p.puntos += puntosObtenidos;
-                titulo = '¡Conseguido!';
-                color = 'text-emerald-400';
-                subtitulo = `Has sumado <span class="font-bold text-white">${puntosObtenidos} pts</span> (sobraron ${window.memTime}s).`;
-                icono = '🎉';
-            } else {
-                p.eliminado = true;
-                titulo = '¡Eliminado!';
-                color = 'text-rose-500';
-                subtitulo = 'Te has quedado sin tiempo en esta ronda.';
-                icono = '💀';
-            }
-
-            document.getElementById('juegosContenido').innerHTML = `
-                <div class="w-full max-w-sm flex flex-col items-center text-center fade-in py-8">
-                    <div class="text-7xl mb-4 pop-in">${icono}</div>
-                    <h3 class="text-4xl font-black ${color} mb-4 leading-tight pop-in">${titulo}</h3>
-                    <p class="text-gray-300 text-lg mb-8">${subtitulo}</p>
-                    
-                    <button onclick="window.siguienteTurnoParejas()" class="w-full bg-rose-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-rose-500 transition active:scale-95 mb-4 text-lg">Siguiente</button>
-                </div>
-            `;
-        };
-
-        window.siguienteTurnoParejas = function() {
-            window.parejasTurn++;
-            window.flujoTurnoParejas();
-        };
-
-        window.evaluarFinRondaParejas = function() {
-            const activos = window.parejasPlayers.filter(p => !p.eliminado);
-            const esFinal = (window.parejasPlayers.length > 1 && activos.length <= 1) || (window.parejasPlayers.length === 1 && activos.length === 0);
-            
-            window.mostrarClasificacionParejas(esFinal);
-        };
-
-        window.mostrarClasificacionParejas = function(esFinal) {
-            window.toggleDisclaimer(true);
-            const ranking = [...window.parejasPlayers].sort((a,b) => b.puntos - a.puntos);
-            
-            let html = ranking.map((p, i) => {
-                let medalla = '';
-                if (esFinal && i === 0 && !p.eliminado && window.parejasPlayers.length > 1) medalla = '🏆 ';
-                else if (esFinal && i === 0) medalla = '🥇 ';
-                else if (esFinal && i === 1) medalla = '🥈 ';
-                else if (esFinal && i === 2) medalla = '🥉 ';
-                else medalla = `<span class="text-gray-500 w-6 inline-block text-center">${i+1}</span>`;
-
-                let opacidad = p.eliminado ? 'opacity-50' : '';
-                let estadoText = p.eliminado ? '<span class="text-rose-500 text-xs ml-2 font-bold uppercase">Eliminado</span>' : '';
-
-                return `<div class="flex justify-between items-center p-4 bg-gray-800 rounded-xl border border-gray-700 mb-2 ${opacidad}">
-                    <div><span class="text-xl">${medalla}</span><span class="font-bold text-white ml-2">${p.nombre}</span>${estadoText}</div>
-                    <span class="font-black text-rose-400">${p.puntos} pts</span>
-                </div>`;
-            }).join('');
-
-            let tituloHTML = esFinal 
-                ? `<h2 class="text-3xl font-black text-rose-400 mb-2 text-center">¡Juego Terminado!</h2><p class="text-gray-300 text-center mb-6">Clasificación Final</p>`
-                : `<h3 class="text-2xl font-bold text-white mb-2 text-center">Clasificación Parcial</h3><p class="text-gray-400 text-center mb-6">Fin de la Ronda ${window.parejasRound}</p>`;
-                
-            let botonHTML = esFinal
-                ? `<button onclick="window.volverJuegos()" class="w-full bg-gray-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-gray-500 transition active:scale-95 mt-4">Volver al Menú</button>`
-                : `<button onclick="window.avanzarRondaParejas()" class="w-full bg-rose-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-rose-500 transition active:scale-95 mt-4">Comenzar Ronda ${window.parejasRound + 1}</button>`;
-
-            document.getElementById('juegosContenido').innerHTML = `
-                <div class="w-full max-w-sm flex flex-col fade-in">
-                    ${tituloHTML}
-                    <div class="flex flex-col">
-                        ${html}
-                    </div>
-                    ${botonHTML}
-                </div>`;
-        };
-
-        window.avanzarRondaParejas = function() {
-            window.parejasRound++;
-            window.parejasTurn = 0;
-            window.flujoTurnoParejas();
         };
 
         const ordenDiasSwipe = ['domingo', 'lunes', 'martes', 'miercoles', 'jueves', 'madrugada', 'viernes', 'resurreccion'];
