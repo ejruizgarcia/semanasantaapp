@@ -190,6 +190,18 @@
                         <p class="text-purple-700 text-xs mt-1 font-medium">Toca aquí para jugar ➡️</p>
                     </div>
                 </button>
+                <button onclick="cerrarNovedades(); abrirJuegos(); seleccionarJuego('teologico');" class="w-full text-left p-4 bg-emerald-50 rounded-xl shadow-sm border border-emerald-200 flex gap-3 items-start relative overflow-hidden hover:bg-emerald-100 transition active:scale-95 cursor-pointer">
+                    <div class="absolute top-0 right-0 bg-emerald-600 text-white text-[10px] font-bold px-2 py-1 rounded-bl-lg">¡NUEVO!</div>
+                    <span class="text-emerald-600 mt-0.5 text-lg">📖</span>
+                    <div>
+                        <p class="text-emerald-900 font-bold pr-8">¡Nuevo juego! Trivial Teológico de la Pasión.</p>
+                        <p class="text-emerald-700 text-xs mt-1 font-medium">Toca aquí para jugar ➡️</p>
+                    </div>
+                </button>
+                <div class="p-4 bg-white rounded-xl shadow-sm border border-gray-100 flex gap-3 items-start">
+                    <span class="text-amber-500 mt-0.5">✨</span>
+                    <p class="text-gray-700 font-medium">Novedades en el juego del impostor: 2 impostores a partir de 6 jugadores y cambio de diseño de las tarjetas de palabras.</p>
+                </div>
                 <div class="p-4 bg-white rounded-xl shadow-sm border border-gray-100 flex gap-3 items-start">
                     <span class="text-amber-500 mt-0.5">✨</span>
                     <p class="text-gray-700 font-medium">Mejor sincronización del itinerario en directo marcando por dónde va la Cruz de Guía.</p>
@@ -368,7 +380,7 @@
     <!-- Modal de Juegos -->
     <div id="juegosModal" class="fixed inset-0 z-[70] bg-gray-900 hidden flex-col h-full w-full text-white">
         <div class="p-4 flex items-center shadow-md shrink-0 bg-gray-800">
-            <button onclick="cerrarJuegos()" class="mr-4 p-2 bg-gray-700 rounded-full hover:bg-gray-600 transition">
+            <button onclick="volverJuegos()" class="mr-4 p-2 bg-gray-700 rounded-full hover:bg-gray-600 transition">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
             </button>
             <h2 id="juegosTitulo" class="text-xl font-bold truncate">Juegos Cofrades</h2>
@@ -481,6 +493,7 @@
         };
 
         window.diccionarioCofrade = ["Carrera Oficial", "Capirote", "Incienso", "Cargador", "Capataz", "Trabajadera", "Marcha procesional", "Iglesia Mayor", "La Isla", "Torrija", "Mantilla", "Nazareno", "Cruz de Guía", "Paso de palio", "Paso de misterio", "Saeta", "Candelabro", "Llamador", "Banda de música", "Penitente", "IslaPasión", "La Venera", "Calle Real", "Carga isleña", "Almohada", "Aguaor", "Cirial", "Respiradero", "Faldón", "Varal", "Manto", "Corona", "Potencias", "Túnica", "Cíngulo", "Cirio", "Hermano Mayor", "Pregón", "Plaza de la Pastora", "Rosario", "Campana", "Recogida", "Antifaz", "Corneta", "Tambor", "Sacerdote", "Acólito", "Colita"];
+        
         window.bancoPreguntasTrivial = [
             { q: "¿Cuál es la cofradía de penitencia más antigua de San Fernando?", a: "La Hermandad de la Soledad.", e: ["La Hermandad del Nazareno.", "La Hermandad de la Vera Cruz.", "La Hermandad del Carmen."] },
             { q: "¿En qué año fue fundada la Hermandad de Nuestra Madre y Señora María Santísima de la Soledad?", a: "En 1747.", e: ["En 1768.", "En 1759.", "En 1795."] },
@@ -687,6 +700,109 @@
             { q: "¿Cuál es el mensaje central de la Resurrección de Jesús?", a: "Que la vida vence a la muerte y el amor vence al pecado", e: ["Que Jesús era un mago", "Que los apóstoles tenían buena imaginación", "Que el cuerpo de Jesús nunca fue encontrado"] }
         ];
 
+        window.bancoPreguntasTeologico = [
+            { q: "¿Qué término teológico describe el vaciamiento de la propia voluntad de Cristo para llegar a ser enteramente receptivo a la voluntad divina durante su encarnación y pasión?", a: "Kenosis", e: ["Hipóstasis", "Theotokos", "Perijóresis"] },
+            { q: "En el contexto de las teorías de la expiación, ¿cuál sostiene que la muerte de Cristo fue un pago a Satanás para liberar a la humanidad?", a: "Teoría del rescate", e: ["Teoría de la satisfacción", "Teoría de la influencia moral", "Teoría de la sustitución penal"] },
+            { q: "¿Qué salmo comienza con las palabras que Jesús pronunció en la cruz: Dios mío, Dios mío, ¿por qué me has abandonado?", a: "Salmo 22", e: ["Salmo 51", "Salmo 23", "Salmo 110"] },
+            { q: "Según la teología paulina en la Primera Carta a los Corintios, ¿cómo es llamado Cristo en relación con la resurrección de los muertos?", a: "Las primicias", e: ["El alfa y la omega", "El cordero inmolado", "El segundo Adán"] },
+            { q: "¿Qué nombre recibe la condición médica que Lucas describe cuando Jesús sudó gotas como de sangre en Getsemaní?", a: "Hematidrosis", e: ["Diapédesis", "Hemólisis", "Epistaxis"] },
+            { q: "¿Cuál fue el cargo teológico por el que el Sanedrín condenó a Jesús a muerte?", a: "Blasfemia", e: ["Sedición", "Profanación del templo", "Falsificación de la ley"] },
+            { q: "¿Qué cargo político presentaron los líderes judíos ante Poncio Pilato para asegurar la crucifixión de Jesús?", a: "Sedición contra el Imperio Romano", e: ["Falsa profecía", "Hechicería", "Robo de los tributos del templo"] },
+            { q: "¿Qué significa el rasgado del velo del templo de arriba a abajo en el momento de la muerte de Jesús desde una perspectiva teológica?", a: "El libre acceso de la humanidad a la presencia de Dios", e: ["La destrucción inminente de la ciudad de Jerusalén", "El fin de la autoridad de los fariseos", "La separación definitiva entre judíos y gentiles"] },
+            { q: "¿Qué padre de la Iglesia desarrolló principalmente la teoría de la satisfacción en su obra Cur Deus Homo?", a: "Anselmo de Canterbury", e: ["Tomás de Aquino", "Agustín de Hipona", "Ireneo de Lyon"] },
+            { q: "¿A qué se refiere el término cristológico descenso a los infiernos mencionado en el Credo de los Apóstoles?", a: "La predicación de Cristo a los espíritus encarcelados en el Seol o Hades", e: ["El sufrimiento psicológico de Cristo en la cruz", "La condena temporal de Jesús antes de la resurrección", "La batalla física contra los demonios en el abismo"] },
+            { q: "¿Qué título mesiánico, derivado del libro de Daniel, usó Jesús ante el sumo sacerdote Caifás?", a: "Hijo del Hombre", e: ["Hijo de David", "León de la tribu de Judá", "Siervo Sufriente"] },
+            { q: "¿Qué significado tipológico tiene el hecho de que a Jesús no le quebraran las piernas en la cruz?", a: "Cumple la prescripción de que el cordero pascual no debía tener huesos rotos", e: ["Representa la fortaleza invencible de la Iglesia", "Simboliza que su reino no será dividido", "Demuestra que su sufrimiento fue puramente espiritual y no físico"] },
+            { q: "Según la exégesis tradicional, ¿qué representan el agua y la sangre que brotaron del costado de Cristo?", a: "Los sacramentos del bautismo y la eucaristía", e: ["La doble naturaleza humana y divina", "La purificación de los judíos y los gentiles", "El sufrimiento físico y el sufrimiento moral"] },
+            { q: "¿Qué concepto soteriológico defiende que Cristo tomó el lugar del pecador recibiendo el castigo que este merecía?", a: "Expiación sustitutoria", e: ["Recapitulación", "Christus Victor", "Gracia preveniente"] },
+            { q: "En los relatos de la resurrección, ¿quién es conocida teológicamente como la apóstol de los apóstoles por ser la primera en ver a Cristo resucitado?", a: "María Magdalena", e: ["María la madre de Santiago", "Juana", "Salomé"] },
+            { q: "¿Qué nombre recibe la teoría refutada por la teología cristiana que afirma que Jesús no murió en la cruz, sino que solo se desmayó?", a: "Teoría del síncope", e: ["Teoría de la alucinación", "Teoría del robo del cuerpo", "Teoría del gemelo impostor"] },
+            { q: "¿Cómo interpreta el teólogo Ireneo de Lyon la pasión y resurrección en su teoría de la recapitulación?", a: "Cristo revive y corrige la historia de fracaso de Adán, triunfando donde él cayó", e: ["Cristo resume todas las enseñanzas de los profetas antiguos en un solo evento", "Dios recapituló los pecados del mundo para destruirlos en el fuego", "La humanidad debe repetir el sufrimiento de Cristo para salvarse"] },
+            { q: "¿Qué evento del Antiguo Testamento es considerado el principal tipo o prefiguración teológica de la crucifixión y resurrección?", a: "El sacrificio de Isaac en el monte Moria", e: ["La caída de las murallas de Jericó", "El diluvio universal", "La zarza ardiente"] },
+            { q: "¿Qué afirma el dogma de la unión hipostática respecto a la muerte de Cristo?", a: "Que su naturaleza humana experimentó la muerte mientras estaba unida a la persona divina del Verbo", e: ["Que su naturaleza divina murió temporalmente junto con la humana", "Que el Verbo abandonó al hombre Jesús justo antes de expirar", "Que la muerte de Jesús fue una mera apariencia física"] },
+            { q: "¿Cuál es el significado teológico de la resurrección de Cristo según Romanos 4, versículo 25?", a: "Fue resucitado para nuestra justificación", e: ["Fue resucitado para condenar a sus enemigos", "Fue resucitado para fundar una nueva religión terrenal", "Fue resucitado para demostrar el poder de los ángeles"] },
+            { q: "¿Qué profeta anunció que el Mesías sería traspasado por nuestras rebeliones y molido por nuestros pecados?", a: "Isaías", e: ["Zacarías", "Miqueas", "Amós"] },
+            { q: "¿Qué significado tiene el lavatorio de los pies en la Última Cena desde una eclesiología de servicio?", a: "La institución de un liderazgo basado en la humildad y el servicio mutuo", e: ["Un ritual de purificación legal previo a la Pascua", "El nombramiento exclusivo de Pedro como líder supremo", "La abolición de todos los sacramentos futuros"] },
+            { q: "¿Qué nombre recibe el modelo de expiación, popular en la Iglesia oriental, que ve la cruz como el triunfo de Dios sobre las fuerzas del mal, el pecado y la muerte?", a: "Christus Victor", e: ["Expiación vicaria", "Modelo gubernamental", "Modelo de influencia moral"] },
+            { q: "¿A qué se refería Jesús al pedir en Getsemaní que pasara de él esta copa?", a: "A la ira de Dios sobre el pecado humano que él iba a asumir", e: ["Al castigo físico exclusivo de los romanos", "Al rechazo de su familia terrenal", "A la traición de Judas Iscariote"] },
+            { q: "En la teología joánica, ¿cuándo es glorificado Jesucristo?", a: "En el momento mismo de ser levantado en la cruz", e: ["En la mañana del domingo de resurrección", "Únicamente durante la ascensión al cielo", "En la transfiguración en el monte Tabor"] },
+            { q: "¿Qué secta judía del primer siglo negaba rotundamente la posibilidad de cualquier resurrección de los muertos?", a: "Los saduceos", e: ["Los fariseos", "Los esenios", "Los zelotes"] },
+            { q: "¿Por qué era teológicamente necesario que el Mesías fuera sepultado en una tumba nueva donde nadie había sido puesto?", a: "Para garantizar que no hubiera confusión sobre qué cuerpo resucitó", e: ["Para cumplir una profecía de Jeremías sobre el reposo de los reyes", "Para evitar la contaminación con la lepra u otras impurezas de cuerpos antiguos", "Porque el Sanedrín prohibía enterrar a los condenados en tumbas familiares"] },
+            { q: "¿Qué teoría propuso el teólogo Hugo Grocio argumentando que Cristo sufrió para demostrar el desagrado de Dios hacia el pecado y mantener el orden moral?", a: "Teoría gubernamental", e: ["Teoría del ejemplo", "Teoría de la redención comercial", "Teoría de la curación ontológica"] },
+            { q: "¿Qué episodio en la cruz ilustra la promesa de la salvación inmediata basada en la fe y la gracia?", a: "El diálogo con el buen ladrón al que promete el paraíso", e: ["La entrega de María al cuidado del apóstol Juan", "El ofrecimiento de vinagre con hiel", "El perdón solicitado para los soldados romanos"] },
+            { q: "¿Qué figura del Antiguo Testamento mencionó Jesús para profetizar que estaría tres días y tres noches en el corazón de la tierra?", a: "Jonás", e: ["Elías", "Enoc", "Moisés"] },
+            { q: "Según el evangelio de Juan, Jesús muere a la misma hora en que en el templo ocurría un evento específico. ¿Cuál era?", a: "El sacrificio de los corderos pascuales", e: ["La quema del incienso vespertino", "La lectura de la Torá por el sumo sacerdote", "La ofrenda de las primicias de la cosecha"] },
+            { q: "Teológicamente, ¿qué demuestra el hecho de que Jesús resucitado comiera pescado asado frente a sus discípulos?", a: "La realidad corpórea de su resurrección frente al docetismo o gnosticismo", e: ["Que el reino de los cielos consiste en banquetes terrenales", "El restablecimiento de las leyes dietéticas judías", "La necesidad fisiológica del cuerpo glorificado de alimentarse"] },
+            { q: "¿Qué concepto teológico describe la transformación del cuerpo terrenal de Jesús en un cuerpo espiritual e inmortal tras su resurrección?", a: "Glorificación", e: ["Metempsicosis", "Consubstanciación", "Apocatástasis"] },
+            { q: "En la Epístola a los Hebreos, ¿con qué figura del Antiguo Testamento se compara a Jesús en su rol de sumo sacerdote ofreciendo su propia sangre?", a: "Melquisedec", e: ["Aarón", "Josué", "Samuel"] },
+            { q: "¿Cuál es el significado del término Gólgota, el lugar de la crucifixión?", a: "Lugar de la calavera", e: ["Monte de la redención", "Valle de la muerte", "Piedra del juicio"] },
+            { q: "En el contexto de la teología trinitaria, ¿quién resucitó a Jesús de entre los muertos?", a: "Las tres personas de la Trinidad actuando de forma conjunta", e: ["Únicamente el Padre, sin intervención del Espíritu Santo", "Exclusivamente el Espíritu Santo", "El propio Jesús humano sin poder divino"] },
+            { q: "¿Qué representan las palabras Consumado es desde el punto de vista de la soteriología bíblica?", a: "El pago total de la deuda del pecado y la conclusión de la obra redentora", e: ["El fin del sufrimiento puramente físico", "La destrucción del Imperio Romano a nivel espiritual", "El cierre definitivo de la revelación de Dios a la humanidad"] },
+            { q: "¿Qué teoría escéptica sugiere que los discípulos robaron el cuerpo de Jesús para fingir su resurrección?", a: "Hipótesis del fraude", e: ["Teoría de la sugestión", "Teoría del mito progresivo", "Hipótesis del sepulcro equivocado"] },
+            { q: "El apóstol Tomás exigió tocar las heridas de Cristo para creer. ¿Qué subraya esta narrativa teológicamente?", a: "La continuidad e identidad entre el Jesús crucificado y el Cristo resucitado", e: ["La incredulidad natural de los filósofos griegos", "La necesidad de reliquias sagradas para la fe cristiana", "La superioridad de la evidencia empírica sobre la fe"] },
+            { q: "Según Pablo, si Cristo no resucitó, ¿cuál es la consecuencia directa para los creyentes?", a: "Su fe es vana y aún están en sus pecados", e: ["Deben basar su religión únicamente en sus enseñanzas éticas", "Reencarnarán hasta alcanzar la perfección", "Serán juzgados según la ley de Moisés"] },
+            { q: "¿Qué figura política representa el intento humano de lavarse las manos ante la responsabilidad del mal moral en el relato de la Pasión?", a: "Poncio Pilato", e: ["Herodes Antipas", "Caifás", "Anás"] },
+            { q: "¿Qué mujer del Antiguo Testamento es un paralelo de María al pie de la cruz, viendo morir y siendo testigo de la redención de su hijo?", a: "Ninguna tiene un paralelo tan exacto, pero los teólogos citan a veces a la madre de los macabeos o a Eva como antitipo", e: ["Débora", "Rut", "Ester"] },
+            { q: "¿Qué título le da el autor de Hebreos a Cristo al referirse al iniciador y perfeccionador de la fe mediante su sufrimiento?", a: "El autor de la salvación", e: ["El paracleto", "El logos eterno", "El pantocrátor"] },
+            { q: "¿Cuál de las siguientes es una implicación escatológica directa de la resurrección de Cristo?", a: "Garantiza la futura resurrección corporal de todos los creyentes en el día final", e: ["Establece el fin inminente del universo en esa misma generación", "Invalida el juicio final puesto que todos están ya salvados", "Cancela el concepto cristiano del cielo como estado intermedio"] },
+            { q: "¿A quién obligaron los romanos a llevar la cruz de Jesús, simbolizando teológicamente la llamada al discipulado de cargar con la cruz?", a: "Simón de Cirene", e: ["José de Arimatea", "Nicodemo", "Bartimeo"] },
+            { q: "¿Qué profeta escribió sobre las treinta monedas de plata y el campo del alfarero siglos antes de la traición de Judas?", a: "Zacarías", e: ["Jeremías", "Malaquías", "Sofonías"] },
+            { q: "En el relato del camino a Emaús, ¿cómo reconocen finalmente a Jesús resucitado los dos discípulos?", a: "Al partir el pan", e: ["Al escucharle explicar las escrituras", "Al ver las heridas en sus manos", "Al escucharle pronunciar sus nombres"] },
+            { q: "¿Qué significa teológicamente la oscuridad que cubrió la tierra desde la hora sexta hasta la novena durante la crucifixión?", a: "El juicio cósmico de Dios y el duelo de la creación por la muerte de su creador", e: ["Un eclipse solar natural que asustó a los romanos", "La retirada definitiva del Espíritu Santo del mundo", "Una señal para que los discípulos huyeran de Jerusalén"] },
+            { q: "¿Qué nombre teológico se le da a la doctrina de que Cristo, tras su muerte, liberó a los justos del Antiguo Testamento que esperaban la redención?", a: "El saqueo del infierno", e: ["La parusía", "La asunción", "El purgatorio"] },
+            { q: "¿Qué declaración de Jesús a Pilato resume la naturaleza no terrenal y escatológica de su señorío?", a: "Mi reino no es de este mundo", e: ["Destruid este templo y lo levantaré en tres días", "El Hijo del Hombre no vino para ser servido, sino para servir", "Dad al César lo que es del César"] },
+            { q: "¿Quién donó su propia tumba para el entierro de Jesús, cumpliendo la profecía de que el Mesías estaría con los ricos en su muerte?", a: "José de Arimatea", e: ["Nicodemo", "Lázaro de Betania", "Zaqueo"] },
+            { q: "¿Qué significa el término griego tetelestai pronunciado por Jesús en la cruz?", a: "Consumado es o pagado en su totalidad", e: ["Perdónalos Padre", "Dios mío, ¿por qué me has abandonado?", "En tus manos encomiendo mi espíritu"] },
+            { q: "Según la teología ortodoxa, ¿la muerte de Cristo alteró la naturaleza inmutable de Dios?", a: "No, porque fue la naturaleza humana de la segunda persona la que experimentó la muerte, no la naturaleza divina", e: ["Sí, porque la Trinidad sufrió una ruptura temporal durante tres días", "Sí, porque Dios Padre sintió el dolor de la muerte físicamente", "No, porque la crucifixión fue solo una ilusión espiritual"] },
+            { q: "¿Qué elemento simbólico entregó Judas a Jesús como señal de traición, convirtiéndose en el arquetipo de la falsedad?", a: "Un beso", e: ["Un abrazo", "Una moneda", "Un manto"] },
+            { q: "¿Qué secta político-religiosa esperaba un mesías guerrero que los liberara de Roma, contrastando fuertemente con la pasión pacífica de Jesús?", a: "Los zelotes", e: ["Los esenios", "Los herodianos", "Los publicanos"] },
+            { q: "¿Qué animal es usado en el libro del Apocalipsis para representar a Cristo resucitado que fue inmolado?", a: "El Cordero", e: ["El León", "El Águila", "El Becerro"] },
+            { q: "¿Qué nombre teológico recibe el estudio de los eventos finales, en los cuales la resurrección de Cristo marca el inicio del fin de los tiempos?", a: "Escatología", e: ["Eclesiología", "Neumatología", "Apologética"] },
+            { q: "En la teología de la gracia, la sangre derramada por Cristo en la cruz es la base para un nuevo pacto. ¿Qué profeta predijo este nuevo pacto escrito en los corazones?", a: "Jeremías", e: ["Ezequiel", "Daniel", "Joel"] },
+            { q: "Cuando el apóstol Pedro predicó en Pentecostés, ¿qué salmo de David citó para demostrar que el cuerpo del Mesías no vería corrupción?", a: "Salmo 16", e: ["Salmo 119", "Salmo 1", "Salmo 150"] },
+            { q: "¿Qué teoría moderna intenta explicar la resurrección sugiriendo que los apóstoles tuvieron una experiencia psicológica colectiva provocada por el duelo?", a: "Teoría de la alucinación", e: ["Teoría del mito escatológico", "Teoría de la transposición cognitiva", "Teoría de la proyección de fe"] },
+            { q: "¿Qué personaje histórico, prefecto de Judea, es mencionado en todos los evangelios y en fuentes extra bíblicas como el responsable legal de la crucifixión?", a: "Poncio Pilato", e: ["Quirino", "Félix", "Festo"] },
+            { q: "Desde una perspectiva tipológica, el maná del desierto prefigura a Cristo. ¿Qué sacramento relacionado con la pasión perpetúa esta memoria?", a: "La Eucaristía", e: ["La Confirmación", "La Extremaunción", "El Orden Sacerdotal"] },
+            { q: "Según los relatos evangélicos, ¿quién interrogó a Jesús esperando ver un milagro por mera curiosidad durante los juicios de la pasión?", a: "Herodes Antipas", e: ["Anás", "Caifás", "Pilato"] },
+            { q: "¿Qué concepto teológico implica que la crucifixión de Jesús fue un evento planeado desde la eternidad por la Trinidad?", a: "El consejo anticipado y la presciencia de Dios", e: ["El determinismo cósmico ciego", "La evolución espiritual de la deidad", "El accidente redentor"] },
+            { q: "¿Qué simbolismo tiene la corona de espinas impuesta a Jesús desde la perspectiva de la maldición del Génesis?", a: "Cristo asume la maldición de la tierra provocada por la caída de Adán", e: ["Simboliza la derrota de la botánica frente a lo espiritual", "Representa la sabiduría punzante de los filósofos", "Es un recordatorio de la zarza ardiente de Moisés"] },
+            { q: "¿Cuál fue la reacción del centurión romano al presenciar la forma en que murió Jesús y el terremoto posterior?", a: "Declaró que verdaderamente era el Hijo de Dios", e: ["Huyó despavorido creyendo que los dioses romanos estaban enfadados", "Se suicidó con su propia espada por remordimiento", "Ordenó arrestar a los discípulos presentes"] },
+            { q: "¿Por qué las mujeres fueron al sepulcro al amanecer del primer día de la semana?", a: "Para terminar de ungir el cuerpo de Jesús con especias aromáticas", e: ["Para celebrar un ritual de luto de tres días", "Para verificar que los romanos no hubieran movido la piedra", "Para robar las mortajas sagradas"] },
+            { q: "¿Cómo defiende Pablo la resurrección física frente a las filosofías griegas en Atenas?", a: "Afirmando que Dios ha fijado un día para juzgar al mundo a través de un hombre al que resucitó", e: ["Cediendo que la resurrección es solo una metáfora de la inmortalidad del alma", "Explicando que el cuerpo físico es malo y solo el espíritu resucita", "Asegurando que todos los seres humanos reencarnan según sus obras"] },
+            { q: "¿Qué representan teológicamente los paños de lino encontrados ordenadamente en la tumba vacía?", a: "La refutación de que el cuerpo fue robado apresuradamente", e: ["La pureza ritual exigida por la ley mosaica", "El talento de las mujeres que prepararon el cuerpo", "Una señal codificada para la iglesia primitiva"] },
+            { q: "¿Qué significado tiene el hecho de que Jesús resucitado mostrara sus heridas a los apóstoles en lugar de tener un cuerpo completamente sin marcas?", a: "Demuestra que su victoria incluye el sufrimiento transformado, no borrado", e: ["Indica que la resurrección fue un proceso incompleto", "Era un castigo por la falta de fe de los apóstoles", "Sirve para asustar a sus enemigos en el juicio final"] },
+            { q: "En la cristología de Juan, Jesús es el cordero de Dios que quita el pecado del mundo. ¿A qué festividad judía está inextricablemente unida la pasión?", a: "La Pascua", e: ["El Yom Kippur", "La Fiesta de los Tabernáculos", "Pentecostés"] },
+            { q: "¿Qué doctrina afirma que los méritos del sufrimiento y la cruz de Cristo son infinitos y suficientes para salvar a toda la humanidad?", a: "Expiación ilimitada", e: ["Elección incondicional", "Gracia irresistible", "Depravación total"] },
+            { q: "¿Cómo se llama el sumo sacerdote que profetizó inconscientemente que convenía que un solo hombre muriera por el pueblo?", a: "Caifás", e: ["Anás", "Eleazar", "Jonatán"] },
+            { q: "¿Qué aspecto de la teología de la cruz destaca Martín Lutero en oposición a la teología de la gloria?", a: "Que Dios se revela en el sufrimiento y la debilidad, no en el poder humano", e: ["Que el sufrimiento es algo de lo que el cristiano debe escapar a toda costa", "Que la cruz es solo un ejemplo moral para inspirarnos heroísmo", "Que la verdadera gloria se alcanza mediante las obras de la ley"] },
+            { q: "¿Qué significa el término propiciación usado por el apóstol Juan al hablar de la sangre de Cristo?", a: "Un sacrificio que apacigua la ira santa de Dios contra el pecado", e: ["Una ofrenda económica entregada al templo", "Una oración prolongada por los enemigos", "El acto de lavar los pecados mediante buenas obras"] },
+            { q: "Según la visión teológica cristiana, ¿quién tuvo la responsabilidad última de la cruz?", a: "Dios Padre, que entregó a su Hijo por amor a la humanidad", e: ["Únicamente el gobierno del Imperio Romano", "Exclusivamente Judas Iscariote por su avaricia", "Satanás, que logró derrotar temporalmente a Dios"] },
+            { q: "¿Qué nombre se le da al domingo previo a la crucifixión en el que Jesús entra triunfante en Jerusalén?", a: "Domingo de Ramos", e: ["Domingo de Resurrección", "Domingo de Pentecostés", "Domingo de Adviento"] },
+            { q: "Al resucitar, Jesús sopla sobre sus discípulos. ¿Qué evento del Génesis evoca este acto teológicamente?", a: "La creación del hombre, cuando Dios sopló aliento de vida en Adán", e: ["El viento que separó las aguas del Mar Rojo", "El espíritu de Dios moviéndose sobre las aguas antes de la luz", "La tormenta del diluvio purificando la tierra"] },
+            { q: "En la cruz, Jesús clama tengo sed. Además de la sed física, ¿qué significado cristológico tiene en el Evangelio de Juan?", a: "Su deseo ardiente de cumplir la voluntad del Padre y consumar la redención", e: ["La necesidad de agua viva que él mismo había negado a la mujer samaritana", "Una demostración de debilidad para anular su divinidad", "Un código para que sus discípulos atacaran a los guardias"] },
+            { q: "¿Qué teoría herética postula que el cuerpo de Jesús no era real, por lo tanto, no sufrió verdaderamente en la cruz?", a: "Docetismo", e: ["Pelagianismo", "Arrianismo", "Nestorianismo"] },
+            { q: "¿Qué personaje fariseo, miembro del Sanedrín, defendió a Jesús discretamente y ayudó en su sepultura?", a: "Nicodemo", e: ["Gamaliel", "Saulo de Tarso", "Hillel"] },
+            { q: "¿Qué evidencia presentan los apologistas modernos respecto a las mujeres siendo los primeros testigos de la resurrección?", a: "Su testimonio carecía de validez legal en aquella época, lo que apoya la autenticidad del relato porque nadie inventaría una historia basándose en testigos poco fiables", e: ["Demuestra que los evangelios fueron escritos en el siglo II durante movimientos feministas primitivos", "Era una estrategia para confundir a las autoridades romanas", "Prueba que los hombres habían perdido por completo la fe"] },
+            { q: "En relación con el cordero pascual, ¿qué uso se le dio a la rama de hisopo durante la crucifixión?", a: "Se usó para acercarle una esponja con vinagre, conectándolo con la sangre en los dinteles de Egipto", e: ["Se utilizó para azotarlo antes de coronarlo de espinas", "Se quemó para producir el humo del incienso de su funeral", "Se usó para limpiar sus heridas una vez muerto"] },
+            { q: "¿Qué nombre recibe la reliquia que históricamente se ha debatido si fue la mortaja que cubrió a Jesús en el sepulcro?", a: "La Sábana Santa de Turín", e: ["El Sudario de Oviedo", "El Velo de la Verónica", "La Túnica Inconsútil de Tréveris"] },
+            { q: "¿Cuál es el núcleo del kerygma o mensaje primitivo predicado por los primeros cristianos?", a: "Cristo murió por nuestros pecados, fue sepultado y resucitó al tercer día", e: ["Jesús fue un gran maestro moral que nos enseñó a amar al prójimo", "La inminente destrucción del templo es el juicio sobre Israel", "Debemos guardar la ley de Moisés para ser salvos"] },
+            { q: "¿Qué significado tiene el nombre de Barrabás, el prisionero liberado en lugar de Jesús?", a: "Hijo del padre, destacando la ironía teológica de que el verdadero Hijo del Padre ocupa su lugar", e: ["El destructor, representando a Satanás", "Príncipe de la paz, como un falso mesías", "Siervo inútil, indicando su bajo estatus social"] },
+            { q: "En el huerto de Getsemaní, Jesús pidió a sus discípulos que velaran y oraran. ¿Qué virtud teologal subraya este mandato de cara a la tentación?", a: "La vigilancia espiritual", e: ["La caridad fraternal", "La paciencia estoica", "La prudencia financiera"] },
+            { q: "¿Qué implicación tiene la Ascensión de Jesucristo cuarenta días después de su resurrección?", a: "Su exaltación a la diestra del Padre y el inicio de su intercesión celestial", e: ["El abandono definitivo de la creación material", "Su transformación final en un espíritu puro sin cuerpo humano", "El comienzo de su reinado exclusivamente sobre la nación de Israel"] },
+            { q: "Durante la agonía en la cruz, las tinieblas envuelven a la tierra. ¿Qué plaga de Egipto resuena tipológicamente en este evento?", a: "La novena plaga, las tinieblas sobre todo Egipto", e: ["La primera plaga, el agua convertida en sangre", "La décima plaga, la muerte de los primogénitos", "La séptima plaga, la lluvia de granizo y fuego"] },
+            { q: "¿Qué secta mística temprana afirmaba poseer conocimientos secretos de Jesús resucitado, a diferencia de la revelación pública a los apóstoles?", a: "Los gnósticos", e: ["Los montanistas", "Los novacianos", "Los donatistas"] },
+            { q: "Según la teología reformada, ¿qué ocurre en el tribunal divino cuando un creyente pone su fe en el Cristo crucificado?", a: "Se le imputa la justicia de Cristo y sus pecados son perdonados", e: ["Alcanza un estado de perfección sin pecado en esta vida", "Se le exige realizar obras expiatorias complementarias", "Pasa por un purgatorio terrenal de sufrimiento"] },
+            { q: "¿Qué significa la expresión la sangre del Nuevo Pacto pronunciada en la institución de la Eucaristía antes de la Pasión?", a: "El cumplimiento y superación de la antigua alianza sellada con sangre animal en el Sinaí", e: ["Un contrato político con el Imperio Romano", "La prohibición de consumir carne a partir de ese momento", "Un juramento de venganza contra los enemigos de Israel"] },
+            { q: "¿Qué ángel se menciona tradicionalmente como el que fortaleció a Jesús en el huerto de Getsemaní?", a: "La Biblia no especifica su nombre, solo dice un ángel del cielo", e: ["El arcángel Miguel", "El arcángel Gabriel", "El ángel Metatrón"] },
+            { q: "Teológicamente, ¿por qué la resurrección de Lázaro es diferente a la de Jesucristo?", a: "Lázaro fue resucitado a la vida mortal y volvió a morir, Jesús resucitó con un cuerpo glorificado para no morir jamás", e: ["Lázaro resucitó por su propia fe, Jesús por el poder de Dios", "Lázaro nunca existió realmente, fue solo una parábola de la resurrección de Jesús", "No hay diferencia teológica, ambos eventos son idénticos"] },
+            { q: "¿Qué título apostólico se deriva directamente del requisito de haber sido testigo ocular de Cristo resucitado?", a: "Apóstol", e: ["Diácono", "Presbítero", "Obispo"] },
+            { q: "¿A qué se refería Jesús cuando profetizó la destrucción de este templo y su reconstrucción en tres días?", a: "Al santuario de su propio cuerpo resucitado", e: ["A la reconstrucción arquitectónica del templo de Herodes", "A la creación de la Iglesia en Roma", "A la instauración de una nueva sinagoga en Galilea"] },
+            { q: "En la iconografía y teología cristianas, ¿qué simbolizan las cinco llagas principales de Cristo?", a: "Las marcas de los clavos en manos y pies, y la herida de la lanza en el costado", e: ["Los cinco continentes a los que llegaría el evangelio", "Los cinco libros de la Torá de Moisés", "Los cinco sentidos del ser humano redimidos"] },
+            { q: "¿Qué postula la teología de la adopción filial respecto a la obra de Cristo en la cruz?", a: "Que por la redención ganada por el Hijo natural, los creyentes son hechos hijos adoptivos de Dios", e: ["Que Jesús fue adoptado por Dios al momento de morir en la cruz", "Que los creyentes adoptan a Cristo como su maestro moral", "Que Dios rechazó al pueblo judío para adoptar a los romanos"] },
+            { q: "¿Qué milagro relata Mateo que ocurrió inmediatamente después de la muerte de Jesús, enfatizando el poder de su sacrificio sobre la muerte?", a: "Se abrieron los sepulcros y muchos cuerpos de santos resucitaron", e: ["Un rayo destruyó la cruz de los dos ladrones", "El agua del mar de Galilea se volvió dulce", "Todos los enfermos de Jerusalén sanaron instantáneamente"] },
+            { q: "¿Cuál es el propósito final de la resurrección de Jesucristo según la revelación bíblica en su conjunto?", a: "La redención integral de la creación, la derrota definitiva del pecado y la muerte, y la reconciliación del cosmos con Dios", e: ["Establecer un gobierno político teocrático en Oriente Medio", "Proveer un mito fundacional para cohesionar la cultura occidental", "Condenar a las generaciones pasadas que no lo conocieron"] }
+        ];
+
         let progresoInterval;
         let modalProgresoInterval;
         window.diaSeleccionadoActual = 'domingo';
@@ -752,6 +868,16 @@
             window.mostrarBotonesFlotantes();
             document.getElementById('juegosModal').classList.add('hidden');
             document.getElementById('juegosModal').classList.remove('flex', 'fade-in');
+        };
+        window.volverJuegos = function() {
+            if (window.impMouseUpHandler) window.removeEventListener('mouseup', window.impMouseUpHandler);
+            if (window.impTouchEndHandler) window.removeEventListener('touchend', window.impTouchEndHandler);
+            
+            if (document.getElementById('juegosTitulo').innerText === 'Juegos Cofrades') {
+                window.cerrarJuegos();
+            } else {
+                window.renderJuegosMenu();
+            }
         };
         window.toggleNombreOficial = function() {
             const container = document.getElementById('modalNombreOficialContainer');
@@ -1186,6 +1312,7 @@
                     <button onclick="window.seleccionarJuego('impostor')" class="w-full bg-rose-700 text-white font-bold py-6 px-4 rounded-2xl shadow-lg hover:bg-rose-600 transition active:scale-95 text-xl border border-rose-500">🕵️ El Impostor Cofrade</button>
                     <button onclick="window.seleccionarJuego('trivial')" class="w-full bg-blue-700 text-white font-bold py-6 px-4 rounded-2xl shadow-lg hover:bg-blue-600 transition active:scale-95 text-xl border border-blue-500">🧠 Trivial Cofrade</button>
                     <button onclick="window.seleccionarJuego('pasion')" class="w-full bg-purple-700 text-white font-bold py-6 px-4 rounded-2xl shadow-lg hover:bg-purple-600 transition active:scale-95 text-xl border border-purple-500">✝️ Trivial de la Pasión</button>
+                    <button onclick="window.seleccionarJuego('teologico')" class="w-full bg-emerald-700 text-white font-bold py-6 px-4 rounded-2xl shadow-lg hover:bg-emerald-600 transition active:scale-95 text-xl border border-emerald-500">📖 Trivial Teológico</button>
                 </div>`;
         };
 
@@ -1418,7 +1545,10 @@
             window.trivialRound = 1;
             window.totalRondasTrivial = playersArray.length === 1 ? 10 : 5;
             
-            let sourceBank = window.selectedGame === 'pasion' ? window.bancoPreguntasPasion : window.bancoPreguntasTrivial;
+            let sourceBank = window.bancoPreguntasTrivial;
+            if (window.selectedGame === 'pasion') sourceBank = window.bancoPreguntasPasion;
+            if (window.selectedGame === 'teologico') sourceBank = window.bancoPreguntasTeologico;
+
             let shuffled = [...sourceBank];
             for (let i = shuffled.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -1580,7 +1710,9 @@
                 textoGanador = `¡Buen trabajo, ${ganador.nombre}!`;
             }
 
-            const nombreJuego = window.selectedGame === 'pasion' ? 'Trivial de la Pasión' : 'Trivial Cofrade';
+            let nombreJuego = 'Trivial Cofrade';
+            if (window.selectedGame === 'pasion') nombreJuego = 'Trivial de la Pasión';
+            if (window.selectedGame === 'teologico') nombreJuego = 'Trivial Teológico';
 
             document.getElementById('juegosContenido').innerHTML = `
                 <div class="w-full max-w-sm flex flex-col items-center justify-center fade-in text-center py-4">
