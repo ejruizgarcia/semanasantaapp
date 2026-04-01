@@ -2221,7 +2221,7 @@
             }
             window.flashPlayers = arr.map(p => ({ nombre: p, puntos: 0 }));
             window.flashRound = 1;
-            window.totalRondasFlash = 5; 
+            window.totalRondasFlash = arr.length === 1 ? 10 : 5; 
             window.flashTurn = 0;
             
             if (window.flashPlayers.length > 1) {
@@ -2321,9 +2321,17 @@
                             <img src="https://raw.githubusercontent.com/ejruizgarcia/images/main/${correctImg.file}" class="w-full h-full object-cover rounded-2xl">
                         </div>
                     `;
+                    
+                    let tiempoExposicion = 170;
+                    if (window.flashPlayers.length === 1 && window.flashRound >= 5) {
+                        tiempoExposicion = 150;
+                    } else if (window.flashPlayers.length > 1 && window.flashRound >= 4) {
+                        tiempoExposicion = 150;
+                    }
+
                     setTimeout(() => {
                         window.mostrarOpcionesFlash();
-                    }, 170); 
+                    }, tiempoExposicion); 
                 }
             }, 1000);
         };
