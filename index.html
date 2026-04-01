@@ -1263,12 +1263,11 @@
 
             document.getElementById('juegosContenido').innerHTML = `
                 <div class="w-full max-w-sm flex flex-col items-center gap-6 fade-in text-center">
-                    <div id="impInstruccion">
-                        <p class="text-xl text-gray-400 mb-1">Turno de</p>
-                        <h3 class="text-4xl font-bold text-rose-500" id="impNombre">${p}</h3>
+                    <div id="impInstruccion" class="mt-2">
+                        <h3 class="text-5xl font-bold text-rose-500" id="impNombre">${p}</h3>
                     </div>
                     
-                    <div class="flip-card mt-4 cursor-pointer select-none mx-auto w-48 h-64" id="impFlipCard">
+                    <div class="flip-card mt-2 cursor-pointer select-none mx-auto w-48 h-64" id="impFlipCard">
                         <div class="flip-card-inner shadow-xl rounded-2xl" id="impCardInner">
                             <div class="flip-card-front bg-gray-800 border border-gray-600 rounded-2xl flex flex-col items-center justify-center">
                                 <span class="text-6xl mb-4">👆</span>
@@ -1382,11 +1381,17 @@
 
         window.revelarImpostorFinal = function() {
             document.getElementById('juegosContenido').innerHTML = `
-                <div class="text-center fade-in">
+                <div class="w-full max-w-sm flex flex-col items-center text-center fade-in">
                     <p class="text-gray-400 mb-2">El impostor era...</p>
-                    <p class="text-4xl font-bold text-rose-500 mb-8">${window.impPlayers[window.impIdx]}</p>
-                    <button onclick="window.iniciarSiguienteRondaImpostor()" class="bg-rose-600 p-4 rounded-xl w-full font-bold mb-4">Siguiente Ronda</button>
-                    <button onclick="window.renderJuegosMenu()" class="text-gray-400">Terminar Juego</button>
+                    <p class="text-5xl font-bold text-rose-500 mb-6">${window.impPlayers[window.impIdx]}</p>
+                    
+                    <div class="bg-gray-800 w-full p-4 rounded-xl border border-gray-700 mb-8">
+                        <p class="text-gray-400 text-xs uppercase tracking-wider mb-1">La palabra secreta era</p>
+                        <p class="text-3xl font-bold text-white">${window.impSecret}</p>
+                    </div>
+
+                    <button onclick="window.iniciarSiguienteRondaImpostor()" class="bg-rose-600 text-white py-4 rounded-xl w-full font-bold shadow-lg transition active:scale-95 mb-4 text-lg">Siguiente Ronda</button>
+                    <button onclick="window.volverJuegos()" class="text-gray-400 text-sm hover:text-gray-300 transition">Terminar Juego</button>
                 </div>`;
         };
 
