@@ -101,6 +101,50 @@
         .flip-card-back {
             transform: rotateY(180deg);
         }
+
+        .mem-card {
+            perspective: 1000px;
+            cursor: pointer;
+            width: 100%;
+            aspect-ratio: 3/4;
+            touch-action: none;
+        }
+        .mem-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.5s cubic-bezier(0.4, 0.2, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+        .mem-card.flipped .mem-card-inner {
+            transform: rotateY(180deg);
+        }
+        .mem-card-front, .mem-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 0.75rem;
+            border: 3px solid white;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3);
+        }
+        .mem-card-front {
+            background-color: #881337;
+        }
+        .mem-card-back {
+            background-color: white;
+            transform: rotateY(180deg);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .mem-card-back img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans fixed inset-0 w-full h-full flex flex-col overflow-hidden">
@@ -739,7 +783,7 @@
             { q: "En el contexto de la teología trinitaria, ¿quién resucitó a Jesús de entre los muertos?", a: "Las tres personas de la Trinidad actuando de forma conjunta", e: ["Únicamente el Padre, sin intervención del Espíritu Santo", "Exclusivamente el Espíritu Santo", "El propio Jesús humano sin poder divino"] },
             { q: "¿Qué representan las palabras Consumado es desde el punto de vista de la soteriología bíblica?", a: "El pago total de la deuda del pecado y la conclusión de la obra redentora", e: ["El fin del sufrimiento puramente físico", "La destrucción del Imperio Romano a nivel espiritual", "El cierre definitivo de la revelación de Dios a la humanidad"] },
             { q: "¿Qué teoría escéptica sugiere que los discípulos robaron el cuerpo de Jesús para fingir su resurrección?", a: "Hipótesis del fraude", e: ["Teoría de la sugestión", "Teoría del mito progresivo", "Hipótesis del sepulcro equivocado"] },
-            { q: "El apóstol Tomás exigió tocar las heridas de Cristo para creer. ¿Qué subraya esta narrativa teológicamente?", a: "La continuidad e identidad entre el Jesús crucificado y el Cristo resucitado", e: ["La incredulidad natural de los filósofos griegos", "La necesidad de reliquias sagradas para la fe cristiana", "La superioridad de la evidencia empírica sobre la fe"] },
+            { q: "El apóstol Tomás exigió tocar las heridas de Cristo para creer. ¿Qué subraya esta narrativa teológicamente?", a: "La continuity e identidad entre el Jesús crucificado y el Cristo resucitado", e: ["La incredulidad natural de los filósofos griegos", "La necesidad de reliquias sagradas para la fe cristiana", "La superioridad de la evidencia empírica sobre la fe"] },
             { q: "Según Pablo, si Cristo no resucitó, ¿cuál es la consecuencia directa para los creyentes?", a: "Su fe es vana y aún están en sus pecados", e: ["Deben basar su religión únicamente en sus enseñanzas éticas", "Reencarnarán hasta alcanzar la perfección", "Serán juzgados según la ley de Moisés"] },
             { q: "¿Qué figura política representa el intento humano de lavarse las manos ante la responsabilidad del mal moral en el relato de la Pasión?", a: "Poncio Pilato", e: ["Herodes Antipas", "Caifás", "Anás"] },
             { q: "¿Qué mujer del Antiguo Testamento es un paralelo de María al pie de la cruz, viendo morir y siendo testigo de la redención de su hijo?", a: "Ninguna tiene un paralelo tan exacto, pero los teólogos citan a veces a la madre de los macabeos o a Eva como antitipo", e: ["Débora", "Rut", "Ester"] },
@@ -801,6 +845,10 @@
             { q: "¿Qué postula la teología de la adopción filial respecto a la obra de Cristo en la cruz?", a: "Que por la redención ganada por el Hijo natural, los creyentes son hechos hijos adoptivos de Dios", e: ["Que Jesús fue adoptado por Dios al momento de morir en la cruz", "Que los creyentes adoptan a Cristo como su maestro moral", "Que Dios rechazó al pueblo judío para adoptar a los romanos"] },
             { q: "¿Qué milagro relata Mateo que ocurrió inmediatamente después de la muerte de Jesús, enfatizando el poder de su sacrificio sobre la muerte?", a: "Se abrieron los sepulcros y muchos cuerpos de santos resucitaron", e: ["Un rayo destruyó la cruz de los dos ladrones", "El agua del mar de Galilea se volvió dulce", "Todos los enfermos de Jerusalén sanaron instantáneamente"] },
             { q: "¿Cuál es el propósito final de la resurrección de Jesucristo según la revelación bíblica en su conjunto?", a: "La redención integral de la creación, la derrota definitiva del pecado y la muerte, y la reconciliación del cosmos con Dios", e: ["Establecer un gobierno político teocrático en Oriente Medio", "Proveer un mito fundacional para cohesionar la cultura occidental", "Condenar a las generaciones pasadas que no lo conocieron"] }
+        ];
+
+        window.bancoImagenesParejas = [
+            'borriquita.png', 'estrella.png', 'columna.png', 'lagrimas.png', 'humildad.png', 'penas.png', 'medinaceli.png', 'trinidad.png', 'afligidos.png', 'eccehomo.png', 'salud.png', 'huerto.png', 'esperanza.png', 'caridad.png', 'prendimiento.png', 'buenfin.png'
         ];
 
         let progresoInterval;
@@ -865,6 +913,7 @@
             window.renderJuegosMenu();
         };
         window.cerrarJuegos = function() {
+            if (window.parejasTimer) clearInterval(window.parejasTimer);
             window.mostrarBotonesFlotantes();
             document.getElementById('juegosModal').classList.add('hidden');
             document.getElementById('juegosModal').classList.remove('flex', 'fade-in');
@@ -872,6 +921,7 @@
         window.volverJuegos = function() {
             if (window.impMouseUpHandler) window.removeEventListener('mouseup', window.impMouseUpHandler);
             if (window.impTouchEndHandler) window.removeEventListener('touchend', window.impTouchEndHandler);
+            if (window.parejasTimer) clearInterval(window.parejasTimer);
             
             if (document.getElementById('juegosTitulo').innerText === 'Juegos Cofrades') {
                 window.cerrarJuegos();
@@ -1307,18 +1357,23 @@
         window.renderJuegosMenu = function() {
             document.getElementById('juegosTitulo').innerText = 'Juegos Cofrades';
             document.getElementById('juegosContenido').innerHTML = `
-                <div class="w-full max-w-sm flex flex-col gap-4 fade-in text-center">
+                <div class="w-full max-w-sm flex flex-col gap-4 fade-in text-center pb-8">
                     <p class="text-gray-300 mb-4">Selecciona un juego para pasar el rato.</p>
                     <button onclick="window.seleccionarJuego('impostor')" class="w-full bg-rose-700 text-white font-bold py-6 px-4 rounded-2xl shadow-lg hover:bg-rose-600 transition active:scale-95 text-xl border border-rose-500">🕵️ El Impostor Cofrade</button>
                     <button onclick="window.seleccionarJuego('trivial')" class="w-full bg-blue-700 text-white font-bold py-6 px-4 rounded-2xl shadow-lg hover:bg-blue-600 transition active:scale-95 text-xl border border-blue-500">🧠 Trivial Cofrade</button>
                     <button onclick="window.seleccionarJuego('pasion')" class="w-full bg-purple-700 text-white font-bold py-6 px-4 rounded-2xl shadow-lg hover:bg-purple-600 transition active:scale-95 text-xl border border-purple-500">✝️ Trivial de la Pasión</button>
                     <button onclick="window.seleccionarJuego('teologico')" class="w-full bg-emerald-700 text-white font-bold py-6 px-4 rounded-2xl shadow-lg hover:bg-emerald-600 transition active:scale-95 text-xl border border-emerald-500">📖 Trivial Teológico</button>
+                    <button onclick="window.seleccionarJuego('parejas')" class="w-full bg-rose-900 text-white font-bold py-6 px-4 rounded-2xl shadow-lg hover:bg-rose-800 transition active:scale-95 text-xl border-2 border-white">🃏 Parejas Cofrades</button>
                 </div>`;
         };
 
         window.seleccionarJuego = function(j) {
             window.selectedGame = j;
-            window.renderJuegosSetup();
+            if (j === 'parejas') {
+                window.iniciarJuegoParejas();
+            } else {
+                window.renderJuegosSetup();
+            }
         };
 
         window.renderJuegosSetup = function() {
