@@ -208,24 +208,24 @@
                 <button id="btnOrdenSalida" onclick="cambiarOrden('salida')" class="flex-1 sm:flex-none px-3 py-2 text-xs font-bold rounded-full transition-all text-gray-500 bg-transparent hover:text-gray-800">Salida</button>
                 <button id="btnOrdenRecogida" onclick="cambiarOrden('recogida')" class="flex-1 sm:flex-none px-3 py-2 text-xs font-bold rounded-full transition-all text-gray-500 bg-transparent hover:text-gray-800">Recogida</button>
             </div>
-        </div>
-        <div id="listaCofradias" class="flex flex-col gap-4 max-w-lg mx-auto pb-6"></div>
-        <div class="text-center pt-2 pb-8 text-[10px] text-gray-500 font-medium">
-            App creada por @ejruizgarcia con la IA de Gemini.<br>Licencia Creative Commons CC BY-NC-SA 4.0
-        </div>
-    </main>
-
-    <div id="botonesFlotantes" class="fixed bottom-6 inset-x-6 flex justify-between items-center pointer-events-none z-40 transition-all duration-300 ease-in-out opacity-100 translate-y-0">
+    <div id="botonesFlotantes" class="fixed bottom-6 inset-x-6 flex justify-between items-end pointer-events-none z-40 transition-all duration-300 ease-in-out opacity-100 translate-y-0">
         <button onclick="abrirJuegos()" class="pointer-events-auto p-4 bg-rose-950 text-white rounded-full shadow-lg hover:bg-rose-900 transition active:scale-95 border-2 border-white" aria-label="Juegos Cofrades">
             <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M12 1.5L5.5 14.5C3.57 14.5 2 16.07 2 18v3h20v-3c0-1.93-1.57-3.5-3.5-3.5L12 1.5z M9.5 10.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm5 0a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/>
             </svg>
         </button>
-        <button onclick="abrirNovedades()" class="pointer-events-auto p-2 text-rose-900 hover:text-rose-700 transition active:scale-95 drop-shadow-md" aria-label="Novedades">
-            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
-            </svg>
-        </button>
+        <div class="flex flex-col gap-4 items-center pointer-events-none">
+            <button onclick="abrirNovedades()" class="pointer-events-auto p-2 text-rose-900 hover:text-rose-700 transition active:scale-95 drop-shadow-md bg-white/60 backdrop-blur-sm rounded-full" aria-label="Novedades">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                </svg>
+            </button>
+            <button onclick="abrirQr()" class="pointer-events-auto p-2 text-rose-900 hover:text-rose-700 transition active:scale-95 drop-shadow-md bg-white/60 backdrop-blur-sm rounded-full" aria-label="Compartir aplicación">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm14 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path>
+                </svg>
+            </button>
+        </div>
     </div>
 
     <div id="novedadesModal" class="fixed inset-0 z-[70] hidden flex-col h-full w-full bg-white/95 backdrop-blur-sm">
@@ -338,28 +338,19 @@
         </div>
     </div>
 
-    <div id="ytModal" class="fixed inset-0 z-[70] bg-white hidden flex-col h-full w-full">
-        <div class="bg-red-600 text-white p-4 flex items-center shadow-md shrink-0">
-            <button onclick="cerrarYt()" class="mr-4 p-2 bg-red-700 rounded-full hover:bg-red-800 transition active:scale-95">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+    <div id="qrModal" class="fixed inset-0 z-[70] hidden flex-col h-full w-full bg-white/95 backdrop-blur-sm">
+        <div class="bg-rose-950 text-white p-4 flex justify-between items-center shadow-md shrink-0">
+            <h2 class="text-xl font-bold">Compárteme</h2>
+            <button onclick="cerrarQr()" class="p-2 bg-rose-800 rounded-full hover:bg-rose-700 transition active:scale-95">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
-            <h2 class="text-xl font-bold truncate">Directos de YouTube</h2>
         </div>
-        <div class="flex-1 overflow-y-auto p-5 bg-gray-50 flex flex-col gap-4">
-            <div class="max-w-lg mx-auto w-full space-y-4 slide-up">
-                <p class="text-gray-600 mb-6 font-medium">Accede a las retransmisiones en directo de nuestra Semana Santa.</p>
-                <a href="https://www.youtube.com/@islapasion/streams" target="_blank" class="block w-full bg-white border border-red-200 p-4 rounded-xl shadow-sm hover:shadow-md transition flex items-center gap-4 group">
-                    <svg class="w-8 h-8 text-red-600 group-hover:scale-110 transition" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.5 12 3.5 12 3.5s-7.505 0-9.377.55a3.016 3.016 0 0 0-2.122 2.136C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.55 9.376.55 9.376.55s7.505 0 9.377-.55a3.016 3.016 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-                    <span class="font-bold text-gray-800 text-lg">IslaPasión</span>
-                </a>
-                <a href="https://www.youtube.com/@SFERNANDOCOFRADE/streams" target="_blank" class="block w-full bg-white border border-red-200 p-4 rounded-xl shadow-sm hover:shadow-md transition flex items-center gap-4 group">
-                    <svg class="w-8 h-8 text-red-600 group-hover:scale-110 transition" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.5 12 3.5 12 3.5s-7.505 0-9.377.55a3.016 3.016 0 0 0-2.122 2.136C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.55 9.376.55 9.376.55s7.505 0 9.377-.55a3.016 3.016 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-                    <span class="font-bold text-gray-800 text-lg">San Fernando Cofrade</span>
-                </a>
+        <div class="flex-1 p-6 flex flex-col items-center justify-center gap-6 max-w-lg mx-auto w-full overflow-y-auto fade-in">
+            <p class="text-xl text-rose-900 font-bold text-center">Comparte la aplicación con quien quieras</p>
+            <div class="p-4 bg-white rounded-2xl shadow-xl border border-gray-200">
+                <img src="https://raw.githubusercontent.com/ejruizgarcia/images/main/qrcode_ejruizgarcia.github.io.png" alt="Código QR" class="w-64 h-64 object-contain">
             </div>
-            <div class="mt-auto text-center pt-8 text-[10px] text-gray-400 font-medium">
-                App creada por @ejruizgarcia con la IA de Gemini.<br>Licencia Creative Commons CC BY-NC-SA 4.0
-            </div>
+            <p class="text-sm text-gray-600 font-medium text-center bg-rose-50 p-4 rounded-xl border border-rose-100">Recuerda fijar esta página en la página de inicio para que funcione como una app</p>
         </div>
     </div>
 
@@ -864,7 +855,7 @@
             { q: "¿Qué ángel se menciona tradicionalmente como el que fortaleció a Jesús en el huerto de Getsemaní?", a: "La Biblia no especifica su nombre, solo dice un ángel del cielo", e: ["El arcángel Miguel", "El arcángel Gabriel", "El ángel Metatrón"] },
             { q: "Teológicamente, ¿por qué la resurrección de Lázaro es diferente a la de Jesucristo?", a: "Lázaro fue resucitado a la vida mortal y volvió a morir, Jesús resucitó con un cuerpo glorificado para no morir jamás", e: ["Lázaro resucitó por su propia fe, Jesús por el poder de Dios", "Lázaro nunca existió realmente, fue solo una parábola de la resurrección de Jesús", "No hay diferencia teológica, ambos eventos son idénticos"] },
             { q: "¿Qué título apostólico se deriva directamente del requisito de haber sido testigo ocular de Cristo resucitado?", a: "Apóstol", e: ["Diácono", "Presbítero", "Obispo"] },
-            "Condenar a las generaciones pasadas que no lo conocieron"] }
+            { q: "¿Cuál es el propósito final de la resurrección de Jesucristo según la revelación bíblica en su conjunto?", a: "La redención integral de la creación, la derrota definitiva del pecado y la muerte, y la reconciliación del cosmos con Dios", e: ["Establecer un gobierno político teocrático en Oriente Medio", "Proveer un mito fundacional para cohesionar la cultura occidental", "Condenar a las generaciones pasadas que no lo conocieron"] }
         ];
 
         window.bancoImagenesParejas = [
@@ -953,6 +944,16 @@
             window.mostrarBotonesFlotantes();
             document.getElementById('ytModal').classList.add('hidden');
             document.getElementById('ytModal').classList.remove('flex', 'fade-in');
+        };
+        window.abrirQr = function() {
+            window.ocultarBotonesFlotantes();
+            document.getElementById('qrModal').classList.remove('hidden');
+            document.getElementById('qrModal').classList.add('flex', 'fade-in');
+        };
+        window.cerrarQr = function() {
+            window.mostrarBotonesFlotantes();
+            document.getElementById('qrModal').classList.add('hidden');
+            document.getElementById('qrModal').classList.remove('flex', 'fade-in');
         };
         window.abrirJuegos = function() {
             window.ocultarBotonesFlotantes();
