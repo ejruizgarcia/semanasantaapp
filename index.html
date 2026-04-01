@@ -208,6 +208,13 @@
                 <button id="btnOrdenSalida" onclick="cambiarOrden('salida')" class="flex-1 sm:flex-none px-3 py-2 text-xs font-bold rounded-full transition-all text-gray-500 bg-transparent hover:text-gray-800">Salida</button>
                 <button id="btnOrdenRecogida" onclick="cambiarOrden('recogida')" class="flex-1 sm:flex-none px-3 py-2 text-xs font-bold rounded-full transition-all text-gray-500 bg-transparent hover:text-gray-800">Recogida</button>
             </div>
+        </div>
+        <div id="listaCofradias" class="flex flex-col gap-4 max-w-lg mx-auto pb-6"></div>
+        <div class="text-center pt-2 pb-8 text-[10px] text-gray-500 font-medium">
+            App creada por @ejruizgarcia con la IA de Gemini.<br>Licencia Creative Commons CC BY-NC-SA 4.0
+        </div>
+    </main>
+
     <div id="botonesFlotantes" class="fixed bottom-6 inset-x-6 flex justify-between items-end pointer-events-none z-40 transition-all duration-300 ease-in-out opacity-100 translate-y-0">
         <button onclick="abrirJuegos()" class="pointer-events-auto p-4 bg-rose-950 text-white rounded-full shadow-lg hover:bg-rose-900 transition active:scale-95 border-2 border-white" aria-label="Juegos Cofrades">
             <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -293,10 +300,6 @@
                     <span class="text-amber-500 mt-0.5">✨</span>
                     <p class="text-gray-700 font-medium">Notificaciones de eventos importantes (salidas, recogidas, etc).</p>
                 </div>
-                <div class="p-4 bg-white rounded-xl shadow-sm border border-gray-100 flex gap-3 items-start">
-                    <span class="text-amber-500 mt-0.5">✨</span>
-                    <p class="text-gray-700 font-medium">Juego de Trivial Cofrade.</p>
-                </div>
             </div>
             
             <div class="mt-2 p-5 bg-gray-100 rounded-2xl text-sm text-gray-500 leading-relaxed text-center">
@@ -330,6 +333,31 @@
                 <a href="https://www.facebook.com/profile.php?id=100080499935607&locale=es_ES" target="_blank" class="block w-full bg-white border border-blue-200 p-4 rounded-xl shadow-sm hover:shadow-md transition flex items-center gap-4 group">
                     <svg class="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/></svg>
                     <span class="font-bold text-gray-800 text-lg">La Venera</span>
+                </a>
+            </div>
+            <div class="mt-auto text-center pt-8 text-[10px] text-gray-400 font-medium">
+                App creada por @ejruizgarcia con la IA de Gemini.<br>Licencia Creative Commons CC BY-NC-SA 4.0
+            </div>
+        </div>
+    </div>
+
+    <div id="ytModal" class="fixed inset-0 z-[70] bg-white hidden flex-col h-full w-full">
+        <div class="bg-red-600 text-white p-4 flex items-center shadow-md shrink-0">
+            <button onclick="cerrarYt()" class="mr-4 p-2 bg-red-700 rounded-full hover:bg-red-800 transition active:scale-95">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+            </button>
+            <h2 class="text-xl font-bold truncate">Directos de YouTube</h2>
+        </div>
+        <div class="flex-1 overflow-y-auto p-5 bg-gray-50 flex flex-col gap-4">
+            <div class="max-w-lg mx-auto w-full space-y-4 slide-up">
+                <p class="text-gray-600 mb-6 font-medium">Accede a las retransmisiones en directo de nuestra Semana Santa.</p>
+                <a href="https://www.youtube.com/@islapasion/streams" target="_blank" class="block w-full bg-white border border-red-200 p-4 rounded-xl shadow-sm hover:shadow-md transition flex items-center gap-4 group">
+                    <svg class="w-8 h-8 text-red-600 group-hover:scale-110 transition" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.5 12 3.5 12 3.5s-7.505 0-9.377.55a3.016 3.016 0 0 0-2.122 2.136C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.55 9.376.55 9.376.55s7.505 0 9.377-.55a3.016 3.016 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    <span class="font-bold text-gray-800 text-lg">IslaPasión</span>
+                </a>
+                <a href="https://www.youtube.com/@SFERNANDOCOFRADE/streams" target="_blank" class="block w-full bg-white border border-red-200 p-4 rounded-xl shadow-sm hover:shadow-md transition flex items-center gap-4 group">
+                    <svg class="w-8 h-8 text-red-600 group-hover:scale-110 transition" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.5 12 3.5 12 3.5s-7.505 0-9.377.55a3.016 3.016 0 0 0-2.122 2.136C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.55 9.376.55 9.376.55s7.505 0 9.377-.55a3.016 3.016 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    <span class="font-bold text-gray-800 text-lg">San Fernando Cofrade</span>
                 </a>
             </div>
             <div class="mt-auto text-center pt-8 text-[10px] text-gray-400 font-medium">
@@ -855,6 +883,10 @@
             { q: "¿Qué ángel se menciona tradicionalmente como el que fortaleció a Jesús en el huerto de Getsemaní?", a: "La Biblia no especifica su nombre, solo dice un ángel del cielo", e: ["El arcángel Miguel", "El arcángel Gabriel", "El ángel Metatrón"] },
             { q: "Teológicamente, ¿por qué la resurrección de Lázaro es diferente a la de Jesucristo?", a: "Lázaro fue resucitado a la vida mortal y volvió a morir, Jesús resucitó con un cuerpo glorificado para no morir jamás", e: ["Lázaro resucitó por su propia fe, Jesús por el poder de Dios", "Lázaro nunca existió realmente, fue solo una parábola de la resurrección de Jesús", "No hay diferencia teológica, ambos eventos son idénticos"] },
             { q: "¿Qué título apostólico se deriva directamente del requisito de haber sido testigo ocular de Cristo resucitado?", a: "Apóstol", e: ["Diácono", "Presbítero", "Obispo"] },
+            { q: "¿A qué se refería Jesús cuando profetizó la destrucción de este templo y su reconstrucción en tres días?", a: "Al santuario de su propio cuerpo resucitado", e: ["A la reconstrucción arquitectónica del templo de Herodes", "A la creación de la Iglesia en Roma", "A la instauración de una nueva sinagoga en Galilea"] },
+            { q: "En la iconografía y teología cristianas, ¿qué simbolizan las cinco llagas principales de Cristo?", a: "Las marcas de los clavos en manos y pies, y la herida de la lanza en el costado", e: ["Los cinco continentes a los que llegaría el evangelio", "Los cinco libros de la Torá de Moisés", "Los cinco sentidos del ser humano redimidos"] },
+            { q: "¿Qué postula la teología de la adopción filial respecto a la obra de Cristo en la cruz?", a: "Que por la redención ganada por el Hijo natural, los creyentes son hechos hijos adoptivos de Dios", e: ["Que Jesús fue adoptado por Dios al momento de morir en la cruz", "Que los creyentes adoptan a Cristo como su maestro moral", "Que Dios rechazó al pueblo judío para adoptar a los romanos"] },
+            { q: "¿Qué milagro relata Mateo que ocurrió inmediatamente después de la muerte de Jesús, enfatizando el poder de su sacrificio sobre la muerte?", a: "Se abrieron los sepulcros y muchos cuerpos de santos resucitaron", e: ["Un rayo destruyó la cruz de los dos ladrones", "El agua del mar de Galilea se volvió dulce", "Todos los enfermos de Jerusalén sanaron instantáneamente"] },
             { q: "¿Cuál es el propósito final de la resurrección de Jesucristo según la revelación bíblica en su conjunto?", a: "La redención integral de la creación, la derrota definitiva del pecado y la muerte, y la reconciliación del cosmos con Dios", e: ["Establecer un gobierno político teocrático en Oriente Medio", "Proveer un mito fundacional para cohesionar la cultura occidental", "Condenar a las generaciones pasadas que no lo conocieron"] }
         ];
 
@@ -1469,6 +1501,8 @@
             if(window.selectedGame === 'impostor') {
                 window.impPlayersOriginal = [...window.players];
                 window.iniciarSiguienteRondaImpostor();
+            } else if (window.selectedGame === 'parejas') {
+                window.iniciarParejasMulti(window.players);
             } else if (window.selectedGame === 'flash') {
                 window.iniciarFlashMulti(window.players);
             } else {
@@ -1603,15 +1637,18 @@
             const animacionElement = document.getElementById('animacionSorteo');
             
             const intervaloAnimacion = setInterval(() => {
-                animacionElement.innerText = iconos[contador % iconos.length];
+                if(animacionElement) animacionElement.innerText = iconos[contador % iconos.length];
                 contador++;
             }, 400);
 
             setTimeout(() => {
                 clearInterval(intervaloAnimacion);
-                animacionElement.classList.add('hidden');
-                document.getElementById('resultadoSorteo').classList.remove('hidden');
-                document.getElementById('resultadoSorteo').classList.add('flex');
+                if(animacionElement) animacionElement.classList.add('hidden');
+                const res = document.getElementById('resultadoSorteo');
+                if(res) {
+                    res.classList.remove('hidden');
+                    res.classList.add('flex');
+                }
             }, 2500);
         };
 
@@ -1696,15 +1733,18 @@
             const animacionElement = document.getElementById('animacionSorteoTrivial');
             
             const intervaloAnimacion = setInterval(() => {
-                animacionElement.innerText = iconos[contador % iconos.length];
+                if (animacionElement) animacionElement.innerText = iconos[contador % iconos.length];
                 contador++;
             }, 400);
 
             setTimeout(() => {
                 clearInterval(intervaloAnimacion);
-                animacionElement.classList.add('hidden');
-                document.getElementById('resultadoSorteoTrivial').classList.remove('hidden');
-                document.getElementById('resultadoSorteoTrivial').classList.add('flex');
+                if(animacionElement) animacionElement.classList.add('hidden');
+                const res = document.getElementById('resultadoSorteoTrivial');
+                if (res) {
+                    res.classList.remove('hidden');
+                    res.classList.add('flex');
+                }
             }, 2500);
         };
 
