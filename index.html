@@ -466,11 +466,12 @@
     <!-- Modal de Juegos -->
     <div id="juegosModal" class="fixed inset-0 z-[70] bg-gray-900 hidden flex-col h-full w-full text-white">
         <div class="p-4 flex items-center shadow-md shrink-0 bg-gray-800 relative">
-            <button onclick="volverJuegos()" class="mr-4 p-2 bg-gray-700 rounded-full hover:bg-gray-600 transition">
+            <button onclick="volverJuegos()" class="mr-4 p-2 bg-gray-700 rounded-full hover:bg-gray-600 transition relative z-10">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
             </button>
-            <h2 id="juegosTitulo" class="text-xl font-bold truncate">Juegos Cofrades</h2>
-            <div id="juegosHeaderTimer" class="ml-auto font-mono text-2xl font-bold text-rose-400 hidden">01:00</div>
+            <h2 id="juegosTitulo" class="text-xl font-bold truncate relative z-10">Juegos Cofrades</h2>
+            <div id="juegosHeaderScore" class="absolute left-0 right-0 text-center font-bold text-white text-xl tracking-widest hidden pointer-events-none">0/6</div>
+            <div id="juegosHeaderTimer" class="ml-auto font-mono text-2xl font-bold text-rose-400 hidden relative z-10">01:00</div>
         </div>
         <div class="flex-1 overflow-y-auto p-5 flex flex-col items-center relative">
             <div id="juegosContenido" class="w-full max-w-sm flex flex-col items-center justify-center gap-6 z-10 flex-1"></div>
@@ -997,6 +998,7 @@
             if (window.parejasTimer) clearInterval(window.parejasTimer);
             if (window.flashCountdownTimer) clearInterval(window.flashCountdownTimer);
             document.getElementById('juegosHeaderTimer').classList.add('hidden');
+            document.getElementById('juegosHeaderScore').classList.add('hidden');
             window.mostrarBotonesFlotantes();
             document.getElementById('juegosModal').classList.add('hidden');
             document.getElementById('juegosModal').classList.remove('flex', 'fade-in');
@@ -1007,6 +1009,7 @@
             if (window.parejasTimer) clearInterval(window.parejasTimer);
             if (window.flashCountdownTimer) clearInterval(window.flashCountdownTimer);
             document.getElementById('juegosHeaderTimer').classList.add('hidden');
+            document.getElementById('juegosHeaderScore').classList.add('hidden');
             
             if (document.getElementById('juegosTitulo').innerText === 'Juegos Cofrades') {
                 window.cerrarJuegos();
@@ -2026,6 +2029,12 @@
                 hTimer.innerText = window.formatTimeString(window.memTime);
             }
             
+            const hScore = document.getElementById('juegosHeaderScore');
+            if (hScore) {
+                hScore.classList.remove('hidden');
+                hScore.innerText = '0/6';
+            }
+            
             if (window.parejasTimer) clearInterval(window.parejasTimer);
             window.parejasTimer = setInterval(() => {
                 window.memTime--;
@@ -2059,9 +2068,6 @@
 
             document.getElementById('juegosContenido').innerHTML = `
                 <div class="w-full max-w-sm flex flex-col items-center fade-in gap-4 px-2 pb-6 mt-4">
-                    <div class="flex justify-center w-full items-center bg-gray-800 p-4 rounded-xl border border-gray-700">
-                        <span class="text-gray-400 font-bold uppercase tracking-wider text-xs">Parejas encontradas: <span class="text-white text-lg ml-2" id="memScore">0 / 6</span></span>
-                    </div>
                     <div class="grid grid-cols-3 grid-rows-4 gap-3 w-full mt-2">
                         ${cardsHTML}
                     </div>
@@ -2088,7 +2094,9 @@
                     window.memCards[idx1].isMatched = true;
                     window.memCards[idx2].isMatched = true;
                     window.memMatches++;
-                    document.getElementById('memScore').innerText = window.memMatches + ' / 6';
+                    
+                    const hScore = document.getElementById('juegosHeaderScore');
+                    if (hScore) hScore.innerText = window.memMatches + '/6';
                     
                     document.getElementById('memCardInner' + idx1).classList.add('flash-match');
                     document.getElementById('memCardInner' + idx2).classList.add('flash-match');
@@ -2116,6 +2124,9 @@
         window.resultadoTurnoParejas = function(victoria) {
             const hTimer = document.getElementById('juegosHeaderTimer');
             if (hTimer) hTimer.classList.add('hidden');
+            const hScore = document.getElementById('juegosHeaderScore');
+            if (hScore) hScore.classList.add('hidden');
+            
             const p = window.parejasPlayers[window.parejasTurn];
             window.toggleDisclaimer(true);
 
@@ -2312,7 +2323,7 @@
                     `;
                     setTimeout(() => {
                         window.mostrarOpcionesFlash();
-                    }, 250); 
+                    }, 170); 
                 }
             }, 1000);
         };
