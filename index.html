@@ -61,6 +61,20 @@
             0% { left: -100%; }
             100% { left: 200%; }
         }
+        @keyframes slideInRightSoft {
+            from { transform: translateX(50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideInLeftSoft {
+            from { transform: translateX(-50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        .slide-in-right-soft {
+            animation: slideInRightSoft 0.3s ease-out forwards;
+        }
+        .slide-in-left-soft {
+            animation: slideInLeftSoft 0.3s ease-out forwards;
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans fixed inset-0 w-full h-full flex flex-col overflow-hidden">
@@ -766,6 +780,14 @@
         };
 
         window.seleccionarDia = function(dia) {
+            const diasList = ['domingo', 'lunes', 'martes', 'miercoles', 'jueves', 'madrugada', 'viernes', 'resurreccion'];
+            const oldIdx = diasList.indexOf(window.diaSeleccionadoActual);
+            const newIdx = diasList.indexOf(dia);
+            
+            let direccion = 'fade';
+            if (newIdx > oldIdx) direccion = 'right';
+            else if (newIdx < oldIdx) direccion = 'left';
+
             window.diaSeleccionadoActual = dia;
             document.querySelectorAll('.dia-btn').forEach(btn => {
                 if (btn.dataset.dia === dia) {
@@ -777,10 +799,10 @@
                     btn.classList.remove('bg-white', 'text-rose-900', 'shadow-sm');
                 }
             });
-            window.cargarDia(dia);
+            window.cargarDia(dia, direccion);
         };
 
-        window.cargarDia = function(diaActual) {
+        window.cargarDia = function(diaActual, direccion = 'fade') {
             const contenedor = document.getElementById('listaCofradias');
             if(!contenedor) return;
             contenedor.innerHTML = '';
@@ -799,10 +821,14 @@
                 return getMins(hA) - getMins(hB);
             });
 
+            let animClass = 'fade-in';
+            if (direccion === 'right') animClass = 'slide-in-right-soft';
+            if (direccion === 'left') animClass = 'slide-in-left-soft';
+
             const barrasParaActualizar = [];
             cofradiasOrdenadas.forEach((cof) => {
                 const btn = document.createElement('button');
-                btn.className = 'relative overflow-hidden fade-in w-full bg-white text-left rounded-2xl shadow-sm border border-gray-200 p-5 active:scale-95 group';
+                btn.className = `relative overflow-hidden ${animClass} w-full bg-white text-left rounded-2xl shadow-sm border border-gray-200 p-5 active:scale-95 group`;
                 btn.onclick = () => window.mostrarDetalle(diaActual, cof.nombre);
                 
                 const barraFondo = document.createElement('div');
