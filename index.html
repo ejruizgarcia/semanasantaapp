@@ -1412,12 +1412,12 @@
             document.getElementById('juegosContenido').innerHTML = `
                 <div class="w-full max-w-sm flex flex-col gap-4 fade-in text-center pb-8">
                     <p class="text-gray-300 mb-4">Selecciona un juego para pasar el rato.</p>
-                    <button onclick="window.seleccionarJuego('flash')" class="w-full bg-orange-700 text-white font-bold py-6 px-4 rounded-2xl shadow-lg hover:bg-orange-600 transition active:scale-95 text-xl border border-orange-500">📸 Flash Photo</button>
                     <button onclick="window.seleccionarJuego('impostor')" class="w-full bg-rose-700 text-white font-bold py-6 px-4 rounded-2xl shadow-lg hover:bg-rose-600 transition active:scale-95 text-xl border border-rose-500">🕵️ El Impostor Cofrade</button>
                     <button onclick="window.seleccionarJuego('parejas')" class="w-full bg-rose-900 text-white font-bold py-6 px-4 rounded-2xl shadow-lg hover:bg-rose-800 transition active:scale-95 text-xl border border-rose-700">🃏 Parejas Cofrades</button>
                     <button onclick="window.seleccionarJuego('trivial')" class="w-full bg-blue-700 text-white font-bold py-6 px-4 rounded-2xl shadow-lg hover:bg-blue-600 transition active:scale-95 text-xl border border-blue-500">🧠 Trivial Cofrade</button>
                     <button onclick="window.seleccionarJuego('pasion')" class="w-full bg-purple-700 text-white font-bold py-6 px-4 rounded-2xl shadow-lg hover:bg-purple-600 transition active:scale-95 text-xl border border-purple-500">✝️ Trivial de la Pasión</button>
                     <button onclick="window.seleccionarJuego('teologico')" class="w-full bg-emerald-700 text-white font-bold py-6 px-4 rounded-2xl shadow-lg hover:bg-emerald-600 transition active:scale-95 text-xl border border-emerald-500">📖 Trivial Teológico</button>
+                    <button onclick="window.seleccionarJuego('flash')" class="w-full bg-orange-700 text-white font-bold py-6 px-4 rounded-2xl shadow-lg hover:bg-orange-600 transition active:scale-95 text-xl border border-orange-500">📸 Flash Photo</button>
                 </div>`;
         };
 
@@ -1468,271 +1468,11 @@
             if(window.selectedGame === 'impostor') {
                 window.impPlayersOriginal = [...window.players];
                 window.iniciarSiguienteRondaImpostor();
-            } else if (window.selectedGame === 'parejas') {
-                window.iniciarParejasMulti(window.players);
             } else if (window.selectedGame === 'flash') {
                 window.iniciarFlashMulti(window.players);
             } else {
                 window.iniciarTrivial(window.players);
             }
-        };
-
-        window.iniciarFlashMulti = function(playersArray) {
-            let arr = [...playersArray];
-            if (arr.length > 1) {
-                arr = arr.sort(() => Math.random() - 0.5);
-            }
-            window.flashPlayers = arr.map(p => ({ nombre: p, puntos: 0 }));
-            window.flashRound = 1;
-            window.totalRondasFlash = 5; 
-            window.flashTurn = 0;
-            
-            if (window.flashPlayers.length > 1) {
-                window.mostrarSorteoTurnoFlash();
-            } else {
-                window.flujoTurnoFlash();
-            }
-        };
-
-        window.mostrarSorteoTurnoFlash = function() {
-            window.toggleDisclaimer(false);
-            const primerJugador = window.flashPlayers[0].nombre;
-            
-            document.getElementById('juegosContenido').innerHTML = `
-                <div class="w-full max-w-sm flex flex-col items-center gap-6 fade-in text-center">
-                    <h3 class="text-3xl font-bold text-white">¡Todos listos!</h3>
-                    <p class="text-xl text-gray-400">¿Preparados para empezar?</p>
-                    
-                    <div id="animacionSorteoFlash" class="text-6xl my-6 pop-in">⏳</div>
-                    
-                    <div id="resultadoSorteoFlash" class="hidden flex-col items-center gap-4 w-full pop-in">
-                        <p class="text-gray-300">El juego lo empieza...</p>
-                        <h4 class="text-4xl font-black text-orange-400 mb-4">¡${primerJugador}!</h4>
-                        <button onclick="window.flujoTurnoFlash()" class="w-full bg-orange-600 text-white font-bold py-4 rounded-xl shadow-lg transition active:scale-95">Comenzar juego</button>
-                    </div>
-                </div>`;
-
-            let contador = 0;
-            const iconos = ['⏱️', '📸', '👀', '💡', '🎲'];
-            const animacionElement = document.getElementById('animacionSorteoFlash');
-            
-            const intervaloAnimacion = setInterval(() => {
-                animacionElement.innerText = iconos[contador % iconos.length];
-                contador++;
-            }, 400);
-
-            setTimeout(() => {
-                clearInterval(intervaloAnimacion);
-                animacionElement.classList.add('hidden');
-                document.getElementById('resultadoSorteoFlash').classList.remove('hidden');
-                document.getElementById('resultadoSorteoFlash').classList.add('flex');
-            }, 2500);
-        };
-
-        window.flujoTurnoFlash = function() {
-            window.toggleDisclaimer(false);
-            if (window.flashPlayers.length === 1) {
-                window.jugarTurnoFlash();
-                return;
-            }
-            const p = window.flashPlayers[window.flashTurn];
-            document.getElementById('juegosContenido').innerHTML = `
-                <div class="w-full max-w-sm flex flex-col items-center gap-8 fade-in text-center">
-                    <p class="text-xl text-gray-400 mb-2">Turno de</p>
-                    <h3 class="text-4xl font-bold text-orange-400">${p.nombre}</h3>
-                    <button onclick="window.jugarTurnoFlash()" class="w-full bg-gray-700 text-white font-bold py-4 rounded-xl shadow-lg transition active:scale-95 text-lg border border-gray-600 hover:bg-gray-600">Estoy listo</button>
-                </div>`;
-        };
-
-        window.jugarTurnoFlash = function() {
-            window.toggleDisclaimer(false);
-            const correctImg = window.bancoFlash[Math.floor(Math.random() * window.bancoFlash.length)];
-            let wrongOptions = window.bancoFlash.filter(item => item.name !== correctImg.name).sort(() => 0.5 - Math.random()).slice(0, 3);
-            window.flashCurrentOptions = [correctImg, ...wrongOptions].sort(() => 0.5 - Math.random());
-            window.flashCurrentCorrect = correctImg;
-
-            const imgPreload = new Image();
-            imgPreload.src = `https://raw.githubusercontent.com/ejruizgarcia/images/main/${correctImg.file}`;
-
-            document.getElementById('juegosContenido').innerHTML = `
-                <div class="w-full max-w-sm flex flex-col items-center gap-8 fade-in text-center">
-                    <p class="text-2xl text-gray-400 font-medium">Atención a la pantalla...</p>
-                    <h2 class="text-9xl font-black text-orange-500 pop-in" id="flashCountdown">3</h2>
-                </div>
-            `;
-
-            let count = 3;
-            window.flashCountdownTimer = setInterval(() => {
-                count--;
-                if (count > 0) {
-                    const el = document.getElementById('flashCountdown');
-                    if (el) {
-                        el.innerText = count;
-                        el.classList.remove('pop-in');
-                        void el.offsetWidth;
-                        el.classList.add('pop-in');
-                    } else {
-                        clearInterval(window.flashCountdownTimer);
-                    }
-                } else {
-                    clearInterval(window.flashCountdownTimer);
-                    document.getElementById('juegosContenido').innerHTML = `
-                        <div class="absolute inset-0 z-[80] bg-black flex items-center justify-center p-2 md:p-6 fade-in">
-                            <img src="https://raw.githubusercontent.com/ejruizgarcia/images/main/${correctImg.file}" class="w-full h-full object-cover rounded-2xl">
-                        </div>
-                    `;
-                    setTimeout(() => {
-                        window.mostrarOpcionesFlash();
-                    }, 150); 
-                }
-            }, 1000);
-        };
-
-        window.mostrarOpcionesFlash = function() {
-            window.toggleDisclaimer(false);
-            let opcionesHTML = '';
-            window.flashCurrentOptions.forEach((opt, i) => {
-                opcionesHTML += `<button id="btnFlash${i}" onclick="window.checkFlash(${i})" class="w-full h-full min-h-[70px] sm:min-h-[100px] bg-gray-700 text-white font-bold text-xl md:text-2xl rounded-2xl shadow-lg border-2 border-gray-600 hover:bg-orange-600 transition active:scale-95 flex items-center justify-center p-3 break-words leading-tight">${opt.name}</button>`;
-            });
-
-            const jugadorActual = window.flashPlayers[window.flashTurn];
-
-            document.getElementById('juegosContenido').innerHTML = `
-                <div class="w-full h-full max-h-[800px] max-w-2xl flex flex-col gap-3 fade-in mx-auto pb-2">
-                    <div class="flex justify-between items-center bg-gray-800 p-3 rounded-xl border border-gray-700 shrink-0">
-                        <span class="text-orange-400 font-bold uppercase text-xs md:text-sm tracking-widest">Ronda ${window.flashRound} de ${window.totalRondasFlash}</span>
-                        <span class="text-white font-bold text-sm md:text-base">${jugadorActual.nombre}</span>
-                    </div>
-                    
-                    <p class="text-center text-gray-300 font-bold tracking-widest uppercase text-base md:text-lg shrink-0 mt-1">¿Qué paso era?</p>
-                    
-                    <div class="grid grid-cols-1 sm:grid-cols-2 grid-rows-4 sm:grid-rows-2 gap-2 sm:gap-4 flex-1 w-full pb-2">
-                        ${opcionesHTML}
-                    </div>
-
-                    <div id="contenedorContinuarFlash" class="hidden mt-auto shrink-0">
-                        <button onclick="window.siguienteTurnoFlash()" class="w-full bg-amber-500 text-gray-900 font-bold py-3 md:py-4 rounded-xl shadow-lg hover:bg-amber-400 transition active:scale-95 text-lg md:text-xl">
-                            Siguiente Turno
-                        </button>
-                    </div>
-                </div>
-            `;
-        };
-
-        window.checkFlash = function(indexSeleccionado) {
-            const opt = window.flashCurrentOptions[indexSeleccionado];
-            const esCorrecta = (opt.name === window.flashCurrentCorrect.name);
-
-            for(let i = 0; i < 4; i++) {
-                const btn = document.getElementById(`btnFlash${i}`);
-                if (!btn) continue;
-                btn.onclick = null;
-                btn.classList.remove('hover:bg-orange-600', 'bg-gray-700');
-                
-                if (window.flashCurrentOptions[i].name === window.flashCurrentCorrect.name) {
-                    btn.classList.add('bg-green-600', 'border-green-400');
-                } else if (i === indexSeleccionado && !esCorrecta) {
-                    btn.classList.add('bg-red-600', 'border-red-400');
-                } else {
-                    btn.classList.add('bg-gray-800', 'opacity-50');
-                }
-            }
-
-            if (esCorrecta) {
-                window.flashPlayers[window.flashTurn].puntos += 100;
-            }
-
-            document.getElementById('contenedorContinuarFlash').classList.remove('hidden');
-            document.getElementById('contenedorContinuarFlash').classList.add('fade-in');
-        };
-
-        window.siguienteTurnoFlash = function() {
-            window.flashTurn++;
-            if(window.flashTurn < window.flashPlayers.length) {
-                window.flujoTurnoFlash();
-            } else {
-                if (window.flashPlayers.length === 1) {
-                    window.flashRound++;
-                    if(window.flashRound > window.totalRondasFlash) window.mostrarPantallaVictoriaFlash();
-                    else { window.flashTurn = 0; window.flujoTurnoFlash(); }
-                } else {
-                    const esFinal = window.flashRound >= window.totalRondasFlash;
-                    if (esFinal) {
-                        window.mostrarPantallaVictoriaFlash();
-                    } else {
-                        window.mostrarClasificacionFlash(false);
-                    }
-                }
-            }
-        };
-
-        window.mostrarClasificacionFlash = function(esFinal) {
-            window.toggleDisclaimer(true);
-            const ranking = [...window.flashPlayers].sort((a,b) => b.puntos - a.puntos);
-            let html = ranking.map((p, i) => {
-                let medalla = '';
-                if (esFinal && i === 0) medalla = '🏆 ';
-                else if (esFinal && i === 1) medalla = '🥈 ';
-                else if (esFinal && i === 2) medalla = '🥉 ';
-                else medalla = `<span class="text-gray-500 w-6 inline-block text-center">${i+1}</span>`;
-                return `<div class="flex justify-between items-center p-4 bg-gray-800 rounded-xl border border-gray-700 mb-2"><div><span class="text-xl">${medalla}</span><span class="font-bold text-white ml-2">${p.nombre}</span></div><span class="font-black text-orange-400">${p.puntos} pts</span></div>`;
-            }).join('');
-            
-            let tituloHTML = esFinal 
-                ? `<h2 class="text-3xl font-black text-orange-400 mb-2 text-center">¡Juego Terminado!</h2><p class="text-gray-300 text-center mb-6">Clasificación Final</p>`
-                : `<h3 class="text-2xl font-bold text-white mb-2 text-center">Clasificación Parcial</h3><p class="text-gray-400 text-center mb-6">Fin de la Ronda ${window.flashRound}</p>`;
-                
-            let botonHTML = esFinal
-                ? `<button onclick="window.volverJuegos()" class="w-full bg-gray-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-gray-500 transition active:scale-95 mt-4">Terminar Juego</button>`
-                : `<button onclick="window.avanzarRondaFlash()" class="w-full bg-orange-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-orange-500 transition active:scale-95 mt-4">Comenzar Ronda ${window.flashRound + 1}</button>`;
-
-            document.getElementById('juegosContenido').innerHTML = `
-                <div class="w-full max-w-sm flex flex-col fade-in">
-                    ${tituloHTML}
-                    <div class="flex flex-col">
-                        ${html}
-                    </div>
-                    ${botonHTML}
-                </div>`;
-        };
-
-        window.avanzarRondaFlash = function() {
-            window.flashRound++;
-            window.flashTurn = 0;
-            window.flujoTurnoFlash();
-        };
-
-        window.mostrarPantallaVictoriaFlash = function() {
-            window.toggleDisclaimer(true);
-            const ranking = [...window.flashPlayers].sort((a,b) => b.puntos - a.puntos);
-            const ganador = ranking[0];
-            
-            let empates = ranking.filter(p => p.puntos === ganador.puntos);
-            let textoGanador = `¡Enhorabuena ${ganador.nombre}, has ganado!`;
-            
-            if (empates.length > 1) {
-                const nombresEmpate = empates.map(e => e.nombre).join(' y ');
-                textoGanador = `¡Enhorabuena ${nombresEmpate}, habéis empatado!`;
-            }
-            if (window.flashPlayers.length === 1) {
-                textoGanador = `¡Buen trabajo, ${ganador.nombre}!`;
-            }
-
-            document.getElementById('juegosContenido').innerHTML = `
-                <div class="w-full max-w-sm flex flex-col items-center justify-center fade-in text-center py-4">
-                    <div class="text-7xl mb-4 pop-in">🏆</div>
-                    <h2 class="text-3xl md:text-4xl font-black text-orange-400 mb-4 leading-tight pop-in">${textoGanador}</h2>
-                    <p class="text-gray-300 mb-8 text-lg">Has completado todas las rondas de Flash Photo.</p>
-                    
-                    <div class="flex flex-col gap-4 w-full">
-                        <button onclick="window.mostrarClasificacionFlash(true)" class="w-full bg-orange-500 text-gray-900 font-bold py-4 rounded-xl shadow-lg hover:bg-orange-400 transition active:scale-95 text-lg">
-                            Ver clasificación final
-                        </button>
-                        <button onclick="window.volverJuegos()" class="w-full bg-gray-700 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-gray-600 transition active:scale-95 text-lg">
-                            Terminar juego
-                        </button>
-                    </div>
-                </div>`;
         };
 
         window.iniciarSiguienteRondaImpostor = function() {
@@ -2132,6 +1872,267 @@
             window.trivialRound++;
             window.trivialTurn = 0;
             window.flujoTurnoTrivial();
+        };
+
+        window.iniciarFlashMulti = function(playersArray) {
+            let arr = [...playersArray];
+            if (arr.length > 1) {
+                arr = arr.sort(() => Math.random() - 0.5);
+            }
+            window.flashPlayers = arr.map(p => ({ nombre: p, puntos: 0 }));
+            window.flashRound = 1;
+            window.totalRondasFlash = 5; 
+            window.flashTurn = 0;
+            
+            if (window.flashPlayers.length > 1) {
+                window.mostrarSorteoTurnoFlash();
+            } else {
+                window.flujoTurnoFlash();
+            }
+        };
+
+        window.mostrarSorteoTurnoFlash = function() {
+            window.toggleDisclaimer(false);
+            const primerJugador = window.flashPlayers[0].nombre;
+            
+            document.getElementById('juegosContenido').innerHTML = `
+                <div class="w-full max-w-sm flex flex-col items-center gap-6 fade-in text-center">
+                    <h3 class="text-3xl font-bold text-white">¡Todos listos!</h3>
+                    <p class="text-xl text-gray-400">¿Preparados para empezar?</p>
+                    
+                    <div id="animacionSorteoFlash" class="text-6xl my-6 pop-in">⏳</div>
+                    
+                    <div id="resultadoSorteoFlash" class="hidden flex-col items-center gap-4 w-full pop-in">
+                        <p class="text-gray-300">El juego lo empieza...</p>
+                        <h4 class="text-4xl font-black text-orange-400 mb-4">¡${primerJugador}!</h4>
+                        <button onclick="window.flujoTurnoFlash()" class="w-full bg-orange-600 text-white font-bold py-4 rounded-xl shadow-lg transition active:scale-95">Comenzar juego</button>
+                    </div>
+                </div>`;
+
+            let contador = 0;
+            const iconos = ['⏱️', '📸', '👀', '💡', '🎲'];
+            const animacionElement = document.getElementById('animacionSorteoFlash');
+            
+            const intervaloAnimacion = setInterval(() => {
+                if (animacionElement) animacionElement.innerText = iconos[contador % iconos.length];
+                contador++;
+            }, 400);
+
+            setTimeout(() => {
+                clearInterval(intervaloAnimacion);
+                if (animacionElement) animacionElement.classList.add('hidden');
+                const res = document.getElementById('resultadoSorteoFlash');
+                if (res) {
+                    res.classList.remove('hidden');
+                    res.classList.add('flex');
+                }
+            }, 2500);
+        };
+
+        window.flujoTurnoFlash = function() {
+            window.toggleDisclaimer(false);
+            if (window.flashPlayers.length === 1) {
+                window.jugarTurnoFlash();
+                return;
+            }
+            const p = window.flashPlayers[window.flashTurn];
+            document.getElementById('juegosContenido').innerHTML = `
+                <div class="w-full max-w-sm flex flex-col items-center gap-8 fade-in text-center">
+                    <p class="text-xl text-gray-400 mb-2">Turno de</p>
+                    <h3 class="text-4xl font-bold text-orange-400">${p.nombre}</h3>
+                    <button onclick="window.jugarTurnoFlash()" class="w-full bg-gray-700 text-white font-bold py-4 rounded-xl shadow-lg transition active:scale-95 text-lg border border-gray-600 hover:bg-gray-600">Estoy listo</button>
+                </div>`;
+        };
+
+        window.jugarTurnoFlash = function() {
+            window.toggleDisclaimer(false);
+            const correctImg = window.bancoFlash[Math.floor(Math.random() * window.bancoFlash.length)];
+            let wrongOptions = window.bancoFlash.filter(item => item.name !== correctImg.name).sort(() => 0.5 - Math.random()).slice(0, 3);
+            window.flashCurrentOptions = [correctImg, ...wrongOptions].sort(() => 0.5 - Math.random());
+            window.flashCurrentCorrect = correctImg;
+
+            const imgPreload = new Image();
+            imgPreload.src = `https://raw.githubusercontent.com/ejruizgarcia/images/main/${correctImg.file}`;
+
+            document.getElementById('juegosContenido').innerHTML = `
+                <div class="w-full max-w-sm flex flex-col items-center gap-8 fade-in text-center">
+                    <p class="text-2xl text-gray-400 font-medium">Atención a la pantalla...</p>
+                    <h2 class="text-9xl font-black text-orange-500 pop-in" id="flashCountdown">3</h2>
+                </div>
+            `;
+
+            let count = 3;
+            window.flashCountdownTimer = setInterval(() => {
+                count--;
+                if (count > 0) {
+                    const el = document.getElementById('flashCountdown');
+                    if (el) {
+                        el.innerText = count;
+                        el.classList.remove('pop-in');
+                        void el.offsetWidth;
+                        el.classList.add('pop-in');
+                    } else {
+                        clearInterval(window.flashCountdownTimer);
+                    }
+                } else {
+                    clearInterval(window.flashCountdownTimer);
+                    document.getElementById('juegosContenido').innerHTML = `
+                        <div class="absolute inset-0 z-[80] bg-black flex items-center justify-center p-2 md:p-6 fade-in">
+                            <img src="https://raw.githubusercontent.com/ejruizgarcia/images/main/${correctImg.file}" class="w-full h-full object-cover rounded-2xl">
+                        </div>
+                    `;
+                    setTimeout(() => {
+                        window.mostrarOpcionesFlash();
+                    }, 150); 
+                }
+            }, 1000);
+        };
+
+        window.mostrarOpcionesFlash = function() {
+            window.toggleDisclaimer(false);
+            let opcionesHTML = '';
+            window.flashCurrentOptions.forEach((opt, i) => {
+                opcionesHTML += `<button id="btnFlash${i}" onclick="window.checkFlash(${i})" class="w-full h-full min-h-[70px] sm:min-h-[100px] bg-gray-700 text-white font-bold text-xl md:text-2xl rounded-2xl shadow-lg border-2 border-gray-600 hover:bg-orange-600 transition active:scale-95 flex items-center justify-center p-3 break-words leading-tight">${opt.name}</button>`;
+            });
+
+            const jugadorActual = window.flashPlayers[window.flashTurn];
+
+            document.getElementById('juegosContenido').innerHTML = `
+                <div class="w-full h-full max-h-[800px] max-w-2xl flex flex-col gap-3 fade-in mx-auto pb-2">
+                    <div class="flex justify-between items-center bg-gray-800 p-3 rounded-xl border border-gray-700 shrink-0">
+                        <span class="text-orange-400 font-bold uppercase text-xs md:text-sm tracking-widest">Ronda ${window.flashRound} de ${window.totalRondasFlash}</span>
+                        <span class="text-white font-bold text-sm md:text-base">${jugadorActual.nombre}</span>
+                    </div>
+                    
+                    <p class="text-center text-gray-300 font-bold tracking-widest uppercase text-base md:text-lg shrink-0 mt-1">¿Qué paso era?</p>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 grid-rows-4 sm:grid-rows-2 gap-2 sm:gap-4 flex-1 w-full pb-2">
+                        ${opcionesHTML}
+                    </div>
+
+                    <div id="contenedorContinuarFlash" class="hidden mt-auto shrink-0">
+                        <button onclick="window.siguienteTurnoFlash()" class="w-full bg-amber-500 text-gray-900 font-bold py-3 md:py-4 rounded-xl shadow-lg hover:bg-amber-400 transition active:scale-95 text-lg md:text-xl">
+                            Siguiente Turno
+                        </button>
+                    </div>
+                </div>
+            `;
+        };
+
+        window.checkFlash = function(indexSeleccionado) {
+            const opt = window.flashCurrentOptions[indexSeleccionado];
+            const esCorrecta = (opt.name === window.flashCurrentCorrect.name);
+
+            for(let i = 0; i < 4; i++) {
+                const btn = document.getElementById(`btnFlash${i}`);
+                if (!btn) continue;
+                btn.onclick = null;
+                btn.classList.remove('hover:bg-orange-600', 'bg-gray-700');
+                
+                if (window.flashCurrentOptions[i].name === window.flashCurrentCorrect.name) {
+                    btn.classList.add('bg-green-600', 'border-green-400');
+                } else if (i === indexSeleccionado && !esCorrecta) {
+                    btn.classList.add('bg-red-600', 'border-red-400');
+                } else {
+                    btn.classList.add('bg-gray-800', 'opacity-50');
+                }
+            }
+
+            if (esCorrecta) {
+                window.flashPlayers[window.flashTurn].puntos += 100;
+            }
+
+            document.getElementById('contenedorContinuarFlash').classList.remove('hidden');
+            document.getElementById('contenedorContinuarFlash').classList.add('fade-in');
+        };
+
+        window.siguienteTurnoFlash = function() {
+            window.flashTurn++;
+            if(window.flashTurn < window.flashPlayers.length) {
+                window.flujoTurnoFlash();
+            } else {
+                if (window.flashPlayers.length === 1) {
+                    window.flashRound++;
+                    if(window.flashRound > window.totalRondasFlash) window.mostrarPantallaVictoriaFlash();
+                    else { window.flashTurn = 0; window.flujoTurnoFlash(); }
+                } else {
+                    const esFinal = window.flashRound >= window.totalRondasFlash;
+                    if (esFinal) {
+                        window.mostrarPantallaVictoriaFlash();
+                    } else {
+                        window.mostrarClasificacionFlash(false);
+                    }
+                }
+            }
+        };
+
+        window.mostrarClasificacionFlash = function(esFinal) {
+            window.toggleDisclaimer(true);
+            const ranking = [...window.flashPlayers].sort((a,b) => b.puntos - a.puntos);
+            let html = ranking.map((p, i) => {
+                let medalla = '';
+                if (esFinal && i === 0) medalla = '🏆 ';
+                else if (esFinal && i === 1) medalla = '🥈 ';
+                else if (esFinal && i === 2) medalla = '🥉 ';
+                else medalla = `<span class="text-gray-500 w-6 inline-block text-center">${i+1}</span>`;
+                return `<div class="flex justify-between items-center p-4 bg-gray-800 rounded-xl border border-gray-700 mb-2"><div><span class="text-xl">${medalla}</span><span class="font-bold text-white ml-2">${p.nombre}</span></div><span class="font-black text-orange-400">${p.puntos} pts</span></div>`;
+            }).join('');
+            
+            let tituloHTML = esFinal 
+                ? `<h2 class="text-3xl font-black text-orange-400 mb-2 text-center">¡Juego Terminado!</h2><p class="text-gray-300 text-center mb-6">Clasificación Final</p>`
+                : `<h3 class="text-2xl font-bold text-white mb-2 text-center">Clasificación Parcial</h3><p class="text-gray-400 text-center mb-6">Fin de la Ronda ${window.flashRound}</p>`;
+                
+            let botonHTML = esFinal
+                ? `<button onclick="window.volverJuegos()" class="w-full bg-gray-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-gray-500 transition active:scale-95 mt-4">Terminar Juego</button>`
+                : `<button onclick="window.avanzarRondaFlash()" class="w-full bg-orange-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-orange-500 transition active:scale-95 mt-4">Comenzar Ronda ${window.flashRound + 1}</button>`;
+
+            document.getElementById('juegosContenido').innerHTML = `
+                <div class="w-full max-w-sm flex flex-col fade-in">
+                    ${tituloHTML}
+                    <div class="flex flex-col">
+                        ${html}
+                    </div>
+                    ${botonHTML}
+                </div>`;
+        };
+
+        window.avanzarRondaFlash = function() {
+            window.flashRound++;
+            window.flashTurn = 0;
+            window.flujoTurnoFlash();
+        };
+
+        window.mostrarPantallaVictoriaFlash = function() {
+            window.toggleDisclaimer(true);
+            const ranking = [...window.flashPlayers].sort((a,b) => b.puntos - a.puntos);
+            const ganador = ranking[0];
+            
+            let empates = ranking.filter(p => p.puntos === ganador.puntos);
+            let textoGanador = `¡Enhorabuena ${ganador.nombre}, has ganado!`;
+            
+            if (empates.length > 1) {
+                const nombresEmpate = empates.map(e => e.nombre).join(' y ');
+                textoGanador = `¡Enhorabuena ${nombresEmpate}, habéis empatado!`;
+            }
+            if (window.flashPlayers.length === 1) {
+                textoGanador = `¡Buen trabajo, ${ganador.nombre}!`;
+            }
+
+            document.getElementById('juegosContenido').innerHTML = `
+                <div class="w-full max-w-sm flex flex-col items-center justify-center fade-in text-center py-4">
+                    <div class="text-7xl mb-4 pop-in">🏆</div>
+                    <h2 class="text-3xl md:text-4xl font-black text-orange-400 mb-4 leading-tight pop-in">${textoGanador}</h2>
+                    <p class="text-gray-300 mb-8 text-lg">Has completado todas las rondas de Flash Photo.</p>
+                    
+                    <div class="flex flex-col gap-4 w-full">
+                        <button onclick="window.mostrarClasificacionFlash(true)" class="w-full bg-orange-500 text-gray-900 font-bold py-4 rounded-xl shadow-lg hover:bg-orange-400 transition active:scale-95 text-lg">
+                            Ver clasificación final
+                        </button>
+                        <button onclick="window.volverJuegos()" class="w-full bg-gray-700 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-gray-600 transition active:scale-95 text-lg">
+                            Terminar juego
+                        </button>
+                    </div>
+                </div>`;
         };
 
         const ordenDiasSwipe = ['domingo', 'lunes', 'martes', 'miercoles', 'jueves', 'madrugada', 'viernes', 'resurreccion'];
