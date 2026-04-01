@@ -1219,25 +1219,71 @@
         };
 
         window.mostrarTurnoPassImpostor = function() {
-            document.getElementById('juegosContenido').innerHTML = `
-                <div class="w-full max-w-sm flex flex-col items-center gap-8 fade-in text-center">
-                    <p class="text-xl text-gray-400 mb-2">Pasa el dispositivo a</p>
-                    <h3 class="text-4xl font-bold text-rose-500">${window.impPlayers[window.impTurn]}</h3>
-                    <button onclick="window.revelarRolImpostor()" class="w-full bg-gray-700 font-bold py-4 rounded-xl shadow-lg">Soy ${window.impPlayers[window.impTurn]}, ver mi rol</button>
-                </div>`;
-        };
-
-        window.revelarRolImpostor = function() {
+            const p = window.impPlayers[window.impTurn];
             const isImp = (window.impTurn === window.impIdx);
-            const msg = isImp ? `<p class="text-2xl font-bold text-red-500">¡ERES EL IMPOSTOR!</p><p class="text-gray-300">Disimula y adivina la palabra por el contexto de los demás.</p>` : `<p class="text-gray-400 text-sm">Palabra Secreta</p><p class="text-4xl font-bold">${window.impSecret}</p>`;
+            const backContent = isImp 
+                ? `<p class="text-2xl font-bold text-red-500">¡ERES EL IMPOSTOR!</p><p class="text-gray-300 text-sm mt-2 px-4">Disimula y adivina la palabra.</p>` 
+                : `<p class="text-gray-400 text-sm">Palabra Secreta</p><p class="text-4xl font-bold text-white mt-2">${window.impSecret}</p>`;
+
+            let subtitulo = window.impTurn === 0 ? "El primer turno es para" : "Pasa el dispositivo a";
+
             document.getElementById('juegosContenido').innerHTML = `
-                <div class="w-full max-w-sm flex flex-col items-center gap-8 fade-in text-center">
-                    <div class="bg-gray-800 p-8 rounded-2xl w-full border border-gray-700">${msg}</div>
-                    <button onclick="window.siguienteTurnoImpostor()" class="w-full bg-rose-600 font-bold py-4 rounded-xl">Ocultar y continuar</button>
+                <div class="w-full max-w-sm flex flex-col items-center gap-4 fade-in text-center">
+                    <p class="text-xl text-gray-400 mb-0">${subtitulo}</p>
+                    <h3 class="text-4xl font-bold text-rose-500">${p}</h3>
+                    
+                    <div class="flip-card mt-2 cursor-pointer select-none" id="impFlipCard">
+                        <div class="flip-card-inner shadow-xl">
+                            <div class="flip-card-front">
+                                <span class="text-5xl mb-3">👆</span>
+                                <p class="text-lg font-bold text-gray-200 px-6">Mantén pulsado para ver tu rol</p>
+                            </div>
+                            <div class="flip-card-back">
+                                ${backContent}
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2 italic transition-opacity duration-300 opacity-0" id="impReleaseText">Suelta para continuar</p>
                 </div>`;
+
+            const card = document.getElementById('impFlipCard');
+            const releaseText = document.getElementById('impReleaseText');
+            let isRevealed = false;
+
+            const handlePress = (e) => {
+                e.preventDefault();
+                if (isRevealed) return;
+                card.classList.add('flipped');
+                releaseText.classList.remove('opacity-0');
+                releaseText.classList.add('opacity-100');
+            };
+
+            const handleRelease = (e) => {
+                e.preventDefault();
+                if (!card.classList.contains('flipped')) return;
+                isRevealed = true;
+                card.classList.remove('flipped');
+                releaseText.classList.remove('opacity-100');
+                releaseText.classList.add('opacity-0');
+                
+                setTimeout(() => {
+                    window.siguienteTurnoImpostor();
+                }, 500); 
+            };
+
+            card.addEventListener('mousedown', handlePress);
+            card.addEventListener('touchstart', handlePress);
+            
+            window.impMouseUpHandler = handleRelease;
+            window.impTouchEndHandler = handleRelease;
+            window.addEventListener('mouseup', window.impMouseUpHandler);
+            window.addEventListener('touchend', window.impTouchEndHandler);
         };
 
         window.siguienteTurnoImpostor = function() {
+            window.removeEventListener('mouseup', window.impMouseUpHandler);
+            window.removeEventListener('touchend', window.impTouchEndHandler);
+            
             window.impTurn++;
             if(window.impTurn < window.impPlayers.length) {
                 window.mostrarTurnoPassImpostor();
