@@ -1454,6 +1454,8 @@
                     <button onclick="window.seleccionarJuego('pasion')" class="w-full bg-purple-700 text-white font-bold py-6 px-4 rounded-2xl shadow-lg hover:bg-purple-600 transition active:scale-95 text-xl border border-purple-500">✝️ Trivial de la Pasión</button>
                     <button onclick="window.seleccionarJuego('teologico')" class="w-full bg-emerald-700 text-white font-bold py-6 px-4 rounded-2xl shadow-lg hover:bg-emerald-600 transition active:scale-95 text-xl border border-emerald-500">📖 Trivial Teológico</button>
                     <button onclick="window.seleccionarJuego('flash')" class="w-full bg-orange-700 text-white font-bold py-6 px-4 rounded-2xl shadow-lg hover:bg-orange-600 transition active:scale-95 text-xl border border-orange-500">📸 Flash Photo</button>
+                    <button onclick="window.seleccionarJuego('puzzle')" class="w-full bg-teal-700 p-6 rounded-2xl font-bold text-xl border border-teal-500 shadow-lg active:scale-95 transition">🧩 Puzle Deslizante</button>
+
                 </div>`;
         };
 
@@ -2482,6 +2484,124 @@
                     </div>
                 </div>`;
         };
+
+        
+        // LÓGICA PUZLE DESLIZANTE 2X3 DRAG AND DROP
+        window.iniciarPuzzleMulti = (names) => {
+            window.pzPlayers = names.sort(()=>0.5-Math.random()).map(n => ({ nombre: n, pts: 0 }));
+            window.pzRound = 1; window.pzTurn = 0; window.flujoPuzzle();
+        };
+
+        window.flujoPuzzle = () => {
+            const p = window.pzPlayers[window.pzTurn];
+            let txt = window.pzRound === 1 ? "¡Esta es la primera de dos rondas!" : "¡Esta es la segunda y definitiva ronda!";
+            document.getElementById('juegosContenido').innerHTML = `
+                <div class="text-center space-y-8 fade-in w-full">
+                    <h3 class="text-4xl font-bold text-teal-400">${p.nombre}</h3>
+                    <p class="text-teal-200 font-bold uppercase tracking-widest border border-teal-800 p-4 rounded-xl">${txt}</p>
+                    <button onclick="window.jugarPuzleTurno()" class="w-full p-6 bg-teal-600 rounded-2xl font-black text-2xl shadow-xl active:scale-95 transition uppercase">Empezar</button>
+                </div>`;
+        };
+
+        window.jugarPuzleTurno = () => {
+            const hTimer = document.getElementById('juegosHeaderTimer'); hTimer.classList.remove('hidden'); hTimer.innerText = '00:00';
+            window.pzImg = bancoFlash[Math.floor(Math.random()*bancoFlash.length)];
+            window.pzGrid = [0,1,2,3,4,5]; let empty = 5;
+            for(let i=0; i<150; i++) {
+                const adj = []; if(empty%2>0) adj.push(empty-1); if(empty%2<1) adj.push(empty+1);
+                if(empty>1) adj.push(empty-2); if(empty<4) adj.push(empty+2);
+                const next = adj[Math.floor(Math.random()*adj.length)];
+                [window.pzGrid[empty], window.pzGrid[next]] = [window.pzGrid[next], window.pzGrid[empty]]; empty = next;
+            }
+            window.pzSecs = 0; clearInterval(window.puzzleTimer);
+            window.puzzleTimer = setInterval(() => { window.pzSecs++; let m=Math.floor(pzSecs/60), s=pzSecs%60; hTimer.innerText = `${m<10?'0':''}${m}:${s<10?'0':''}${s}`; }, 1000);
+            window.initPzUI();
+        };
+
+        window.initPzUI = () => {
+            document.getElementById('juegosContenido').innerHTML = `
+                <div class="space-y-4 w-full text-center">
+                    <div class="bg-gray-800 p-3 rounded-xl border border-gray-700 text-teal-400 font-bold uppercase text-xs mx-auto max-w-[280px]">Ronda ${pzRound} - ${pzPlayers[pzTurn].nombre}</div>
+                    <div class="relative w-full max-w-[280px] aspect-[2/3] bg-gray-800 border-4 border-gray-700 rounded-lg overflow-hidden shadow-2xl mx-auto touch-none select-none" id="pzBoard"></div>
+                    <button onclick="window.rendirsePz()" class="w-full max-w-[280px] p-3 bg-gray-800 border border-gray-700 rounded-xl text-gray-400 font-bold">Me rindo</button>
+                </div>`;
+            for(let v=0; v<5; v++) {
+                const d = document.createElement('div'); d.id = 'pzP_'+v;
+                d.className = "absolute w-[50%] h-[33.333%] border border-black/30 bg-cover transition-transform duration-200 cursor-pointer z-10";
+                d.style.backgroundImage = `url('https://raw.githubusercontent.com/ejruizgarcia/images/main/${pzImg.file}')`;
+                d.style.backgroundSize = "200% 300%";
+                d.style.backgroundPosition = `${(v%2)*100}% ${Math.floor(v/2)*50}%`;
+                d.addEventListener('touchstart', window.pzDS, {passive: false}); d.addEventListener('mousedown', window.pzDS);
+                document.getElementById('pzBoard').appendChild(d);
+            }
+            if(!window.pzEv) {
+                document.addEventListener('touchmove', window.pzDM, {passive: false}); document.addEventListener('touchend', window.pzDE);
+                document.addEventListener('mousemove', window.pzDM); document.addEventListener('mouseup', window.pzDE);
+                window.pzEv = true;
+            }
+            window.pzDrag = { active: false, el: null, startX: 0, startY: 0 };
+            window.updPzUI();
+        };
+
+        window.updPzUI = () => {
+            window.pzGrid.forEach((v, i) => { if(v===5) return; const el = document.getElementById('pzP_'+v); if(el){ el.style.transform = `translate(${(i%2)*100}%, ${Math.floor(i/2)*100}%)`; el.dataset.idx = i; } });
+        };
+
+        window.pzDS = (e) => {
+            if(e.type==='touchstart') e.preventDefault();
+            const t = e.type.includes('touch') ? e.touches[0] : e;
+            window.pzDrag = { active: true, el: e.target, startX: t.clientX, startY: t.clientY };
+            e.target.classList.remove('transition-transform'); e.target.style.zIndex = '50';
+        };
+
+        window.pzDM = (e) => {
+            if(!pzDrag.active) return; e.preventDefault();
+            const t = e.type.includes('touch') ? e.touches[0] : e;
+            const dx = t.clientX - pzDrag.startX, dy = t.clientY - pzDrag.startY;
+            const idx = parseInt(pzDrag.el.dataset.idx), em = pzGrid.indexOf(5);
+            const r1 = Math.floor(idx/2), c1 = idx%2, r2 = Math.floor(em/2), c2 = em%2;
+            if(Math.abs(r1-r2)+Math.abs(c1-c2)===1) {
+                let mx=0, my=0;
+                if(r1===r2){ if(c1<c2) mx=Math.max(0,Math.min(dx, pzDrag.el.offsetWidth)); else mx=Math.min(0,Math.max(dx, -pzDrag.el.offsetWidth)); }
+                else{ if(r1<r2) my=Math.max(0,Math.min(dy, pzDrag.el.offsetHeight)); else my=Math.min(0,Math.max(dy, -pzDrag.el.offsetHeight)); }
+                pzDrag.el.style.transform = `translate(calc(${c1*100}% + ${mx}px), calc(${r1*100}% + ${my}px))`;
+            }
+        };
+
+        window.pzDE = (e) => {
+            if(!pzDrag.active) return; const el = pzDrag.el; pzDrag.active = false;
+            el.classList.add('transition-transform'); el.style.zIndex = '10';
+            const t = e.type.includes('touch') ? e.changedTouches[0] : e;
+            const dx = t.clientX - pzDrag.startX, dy = t.clientY - pzDrag.startY;
+            if(Math.abs(dx)>el.offsetWidth*0.3 || Math.abs(dy)>el.offsetHeight*0.3 || (Math.abs(dx)<10 && Math.abs(dy)<10)) window.moverPz(parseInt(el.dataset.idx));
+            else window.updPzUI();
+        };
+
+        window.moverPz = (idx) => {
+            const em = pzGrid.indexOf(5);
+            const r1 = Math.floor(idx/2), c1 = idx%2, r2 = Math.floor(em/2), c2 = em%2;
+            if(Math.abs(r1-r2)+Math.abs(c1-c2)===1){ [pzGrid[idx], pzGrid[em]] = [pzGrid[em], pzGrid[idx]]; }
+            window.updPzUI();
+            if(pzGrid.every((v,i)=>v===i)){
+                clearInterval(window.puzzleTimer); document.getElementById('juegosHeaderTimer').classList.add('hidden');
+                let s = Math.max(50, 500-(pzSecs*2)); pzPlayers[pzTurn].pts += s;
+                setTimeout(() => {
+                    document.getElementById('juegosContenido').innerHTML = `<div class="text-center space-y-6 fade-in"><p class="text-7xl">🧩</p><h2 class="text-3xl font-black text-teal-400">¡COMPLETADO!</h2><p class="text-xl">Sumas <b>${s} pts</b></p><button onclick="window.nextPzTurn()" class="w-full p-5 bg-teal-600 rounded-xl font-bold uppercase">Continuar</button></div>`;
+                }, 300);
+            }
+        };
+
+        window.rendirsePz = () => { clearInterval(window.puzzleTimer); document.getElementById('juegosHeaderTimer').classList.add('hidden'); window.nextPzTurn(); };
+        window.nextPzTurn = () => {
+            pzTurn++; if(pzTurn>=pzPlayers.length){ pzTurn=0; pzRound++; }
+            if(pzRound>2) window.finPuzzle(); else window.flujoPuzzle();
+        };
+
+        window.finPuzzle = () => {
+            const rk = [...pzPlayers].sort((a,b)=>b.pts-a.pts);
+            document.getElementById('juegosContenido').innerHTML = `<div class="text-center space-y-6 w-full"><p class="text-6xl">🏆</p><h2 class="text-3xl font-black text-teal-400 uppercase">RESULTADOS</h2><div class="space-y-3">${rk.map(r => `<div class="flex justify-between p-4 bg-gray-800 rounded-xl border border-gray-700"><span>${r.nombre}</span><b>${r.pts} pts</b></div>`).join('')}</div><button onclick="volverJuegos()" class="w-full p-5 bg-gray-700 rounded-xl font-bold">SALIR</button></div>`;
+        };
+
 
         const ordenDiasSwipe = ['domingo', 'lunes', 'martes', 'miercoles', 'jueves', 'madrugada', 'viernes', 'resurreccion'];
         let touchstartX = 0;
